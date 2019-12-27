@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AngularFireDatabase } from '@angular/fire/database';
 
 import { AuthenticationService } from './_services';
-import { User } from './_models';
+import { IUser } from './_models';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +11,7 @@ import { User } from './_models';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  currentUser: User;
+  currentUser: IUser;
 
   constructor(public db: AngularFireDatabase,
     private router: Router,

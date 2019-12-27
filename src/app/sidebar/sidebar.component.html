@@ -20,13 +20,23 @@
       </a>
     </li>
     <li>
+      <a routerLink="/checklists" routerLinkActive="activated">
+        <i class="material-icons">event_available</i>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/members" routerLinkActive="activated">
+        <i class="material-icons">people</i>
+      </a>
+    </li>
+    <li>
       <a routerLink="/users" routerLinkActive="activated">
         <i class="material-icons">supervised_user_circle</i>
       </a>
     </li>
     <li>
-      <a routerLink="/posts" routerLinkActive="activated">
-        <i class="material-icons">message</i>
+      <a (click)="logout()">
+        <i class="material-icons">exit_to_app</i>
       </a>
     </li>
   </ul>

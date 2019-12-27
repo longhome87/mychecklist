@@ -2,6 +2,12 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+const NewEntityURLParameters = {
+  NewChecklist: 'NewChecklist',
+  NewMember: 'NewMember',
+  NewUser: 'NewUser'
+};
+
 export const environment = {
   production: false,
   firebaseConfig: {
@@ -13,7 +19,8 @@ export const environment = {
     messagingSenderId: "290809435292",
     appId: "1:290809435292:web:b605545f17efec79e88959",
     measurementId: "G-NLS6M5E4BH"
-  }
+  },
+  NewEntityURLParameters: NewEntityURLParameters
 };
 
 /*

@@ -26,8 +26,8 @@ import { RegisterComponent } from './register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule, MatSliderModule } from "@angular/material";
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { ChecklistComponent } from './checklists/checklist/checklist.component';
-import { CreateChecklistComponent } from './checklists/create-checklist/create-checklist.component';
+import { MemberListComponent } from './members/member-list/member-list.component';
+import { CreateMemberComponent } from './members/create-member/create-member.component';
 
 @NgModule({
   declarations: [
@@ -40,8 +40,8 @@ import { CreateChecklistComponent } from './checklists/create-checklist/create-c
     LoginComponent,
     RegisterComponent,
     SidebarComponent,
-    ChecklistComponent,
-    CreateChecklistComponent
+    MemberListComponent,
+    CreateMemberComponent,
   ],
   imports: [
     BrowserModule,

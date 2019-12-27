@@ -2,21 +2,21 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 
-import { User } from '../_models';
+import { IUser } from '../_models';
 import { error } from 'util';
 import { first } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class UserFService {
   private dbPath = 'users';
-  usersRef: AngularFirestoreCollection<User> = null;
+  usersRef: AngularFirestoreCollection<IUser> = null;
 
   constructor(private http: HttpClient, private db: AngularFirestore) {
     this.usersRef = db.collection(this.dbPath);
   }
 
   getAll() {
-    return this.http.get<User[]>(`/users`);
+    return this.http.get<IUser[]>(`/users`);
   }
 
   getById(id: number) {
@@ -69,7 +69,7 @@ export class UserFService {
     // });
   }
 
-  register(data: User) {
+  register(data: IUser) {
     return new Promise<any>((resolve, reject) => {
       this.usersRef
         .doc(data.username).set(data)
@@ -78,7 +78,7 @@ export class UserFService {
     });
   }
 
-  update(user: User) {
+  update(user: IUser) {
     return this.http.put(`/users/` + user.id, user);
   }
 

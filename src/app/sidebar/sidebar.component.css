@@ -13,6 +13,11 @@ nav ul li a {
   color: #fff;
   padding: 20px;
   display: block;
+  cursor: pointer;
+}
+
+nav ul li a:hover {
+  background-color: #3b5461;
 }
 
 nav ul li .activated {
