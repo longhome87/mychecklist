@@ -1,7 +1,7 @@
 import { IMember } from './imember';
 
 export class IChecklist {
-    id: number;
+    id: string;
     date: string;
     members: Array<IMember>;
 }

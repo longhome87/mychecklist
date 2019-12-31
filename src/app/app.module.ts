@@ -24,7 +24,6 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatIconModule, MatSliderModule } from "@angular/material";
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { MemberListComponent } from './members/member-list/member-list.component';
 import { CreateMemberComponent } from './members/create-member/create-member.component';
@@ -53,8 +52,6 @@ import { CreateMemberComponent } from './members/create-member/create-member.com
     AngularFirestoreModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatIconModule,
-    MatSliderModule
   ],
   providers: [
     { provide: FirestoreSettingsToken, useValue: {} },

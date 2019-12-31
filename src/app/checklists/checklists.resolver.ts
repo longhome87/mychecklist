@@ -19,7 +19,7 @@ export class ChecklistResolver implements Resolve<IChecklist> {
     console.log('resolver', id);
 
     if (id === environment.NewEntityURLParameters.NewChecklist) {
-      return of({ id: 0 } as IChecklist);
+      return of({ id: '0' } as IChecklist);
     }
     // else {
     //   if (Number(id) === NaN || Number(id) === 0) {
