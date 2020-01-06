@@ -8,8 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './_guards';
 import { MemberListComponent } from './members/member-list/member-list.component';
-import { ChecklistListComponent } from './checklists/checklist-list/checklist-list.component';
-import { CreateChecklistComponent } from './checklists/create-checklist/create-checklist.component';
+import { CreateMemberComponent } from './members/create-member/create-member.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -19,7 +18,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'members', component: MemberListComponent },
   { path: 'checklists', loadChildren: './checklists/checklists.module#ChecklistsModule' },
-  // { path: 'checklists/create', component: CreateChecklistComponent },
+  { path: 'members/create', component: CreateMemberComponent },
 
   // otherwise redirect to home
   { path: '**', redirectTo: '' }

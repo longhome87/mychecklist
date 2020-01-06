@@ -27,6 +27,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { MemberListComponent } from './members/member-list/member-list.component';
 import { CreateMemberComponent } from './members/create-member/create-member.component';
+import { AppMaterialModule } from './app-material.module';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { CreateMemberComponent } from './members/create-member/create-member.com
     AngularFirestoreModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    AppMaterialModule
   ],
   providers: [
     { provide: FirestoreSettingsToken, useValue: {} },

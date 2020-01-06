@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { MatCardModule, MatButtonModule, MatIconModule, MatListModule } from '@angular/material';
 import { ChecklistListComponent } from './checklist-list/checklist-list.component';
 import { CreateChecklistComponent } from './create-checklist/create-checklist.component';
 import { ChecklistResolver } from './checklists.resolver';
+import { AppMaterialModule } from '../app-material.module';
 
 @NgModule({
   declarations: [
@@ -12,11 +11,6 @@ import { ChecklistResolver } from './checklists.resolver';
     CreateChecklistComponent
   ],
   imports: [
-    CommonModule,
-    MatCardModule,
-    MatIconModule,
-    MatButtonModule,
-    MatListModule,
     RouterModule.forChild([
       { path: '', component: ChecklistListComponent, pathMatch: 'full' },
       {
@@ -27,7 +21,8 @@ import { ChecklistResolver } from './checklists.resolver';
           { path: 'create', component: CreateChecklistComponent }
         ]
       }
-    ])
+    ]),
+    AppMaterialModule
   ],
   providers: [
     ChecklistResolver

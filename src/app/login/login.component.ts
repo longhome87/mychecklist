@@ -43,6 +43,8 @@ export class LoginComponent implements OnInit {
   get f() { return this.loginForm.controls; }
 
   onSubmit() {
+    console.log('logging');
+    
     this.submitted = true;
 
     // stop here if form is invalid
@@ -50,7 +52,7 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    // this.loading = true;
+    this.loading = true;
     this.authenticationService.login(this.f.username.value, this.f.password.value)
       .then(data => {
         this.router.navigate([this.returnUrl]);

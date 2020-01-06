@@ -1,6 +1,6 @@
 export class IMember {
     id: string;
-    prefixName: string;
+    prefixName?: string;
     firstName: string;
     lastName: string;
 }
