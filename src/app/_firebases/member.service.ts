@@ -9,7 +9,7 @@ import { IMember } from '../_models/imember';
 })
 export class MemberService extends FirebaseService {
   private dbPath = 'members';
-  private collectionRef: CollectionReference = null;
+  public collectionRef: CollectionReference = null;
 
   constructor(public db: AngularFirestore) {
     super(db);

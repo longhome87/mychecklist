@@ -4,61 +4,17 @@
   <thead class="thead-dark">
     <tr>
       <th scope="col" class="text-center">#</th>
-      <th scope="col" class="text-center">Name</th>
-      <th scope="col" class="text-center">22<br>12</th>
-      <th scope="col" class="text-center">29<br>12</th>
-      <th scope="col" class="text-center">5<br>1</th>
-      <th scope="col" class="text-center">12<br>1</th>
-      <th scope="col" class="text-center">19<br>1</th>
-      <th scope="col" class="text-center">26<br>1</th>
-      <th scope="col" class="text-center">2<br>2</th>
-      <th scope="col" class="text-center">9<br>2</th>
-      <th scope="col" class="text-center">16<br>2</th>
-      <th scope="col" class="text-center">23<br>2</th>
+      <th scope="col" class="text-center">Prefix</th>
+      <th scope="col" class="text-center">Last Name</th>
+      <th scope="col" class="text-center">First Name</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td class="text-center"><input type="checkbox"></td>
-      <td class="text-center"><input type="checkbox"></td>
-      <td class="text-center"><input type="checkbox"></td>
-      <td class="text-center"><input type="checkbox"></td>
-      <td class="text-center"><input type="checkbox"></td>
-      <td class="text-center"><input type="checkbox"></td>
-      <td class="text-center"><input type="checkbox"></td>
-      <td class="text-center"><input type="checkbox"></td>
-      <td class="text-center"><input type="checkbox"></td>
-      <td class="text-center"><input type="checkbox"></td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td><input type="checkbox"></td>
-      <td><input type="checkbox"></td>
-      <td><input type="checkbox"></td>
-      <td><input type="checkbox"></td>
-      <td><input type="checkbox"></td>
-      <td><input type="checkbox"></td>
-      <td><input type="checkbox"></td>
-      <td><input type="checkbox"></td>
-      <td><input type="checkbox"></td>
-      <td><input type="checkbox"></td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td><input type="checkbox"></td>
-      <td><input type="checkbox"></td>
-      <td><input type="checkbox"></td>
-      <td><input type="checkbox"></td>
-      <td><input type="checkbox"></td>
-      <td><input type="checkbox"></td>
-      <td><input type="checkbox"></td>
-      <td><input type="checkbox"></td>
-      <td><input type="checkbox"></td>
-      <td><input type="checkbox"></td>
+    <tr *ngFor="let item of memberList; let i = index">
+      <th scope="row">{{i+1}}</th>
+      <td>{{item.prefixName}}</td>
+      <td>{{item.lastName}}</td>
+      <td>{{item.firstName}}</td>
     </tr>
   </tbody>
 </table>

@@ -28,6 +28,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { MemberListComponent } from './members/member-list/member-list.component';
 import { CreateMemberComponent } from './members/create-member/create-member.component';
 import { AppMaterialModule } from './app-material.module';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { AppMaterialModule } from './app-material.module';
     { provide: FirestoreSettingsToken, useValue: {} },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    DatePipe,
 
     // provider used to create fake backend
     fakeBackendProvider

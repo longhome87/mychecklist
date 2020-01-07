@@ -1,5 +1,5 @@
 export class IChecklistItem {
-    id: number;
+    id: string;
     name: string;
     status: number;
     selected: boolean;

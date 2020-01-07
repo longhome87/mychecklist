@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { IMember } from '../_models';
 
 @Injectable({
   providedIn: 'root'
@@ -30,11 +31,11 @@ export class SortService {
   * @param b
   */
   public sortByFirstName(a: any, b: any): number {
-    if (a.firstname < b.firstname) {
+    if (a.firstName < b.firstName) {
       return -1;
     }
 
-    if (a.firstname > b.firstname) {
+    if (a.firstName > b.firstName) {
       return 1;
     }
 

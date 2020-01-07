@@ -17,23 +17,23 @@ export class ChecklistService extends FirebaseService {
     this.collectionRef = this.getRef(this.dbPath);
   }
 
-  getMember(dataKey: string) {
+  getChecklist(dataKey: string) {
     return this.get(this.dbPath, dataKey);
   }
 
-  getMembers() {
+  getChecklists() {
     return this.getAll(this.dbPath);
   }
 
-  createMember(data: IChecklist) {
+  createChecklist(data: IChecklist) {
     return this.create(this.dbPath, data);
   }
 
-  updateMember(data: IChecklist) {
+  updateChecklist(data: IChecklist) {
     return this.update(this.dbPath, data.id, data);
   }
 
-  deleteMember(dataKey: string) {
+  deleteChecklist(dataKey: string) {
     return this.delete(this.dbPath, dataKey);
   }
 }
