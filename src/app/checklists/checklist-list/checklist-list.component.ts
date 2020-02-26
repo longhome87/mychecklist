@@ -5,7 +5,7 @@ import { ChecklistService } from 'src/app/_firebases/checklist.service';
 import { IChecklist, IMember } from 'src/app/_models';
 import { combineLatest } from 'rxjs';
 import { MemberService } from 'src/app/_firebases/member.service';
-import { SortService } from 'src/app/_services';
+import { SortService, DateService } from 'src/app/_services';
 
 @Component({
   selector: 'app-checklist-list',
@@ -15,14 +15,20 @@ import { SortService } from 'src/app/_services';
 export class ChecklistListComponent implements OnInit {
   checklistList: Array<IChecklist> = [];
   memberList: Array<IMember> = [];
+  daysInMonth: Array<Date> = [];
+  numberOfDays: number = 10;
 
   constructor(
     private router: Router,
     private checklistService: ChecklistService,
     private memberService: MemberService,
-    private sortService: SortService) { }
+    private sortService: SortService,
+    private dateService: DateService) { }
 
   ngOnInit() {
+    let today = new Date();
+    this.daysInMonth = this.dateService.getDaysInMonth(today.getMonth(), today.getFullYear());
+
     const getChecklists = this.checklistService.getChecklists();
     const getMembers = this.memberService.getMembers();
 
@@ -38,7 +44,8 @@ export class ChecklistListComponent implements OnInit {
             checklistItem.id = docChangeAction.payload.doc.id;
             this.checklistList.push(checklistItem);
           });
-          console.log(this.checklistList);
+          this.checklistList.sort(this.sortService.sortByDate);
+          // console.log(this.checklistList);
         }
 
         // Get members data
@@ -46,9 +53,16 @@ export class ChecklistListComponent implements OnInit {
           data[1].map(docChangeAction => {
             let memberItem: any = docChangeAction.payload.doc.data();
             memberItem.id = docChangeAction.payload.doc.id;
+            memberItem['checkedDate'] = [];
+            let checklists = this.checklistList.filter(x => x.members.some(m => m.id === memberItem.id));
+            checklists.map(x => {
+              memberItem['checkedDate'].push(x.date);
+            });
             this.memberList.push(memberItem);
           });
           this.memberList.sort(this.sortService.sortByFirstName);
+          // console.log(this.memberList);
+
         }
       },
         (err: Response) => {
@@ -64,5 +78,9 @@ export class ChecklistListComponent implements OnInit {
   createNewChecklist() {
     console.log('createNewChecklist');
     this.router.navigate(['/checklists/' + environment.NewEntityURLParameters.NewChecklist + '/create']);
+  }
+
+  isCheckedDate(checkedDate: Array<string>, date: Date): boolean {
+    return checkedDate.includes(this.dateService.formatDate(date));
   }
 }

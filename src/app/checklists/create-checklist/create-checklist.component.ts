@@ -81,4 +81,8 @@ export class CreateChecklistComponent implements OnInit {
 
       });
   }
+
+  onCancel(){
+    this.router.navigate(['/checklists']);
+  }
 }

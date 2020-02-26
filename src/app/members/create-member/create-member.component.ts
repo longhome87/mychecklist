@@ -42,4 +42,8 @@ export class CreateMemberComponent implements OnInit {
 
       });
   }
+
+  onCancel() {
+    this.router.navigate(['/members']);
+  }
 }
