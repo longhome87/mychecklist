@@ -5,20 +5,27 @@
     <tr>
       <th scope="col" class="text-center">#</th>
       <th scope="col" class="text-center" style="min-width: 200px">Name</th>
-      <th scope="col" class="text-center" *ngFor="let date of daysInMonth">{{date.getDate()}}<br>{{date.getMonth()+1}}
+      <th scope="col" class="text-center" *ngFor="let date of checkedDateList">
+        {{date.getDate()}}<br>{{date.getMonth()+1}}
       </th>
+      <th scope="col" class="text-center">Total</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let member of memberList; let i = index">
-      <th scope="row">{{i+1}}</th>
+      <th scope="row" class="text-center">{{i+1}}</th>
       <td>{{member.firstName}} {{member.lastName}}</td>
-      <td class="text-center" *ngFor="let date of daysInMonth">
+      <td class="text-center" *ngFor="let date of checkedDateList">
         <!-- <input type="checkbox" checked *ngIf="isCheckedDate(member.checkedDate, date)" disabled>
         <input type="checkbox" *ngIf="!isCheckedDate(member.checkedDate, date)" disabled> -->
-        <i class="fa fa-square-o" *ngIf="!isCheckedDate(member.checkedDate, date)" style="font-size: 1.5em; color:black"></i>
-        <i class="fa fa-check-square-o" *ngIf="isCheckedDate(member.checkedDate, date)" style="font-size: 1.5em; color:black"></i>
+        <!-- <i class="fa fa-square-o" *ngIf="!isCheckedDate(member.checkedDate, date)" style="font-size: 1.5em; color:black"></i>
+        <i class="fa fa-check-square-o" *ngIf="isCheckedDate(member.checkedDate, date)" style="font-size: 1.5em; color:black"></i> -->
+        <!-- <mat-checkbox (click)="onClick($event)" *ngIf="!isCheckedDate(member.checkedDate, date)"></mat-checkbox>
+        <mat-checkbox [checked]="true" (click)="onClick($event)" *ngIf="isCheckedDate(member.checkedDate, date)">
+        </mat-checkbox> -->
+        <mat-icon *ngIf="isCheckedDate(member.checkedDate, date)">check_box</mat-icon>
       </td>
+      <th scope="row" class="text-center">{{member.checkedDate.length}}</th>
     </tr>
   </tbody>
 </table>

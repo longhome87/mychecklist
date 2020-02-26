@@ -15,8 +15,7 @@ import { SortService, DateService } from 'src/app/_services';
 export class ChecklistListComponent implements OnInit {
   checklistList: Array<IChecklist> = [];
   memberList: Array<IMember> = [];
-  daysInMonth: Array<Date> = [];
-  numberOfDays: number = 10;
+  checkedDateList: Array<Date> = [];
 
   constructor(
     private router: Router,
@@ -26,9 +25,6 @@ export class ChecklistListComponent implements OnInit {
     private dateService: DateService) { }
 
   ngOnInit() {
-    let today = new Date();
-    this.daysInMonth = this.dateService.getDaysInMonth(today.getMonth(), today.getFullYear());
-
     const getChecklists = this.checklistService.getChecklists();
     const getMembers = this.memberService.getMembers();
 
@@ -45,6 +41,9 @@ export class ChecklistListComponent implements OnInit {
             this.checklistList.push(checklistItem);
           });
           this.checklistList.sort(this.sortService.sortByDate);
+          this.checkedDateList = this.checklistList.map(x => {
+            return new Date(x.date);
+          })
           // console.log(this.checklistList);
         }
 
@@ -82,5 +81,9 @@ export class ChecklistListComponent implements OnInit {
 
   isCheckedDate(checkedDate: Array<string>, date: Date): boolean {
     return checkedDate.includes(this.dateService.formatDate(date));
+  }
+
+  onClick(event) {
+    event.preventDefault();
   }
 }
