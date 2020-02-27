@@ -1,0 +1,43 @@
+<!-- <nav>
+  <ul>
+    <li>
+      <a routerLink="" [class.activated]="currentUrl == '/'">
+        <i class="material-icons">supervised_user_circle</i>
+      </a>
+    </li>
+    <li>
+      <a routerLink="posts" [class.activated]="currentUrl == '/posts'">
+        <i class="material-icons">message</i>
+      </a>
+    </li>
+  </ul>
+</nav> -->
+<nav>
+  <ul>
+    <li>
+      <a routerLink="" routerLinkActive="activated" [routerLinkActiveOptions]="{exact: true}">
+        <i class="material-icons">home</i>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/checklists" routerLinkActive="activated">
+        <i class="material-icons">event_available</i>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/members" routerLinkActive="activated">
+        <i class="material-icons">people</i>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/users" routerLinkActive="activated">
+        <i class="material-icons">supervised_user_circle</i>
+      </a>
+    </li>
+    <li>
+      <a (click)="logout()">
+        <i class="material-icons">exit_to_app</i>
+      </a>
+    </li>
+  </ul>
+</nav>

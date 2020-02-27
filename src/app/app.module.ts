@@ -24,7 +24,11 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatIconModule, MatSliderModule } from "@angular/material";
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { MemberListComponent } from './members/member-list/member-list.component';
+import { CreateMemberComponent } from './members/create-member/create-member.component';
+import { AppMaterialModule } from './app-material.module';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -35,7 +39,10 @@ import { MatIconModule, MatSliderModule } from "@angular/material";
     AlertComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    SidebarComponent,
+    MemberListComponent,
+    CreateMemberComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,13 +54,13 @@ import { MatIconModule, MatSliderModule } from "@angular/material";
     AngularFirestoreModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatIconModule,
-    MatSliderModule
+    AppMaterialModule
   ],
   providers: [
     { provide: FirestoreSettingsToken, useValue: {} },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    DatePipe,
 
     // provider used to create fake backend
     fakeBackendProvider

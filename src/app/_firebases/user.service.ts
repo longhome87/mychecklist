@@ -2,18 +2,18 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, CollectionReference } from '@angular/fire/firestore';
 
 import { FirebaseService } from './firebase.service';
-import { User } from '../_models';
+import { IUser } from '../_models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService extends FirebaseService {
   private dbPath = 'users';
-  private usersRef: CollectionReference = null;
+  private collectionRef: CollectionReference = null;
 
   constructor(public db: AngularFirestore) {
     super(db);
-    this.usersRef = this.getRef(this.dbPath);
+    this.collectionRef = this.getRef(this.dbPath);
   }
 
   getUser(dataKey: string) {
@@ -24,11 +24,11 @@ export class UserService extends FirebaseService {
     return this.getAll(this.dbPath);
   }
 
-  createUser(data: User) {
+  createUser(data: IUser) {
     return this.create(this.dbPath, data);
   }
 
-  updateUser(data: User) {
+  updateUser(data: IUser) {
     return this.update(this.dbPath, data.id, data);
   }
 
@@ -37,15 +37,15 @@ export class UserService extends FirebaseService {
   }
 
   authenticate(username: string, password: string) {
-    let query = this.usersRef
+    let query = this.collectionRef
       .where('username', '==', username)
       .where('password', '==', password)
       .limit(1)
       .get();
 
-    return new Promise<User>((resolve, reject) => {
+    return new Promise<IUser>((resolve, reject) => {
       query.then((snapshot) => {
-        let user: User = null;
+        let user: IUser = null;
         if (!snapshot.empty) {
           snapshot.forEach(q => {
             let doc = q.data();
