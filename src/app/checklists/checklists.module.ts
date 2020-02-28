@@ -4,6 +4,7 @@ import { ChecklistListComponent } from './checklist-list/checklist-list.componen
 import { CreateChecklistComponent } from './create-checklist/create-checklist.component';
 import { ChecklistResolver } from './checklists.resolver';
 import { AppMaterialModule } from '../app-material.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AppMaterialModule } from '../app-material.module';
         ]
       }
     ]),
-    AppMaterialModule
+    AppMaterialModule,
+    FormsModule
   ],
   providers: [
     ChecklistResolver

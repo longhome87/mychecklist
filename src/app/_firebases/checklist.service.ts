@@ -36,4 +36,8 @@ export class ChecklistService extends FirebaseService {
   deleteChecklist(dataKey: string) {
     return this.delete(this.dbPath, dataKey);
   }
+
+  getChecklistByDate(date: string) {
+    return this.collectionRef.where("date", "==", date);
+  }
 }

@@ -16,6 +16,7 @@ export class CreateChecklistComponent implements OnInit {
   checklist: IChecklist;
   checklistItemList: Array<IChecklistItem> = [];
   memberList: Array<IMember> = [];
+  selectedDate: Date = new Date();
 
   constructor(
     private route: ActivatedRoute,
@@ -45,10 +46,10 @@ export class CreateChecklistComponent implements OnInit {
         this.checklistItemList.sort(this.sortService.sortByFirstName);
       });
 
-    this.route.data.subscribe(data => {
-      console.log(data);
-      console.log(data['checklist']);
-    });
+    // this.route.data.subscribe(data => {
+    //   console.log(data);
+    //   console.log(data['checklist']);
+    // });
   }
 
   onCheck(checklistItem) {
@@ -67,14 +68,36 @@ export class CreateChecklistComponent implements OnInit {
     const checkedItems = this.getCheckedItems().map(x => x.id);
     this.checklist = {
       id: null,
-      date: this.datePipe.transform(new Date(), 'yyyy-MM-dd'),
+      date: this.datePipe.transform(this.selectedDate, 'yyyy-MM-dd'),
       members: this.memberList.filter(x => checkedItems.includes(x.id))
     };
 
-    this.checklistService.createChecklist(this.checklist)
-      .then(data => {
-        console.log(data.id);
-        this.router.navigate(['/checklists']);
+    this.checklistService.getChecklistByDate(this.checklist.date)
+      .get()
+      .then(querySnapshot => {
+        if (querySnapshot.size > 0) {
+          // Merge new members with old one
+          let existedChecklist = querySnapshot.docs[0].data();
+          let memberIdList = this.checklist.members.map(x => x.id);
+          let filteredMembers = existedChecklist.members.filter(m => memberIdList.indexOf(m.id) < 0);
+          this.checklist.members = this.checklist.members.concat(filteredMembers);
+          this.checklist.id = querySnapshot.docs[0].id;
+          this.checklistService.updateChecklist(this.checklist)
+            .then(data => {
+              this.router.navigate(['/checklists']);
+            })
+            .catch(error => {
+              console.log('1', error);
+            });
+        } else {
+          this.checklistService.createChecklist(this.checklist)
+            .then(data => {
+              this.router.navigate(['/checklists']);
+            })
+            .catch(error => {
+              console.log('2', error);
+            });
+        }
       })
       .catch(error => {
         console.log(error);
@@ -82,7 +105,7 @@ export class CreateChecklistComponent implements OnInit {
       });
   }
 
-  onCancel(){
+  onCancel() {
     this.router.navigate(['/checklists']);
   }
 }
