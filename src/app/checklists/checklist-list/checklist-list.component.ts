@@ -13,8 +13,8 @@ import { SortService, DateService } from 'src/app/_services';
   styleUrls: ['./checklist-list.component.css']
 })
 export class ChecklistListComponent implements OnInit {
-  checklistList: Array<IChecklist> = [];
-  memberList: Array<IMember> = [];
+  checklistList: Array<IChecklist>;
+  memberList: Array<IMember>;
   checkedDateList: Array<Date> = [];
 
   constructor(
@@ -35,6 +35,7 @@ export class ChecklistListComponent implements OnInit {
       .subscribe(data => {
         // Get checklists data
         if (data[0] !== null) {
+          this.checklistList = [];
           data[0].map(docChangeAction => {
             let checklistItem: any = docChangeAction.payload.doc.data();
             checklistItem.id = docChangeAction.payload.doc.id;
@@ -44,11 +45,11 @@ export class ChecklistListComponent implements OnInit {
           this.checkedDateList = this.checklistList.map(x => {
             return new Date(x.date);
           })
-          // console.log(this.checklistList);
         }
 
         // Get members data
         if (data[1] !== null) {
+          this.memberList = [];
           data[1].map(docChangeAction => {
             let memberItem: any = docChangeAction.payload.doc.data();
             memberItem.id = docChangeAction.payload.doc.id;
@@ -60,8 +61,6 @@ export class ChecklistListComponent implements OnInit {
             this.memberList.push(memberItem);
           });
           this.memberList.sort(this.sortService.sortByFirstName);
-          // console.log(this.memberList);
-
         }
       },
         (err: Response) => {
