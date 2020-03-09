@@ -16,8 +16,8 @@ const routes: Routes = [
   { path: 'add', component: CreateCustomerComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'members', component: MemberListComponent },
-  { path: 'checklists', loadChildren: './checklists/checklists.module#ChecklistsModule' },
+  { path: 'members', component: MemberListComponent, canActivate: [AuthGuard] },
+  { path: 'checklists', loadChildren: './checklists/checklists.module#ChecklistsModule', canActivate: [AuthGuard] },
   { path: 'members/create', component: CreateMemberComponent },
 
   // otherwise redirect to home
