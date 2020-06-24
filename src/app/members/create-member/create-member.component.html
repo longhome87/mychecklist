@@ -1,6 +1,4 @@
 <h2>Create new Member</h2>
-<button mat-raised-button color="primary" type="submit" class="mb-2 mr-2" [disabled]="formGroup.invalid">Save</button>
-<button mat-raised-button (click)="onCancel()">Cancel</button>
 <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
   <mat-form-field class="full-width">
     <input matInput placeholder="Prefix Name" formControlName="prefixName">
@@ -12,6 +10,8 @@
   <mat-form-field class="full-width">
     <input matInput placeholder="Last Name" formControlName="lastName">
   </mat-form-field>
+  <button mat-raised-button color="primary" type="submit" class="mb-2 mr-2" [disabled]="formGroup.invalid">Save</button>
+  <button mat-raised-button (click)="onCancel()">Cancel</button>
 </form>
 
 <!-- <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
