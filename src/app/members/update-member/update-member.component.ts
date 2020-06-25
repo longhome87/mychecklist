@@ -1,28 +1,37 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MemberService } from 'src/app/_firebases/member.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute,Router } from '@angular/router';
 
 @Component({
-  selector: 'app-create-member',
-  templateUrl: './create-member.component.html',
-  styleUrls: ['./create-member.component.css']
+  selector: 'app-update-member',
+  templateUrl: './update-member.component.html',
+  styleUrls: ['./update-member.component.css']
 })
-export class CreateMemberComponent implements OnInit {
+export class UpdateMemberComponent implements OnInit {
   formGroup: FormGroup;
+  prefixName:'';
+  firstName:'';
+  lastName:'';
+  id:''
 
   constructor(
     private formBuilder: FormBuilder,
     private memberService: MemberService,
-    private router: Router) {
-  }
+    private router: Router, 
+    private route: ActivatedRoute) {
 
+  }
   ngOnInit() {
     this.formGroup = this.formBuilder.group({
       prefixName: ['', Validators.required],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required]
     });
+    this.prefixName = this.route.snapshot.params['prefixName'];
+    this.firstName = this.route.snapshot.params['firstName'];
+    this.lastName = this.route.snapshot.params['lastName'];
+    this.id = this.route.snapshot.params['id'];
   }
 
   public hasError = (controlName: string, errorName: string) => {
@@ -30,11 +39,13 @@ export class CreateMemberComponent implements OnInit {
   }
 
   onSubmit() {
-    // console.log('Submitted', this.formGroup.controls['prefixName'].value);
-    // console.log('Submitted', this.formGroup.value);
-    this.memberService.createMember(this.formGroup.value)
+    let  { value } = this.formGroup;
+    value.id = this.id;
+    console.log(value,"zzzz");
+    
+    this.memberService.updateMember(value)
       .then(data => {
-        console.log(data, "data");
+        console.log(data, "update");
         this.router.navigate(['/members']);
       })
       .catch(error => {

@@ -27,6 +27,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { MemberListComponent } from './members/member-list/member-list.component';
 import { CreateMemberComponent } from './members/create-member/create-member.component';
+import { UpdateMemberComponent } from './members/update-member/update-member.component';
 import { AppMaterialModule } from './app-material.module';
 import { DatePipe } from '@angular/common';
 
@@ -43,6 +44,7 @@ import { DatePipe } from '@angular/common';
     SidebarComponent,
     MemberListComponent,
     CreateMemberComponent,
+    UpdateMemberComponent
   ],
   imports: [
     BrowserModule,
