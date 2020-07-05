@@ -32,6 +32,7 @@ export class MemberListComponent implements OnInit {
     // this.memberList.sort(this.sortService.sortByFirstName);
     this.memberService.getMembers()
     .subscribe(doc => {
+      this.memberList=[];
       doc.map(data => {
         let memberItem: any = data.payload.doc.data();
         memberItem.isChecked = false;
@@ -69,7 +70,7 @@ export class MemberListComponent implements OnInit {
     return this.listChecked.push(item.id)
   }
 
-  deleteMember() {
+  deleteMembers() {
     this.memberList = [];
     this.listChecked.forEach( listId => {
       this.memberService.deleteMember(listId)
@@ -81,5 +82,15 @@ export class MemberListComponent implements OnInit {
       });
     })
     this.listChecked = [];
+  }
+
+  deleteMember(Id) {
+      this.memberService.deleteMember(Id)
+      .then(data => {
+        console.log("done");       
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 }

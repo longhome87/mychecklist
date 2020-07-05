@@ -13,32 +13,36 @@
     type="button" 
     class="mb-2" 
     [disabled]="listChecked.length === 0"
-    (click)="deleteMember()"
+    (click)="deleteMembers()"
   >
-    Delete
+    Delete items
   </button>
 </div>
-<table class="table table-striped table-bordered table-hover">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col" class="text-center">#</th>
-      <th scope="col" class="text-center">Prefix</th>
-      <th scope="col" class="text-center">Last Name</th>
-      <th scope="col" class="text-center">First Name</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr 
-      *ngFor="let item of memberList; let i = index" 
-      (click)="checkList(item)" 
-      [class.done] = "item.isChecked"
+
+<div class="container-lg">
+  <div class="row">
+    <div 
+    class="memberList__item col-12 col-sm-4"
+    *ngFor="let item of memberList; let i = index"
+    (click)="checkList(item)" 
+    [class.done] = "item.isChecked"
     >
-      <th scope="row">{{i+1}}</th>
-      <td>{{item.prefixName}}</td>
-      <td>{{item.lastName}}</td>
-      <td class="first_name">{{item.firstName}}
-        <i class="material-icons" (click)="update(item); $event.stopPropagation()">edit</i>
-      </td>
-    </tr>
-  </tbody>
-</table>
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title>{{item.prefixName}}</mat-card-title>
+          <mat-card-subtitle>{{item.lastName}} {{item.firstName}}</mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image src="https://product.hstatic.net/1000160337/product/nendoroid_uzumaki_naruto___4__1024x1024.jpg" alt="Photo of a Shiba Inu">
+        <mat-card-content>
+          <p>
+           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reprehenderit aut dolorem, eius fugit inventore, sunt dolores pariatur tempora magnam laboriosam, rerum quasi assumenda ea corporis fuga fugiat facilis cumque sequi?
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button (click)="update(item)">EDIT</button>
+          <button mat-button (click)="deleteMember(item.id)">DELETE</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

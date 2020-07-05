@@ -1,18 +1,25 @@
 .done {
-    opacity: 0.5;
+	opacity: 0.5;
 }
+
 .btn_list {
-    display: flex;
-    justify-content: space-between;
+	display        : flex;
+	justify-content: space-between;
 }
+
 .first_name {
-    position: relative;
+	position: relative;
 }
+
 .first_name i {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    margin-right: -30px;
-    right: 0;
-    cursor: pointer;
+	position    : absolute;
+	top         : 50%;
+	transform   : translateY(-50%);
+	margin-right: -30px;
+	right       : 0;
+	cursor      : pointer;
+}
+
+.memberList__item {
+	margin-top: 10px;
 }
