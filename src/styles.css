@@ -58,3 +58,27 @@ body {
   font-size: 1em;
   font-weight: 300;
 }
+
+@media only screen and (max-width: 425px) {
+  #container {
+    display: block;
+    height: auto;
+  }
+
+  #container nav ul {
+    display: flex;
+    justify-content: center;
+  }
+
+  #container #content {
+    padding: 15px;
+  }
+
+  #container #content h2 {
+    font-size: 15px;
+  }
+
+  #container #content table {
+    font-size: 12px;
+  }
+}
