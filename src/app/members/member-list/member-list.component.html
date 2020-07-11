@@ -1,28 +1,27 @@
-<h2>Member List</h2>
-<div class="btn_list">
-  <button 
-    mat-raised-button color="primary" 
-    type="button" 
-    class="mb-2" 
-    (click)="createNew()"
-  >
-    Create New
-  </button>
-  <button 
-    mat-raised-button color="primary" 
-    type="button" 
-    class="mb-2" 
-    [disabled]="listChecked.length === 0"
-    (click)="deleteMembers()"
-  >
-    Delete items
-  </button>
-</div>
-
-<div class="container-lg">
+<div>
+  <h2>Member List</h2>
+  <div class="btn_list">
+    <button 
+      mat-raised-button color="primary" 
+      type="button" 
+      class="mb-2" 
+      (click)="createNew()"
+    >
+      Create New
+    </button>
+    <button 
+      mat-raised-button color="primary" 
+      type="button" 
+      class="mb-2" 
+      [disabled]="listChecked.length === 0"
+      (click)="deleteMembers()"
+    >
+      Delete items
+    </button>
+  </div>
   <div class="row">
     <div 
-    class="memberList__item col-12 col-sm-4"
+    class="memberList__item col-xl-3 col-lg-4 col-md-6"
     *ngFor="let item of memberList; let i = index"
     (click)="checkList(item)" 
     [class.done] = "item.isChecked"
