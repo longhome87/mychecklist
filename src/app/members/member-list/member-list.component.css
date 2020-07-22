@@ -1,5 +1,12 @@
-.done {
-	opacity: 0.5;
+@media only screen and (max-width: 425px) {
+	.member-list {
+		margin-top: 75px;
+	}
+}
+
+.member-list__header {
+	display: flex;
+	justify-content: space-between;
 }
 
 .btn_list {
@@ -7,19 +14,3 @@
 	justify-content: space-between;
 }
 
-.first_name {
-	position: relative;
-}
-
-.first_name i {
-	position    : absolute;
-	top         : 50%;
-	transform   : translateY(-50%);
-	margin-right: -30px;
-	right       : 0;
-	cursor      : pointer;
-}
-
-.memberList__item {
-	margin-top: 10px;
-}

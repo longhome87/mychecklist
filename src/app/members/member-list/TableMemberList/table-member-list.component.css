@@ -1,0 +1,16 @@
+.first_name {
+	position: relative;
+}
+
+.first_name i {
+	position    : absolute;
+	top         : 50%;
+	transform   : translateY(-50%);
+	margin-right: -30px;
+	right       : 0;
+	cursor      : pointer;
+}
+
+.done {
+	opacity: 0.5;
+}

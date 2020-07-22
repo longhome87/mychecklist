@@ -63,7 +63,16 @@ body {
   #container {
     display: block;
     height: auto;
+    position: relative;
   }
+
+  #container nav {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    height: 70px;
+    z-index: 10;
+  } 
 
   #container nav ul {
     display: flex;

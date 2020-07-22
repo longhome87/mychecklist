@@ -3,4 +3,5 @@ export class IMember {
     prefixName?: string;
     firstName: string;
     lastName: string;
+    isChecked?: boolean
 }

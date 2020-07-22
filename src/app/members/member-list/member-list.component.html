@@ -1,47 +1,31 @@
-<div>
-  <h2>Member List</h2>
+<div class="member-list">
+  <div class="member-list__header">
+    <h2>Member List</h2>
+    <mat-slide-toggle color="primary" (click)="handlerChangeView()"> 
+      Change view
+    </mat-slide-toggle>
+  </div>
   <div class="btn_list">
-    <button 
-      mat-raised-button color="primary" 
-      type="button" 
-      class="mb-2" 
-      (click)="createNew()"
-    >
+    <button mat-raised-button color="primary" type="button" class="mb-2" (click)="createNew()">
       Create New
     </button>
-    <button 
-      mat-raised-button color="primary" 
-      type="button" 
-      class="mb-2" 
-      [disabled]="listChecked.length === 0"
-      (click)="deleteMembers()"
-    >
+    <button mat-raised-button color="primary" type="button" class="mb-2" [disabled]="listChecked.length === 0"
+      (click)="deleteMembers()">
       Delete items
     </button>
   </div>
-  <div class="row">
-    <div 
-    class="memberList__item col-xl-3 col-lg-4 col-md-6"
-    *ngFor="let item of memberList; let i = index"
-    (click)="checkList(item)" 
-    [class.done] = "item.isChecked"
+  <app-table-member-list 
+    *ngIf="viewTable; else viewList"
+    [memberList]="memberList"
+    (checkList)="checkList($event)"
+  >
+  </app-table-member-list>
+
+  <ng-template #viewList>
+    <app-grid-member-list 
+      [memberList]="memberList" 
+      (checkList)="checkList($event)"
     >
-      <mat-card class="example-card">
-        <mat-card-header>
-          <mat-card-title>{{item.prefixName}}</mat-card-title>
-          <mat-card-subtitle>{{item.lastName}} {{item.firstName}}</mat-card-subtitle>
-        </mat-card-header>
-        <img mat-card-image src="https://product.hstatic.net/1000160337/product/nendoroid_uzumaki_naruto___4__1024x1024.jpg" alt="Photo of a Shiba Inu">
-        <mat-card-content>
-          <p>
-           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reprehenderit aut dolorem, eius fugit inventore, sunt dolores pariatur tempora magnam laboriosam, rerum quasi assumenda ea corporis fuga fugiat facilis cumque sequi?
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button (click)="update(item)">EDIT</button>
-          <button mat-button (click)="deleteMember(item.id)">DELETE</button>
-        </mat-card-actions>
-      </mat-card>
-    </div>
-  </div>
+    </app-grid-member-list>
+  </ng-template>
 </div>

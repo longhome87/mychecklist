@@ -10,9 +10,11 @@ import { MemberService } from 'src/app/_firebases/member.service';
   templateUrl: './member-list.component.html',
   styleUrls: ['./member-list.component.css']
 })
+
 export class MemberListComponent implements OnInit {
-  memberList = [];
-  listChecked = []
+  memberList : Array<IMember>;
+  listChecked = [];
+  viewTable = false;
 
   constructor(
     private router: Router,
@@ -92,5 +94,9 @@ export class MemberListComponent implements OnInit {
       .catch(error => {
         console.log(error);
       });
+  }
+
+  handlerChangeView() {
+    this.viewTable = !this.viewTable;
   }
 }
