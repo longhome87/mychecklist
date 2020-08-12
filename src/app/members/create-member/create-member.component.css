@@ -1,3 +1,48 @@
 .full-width {
   width: 100%;
 }
+.create__member {
+	display: flex;
+	justify-content: flex-start;
+	margin-top: 40px;
+}
+.load__image {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	width: 30%;
+}
+
+.label__image {
+	border: 1px solid green;
+	line-height: 35px;
+	padding: 0 10px;
+	cursor: pointer;
+}
+
+#upload__review {
+	width: 200px;
+	height: 200px;
+	border-radius: 100px;
+	margin-bottom: 10px;
+}
+
+#avatar {
+  width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+@media only screen and (max-width: 425px) {
+	.create__member {
+		flex-direction: column;
+	}
+
+	.load__image {
+		width: 100%;
+	}
+}

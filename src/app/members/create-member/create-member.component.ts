@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class CreateMemberComponent implements OnInit {
   formGroup: FormGroup;
+  srcImage;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -44,5 +45,17 @@ export class CreateMemberComponent implements OnInit {
 
   onCancel() {
     this.router.navigate(['/members']);
+  }
+
+  handlerAvatar($event) {
+    let self = this;
+    let file = $event.target.files[0]; 
+    let fileReader = new FileReader();
+    
+    fileReader.onloadend = function(e){
+      self.srcImage = fileReader.result;
+    }
+
+    fileReader.readAsDataURL(file);
   }
 }
