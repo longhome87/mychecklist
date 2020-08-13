@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class CreateMemberComponent implements OnInit {
   formGroup: FormGroup;
-  srcImage;
+  srcImage: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,9 +33,10 @@ export class CreateMemberComponent implements OnInit {
   onSubmit() {
     // console.log('Submitted', this.formGroup.controls['prefixName'].value);
     // console.log('Submitted', this.formGroup.value);
-    this.memberService.createMember(this.formGroup.value)
+    var params = this.formGroup.value;
+    params.image = this.srcImage;
+    this.memberService.createMember(params)
       .then(data => {
-        console.log(data, "data");
         this.router.navigate(['/members']);
       })
       .catch(error => {
@@ -53,7 +54,7 @@ export class CreateMemberComponent implements OnInit {
     let fileReader = new FileReader();
     
     fileReader.onloadend = function(e){
-      self.srcImage = fileReader.result;
+      self.srcImage = fileReader.result.toString();
     }
 
     fileReader.readAsDataURL(file);

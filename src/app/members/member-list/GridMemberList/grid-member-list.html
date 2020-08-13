@@ -7,7 +7,7 @@
         <mat-card-subtitle>{{item.lastName}} {{item.firstName}}</mat-card-subtitle>
       </mat-card-header>
       <img mat-card-image
-        src="https://product.hstatic.net/1000160337/product/nendoroid_uzumaki_naruto___4__1024x1024.jpg"
+        [src]="item.image || '../../../assets/image/default-user-image.png'" 
         alt="Photo of a Shiba Inu">
       <mat-card-content>
         <p>
