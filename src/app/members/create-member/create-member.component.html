@@ -1,20 +1,20 @@
 <h2>Create new Member</h2>
 <div class="create__member">
   <div class="load__image">
-    <img 
-      id="upload__review" 
-      [src]="srcImage || '/assets/image/default-user-image.png'" 
+    <img
+      id="upload__review"
+      [src]="srcImage || '/assets/image/default-user-image.png'"
     />
 
     <label for="avatar" class="label__image">Change Image</label>
-    <input 
-      type="file" 
-      id="avatar" 
-      name="avatar" 
-      accept="image/png, image/jpeg" 
-      ng-model-instant 
+    <input
+      type="file"
+      id="avatar"
+      name="avatar"
+      accept="image/png, image/jpeg"
+      ng-model-instant
       (change)="handlerAvatar($event)"
-    >    
+    >
   </div>
   <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="form__info">
     <mat-form-field class="full-width">
@@ -23,12 +23,19 @@
     </mat-form-field>
     <mat-form-field class="full-width">
       <input matInput placeholder="First Name" formControlName="firstName">
+      <mat-error *ngIf="hasError('firstName', 'required')">First name name is <strong>required</strong></mat-error>
     </mat-form-field>
     <mat-form-field class="full-width">
       <input matInput placeholder="Last Name" formControlName="lastName">
+      <mat-error *ngIf="hasError('lastName', 'required')">Last name name is <strong>required</strong></mat-error>
     </mat-form-field>
-  
-  
+    <!-- <mat-form-field class="full-width">
+      <input matInput placeholder="Date of Birth" formControlName="dateOfBirth">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Phone Number" formControlName="phoneNumber">
+    </mat-form-field> -->
+
     <button mat-raised-button color="primary" type="submit" class="mb-2 mr-2" [disabled]="formGroup.invalid">Save</button>
     <button mat-raised-button (click)="onCancel()">Cancel</button>
   </form>

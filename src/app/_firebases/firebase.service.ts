@@ -4,6 +4,7 @@ import { AngularFirestore, CollectionReference } from '@angular/fire/firestore';
 @Injectable({
   providedIn: 'root'
 })
+
 export class FirebaseService {
 
   constructor(public db: AngularFirestore) { }
@@ -31,4 +32,6 @@ export class FirebaseService {
   protected delete(collectionName: string, dataKey: string) {
     return this.db.collection(collectionName).doc(dataKey).delete();
   }
+
+
 }

@@ -38,6 +38,7 @@ export class CreateChecklistComponent implements OnInit {
           this.checklistItemList.push({
             id: memberItem.id,
             name: memberItem.lastName + ' ' + memberItem.firstName,
+            image:memberItem.image,
             status: 0,
             selected: false,
           })
@@ -82,7 +83,10 @@ export class CreateChecklistComponent implements OnInit {
           let filteredMembers = existedChecklist.members.filter(m => memberIdList.indexOf(m.id) < 0);
           this.checklist.members = this.checklist.members.concat(filteredMembers);
           this.checklist.id = querySnapshot.docs[0].id;
+          console.log(this.checklist, "jjj");
+
           this.checklistService.updateChecklist(this.checklist)
+
             .then(data => {
               this.router.navigate(['/checklists']);
             })
