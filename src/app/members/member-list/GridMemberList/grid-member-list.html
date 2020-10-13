@@ -1,25 +1,77 @@
 <div class="row">
-  <div class="memberList__item col-xl-3 col-lg-4 col-md-6" *ngFor="let item of memberList; let i = index"
+  <div class="memberList__item col-xl-3 col-lg-4 col-md-6 cards"
+    *ngFor="let item of memberList; let i = index"
     (click)="checkItem(item)" [class.done]="item.isChecked">
-    <mat-card class="example-card">
-      <mat-card-header>
-        <mat-card-title>{{item.prefixName}}</mat-card-title>
-        <mat-card-subtitle>{{item.lastName}} {{item.firstName}}</mat-card-subtitle>
-      </mat-card-header>
-      <img mat-card-image
-        [src]="item.image || '/assets/image/default-user-image.png'"
-        alt="Photo of a Shiba Inu">
-      <mat-card-content>
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reprehenderit aut dolorem, eius fugit inventore,
-          sunt dolores pariatur tempora magnam laboriosam, rerum quasi assumenda ea corporis fuga fugiat facilis
-          cumque sequi?
-        </p>
-      </mat-card-content>
-      <mat-card-actions>
-        <!-- <button mat-button (click)="update(item)">EDIT</button>
-        <button mat-button (click)="deleteMember(item.id)">DELETE</button> -->
-      </mat-card-actions>
-    </mat-card>
+      <div class="content">
+        <div class="cardFront">
+          <mat-card class="example-card">
+            <div class="image">
+              <img mat-card-image [src]="item.image || '/assets/image/default-user-image.png'"
+              alt=avatar_{{item.firstName}} />
+            </div>
+            <mat-card-content>
+              <h5>{{item.prefixName}} {{item.lastName}} {{item.firstName}}</h5>
+              <p >
+                Ngày sinh:
+                <span [class.red-color]="!item?.dateOfBirth">
+                  {{ item?.dateOfBirth ? item.dateOfBirth : 'chưa có' }}
+                </span>
+              </p>
+              <p >
+                Số điện thoại:
+                <span [class.red-color]="!item?.phoneNumber">
+                  {{ item?.phoneNumber ? item.phoneNumber : 'chưa có' }}
+                </span>
+              </p>
+              <p >
+                Địa chỉ:
+                <span [class.red-color]="!item?.address">
+                  {{ item?.address ? item.address : 'chưa có' }}
+                </span>
+              </p>
+            </mat-card-content>
+            <mat-card-actions  class="d-flex justify-content-between align-items-center">
+              <button mat-button (click)="editMember($event, item)">Update</button>
+              <span class="more-details" (click)="change($event, i)">
+                More details
+              </span>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+        <div class="cardBack">
+          <!-- back content -->
+          <mat-card class="example-card">
+            <mat-card-header class="justify-content-center">
+              <mat-card-title>THÔNG TIN</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <h6>Tên Thánh, Họ và tên Cha:</h6>
+              <p [class.red-color]="!item?.fullnameDad">{{ item?.fullnameDad ? item.fullnameDad : 'chưa có' }}</p>
+              <h6>Số điện thoại Cha:</h6>
+              <p [class.red-color]="!item?.phoneNumberDad">{{ item?.phoneNumberDad ? item.phoneNumberDad : 'chưa có' }}</p>
+              <h6>Tên Thánh, Họ và tên Mẹ:</h6>
+              <p [class.red-color]="!item?.fullnameMom">{{ item?.fullnameMom ? item.fullnameMom : 'chưa có' }}</p>
+              <h6>Số điện thoại Mẹ:</h6>
+              <p [class.red-color]="!item?.phoneNumberMom">{{ item?.phoneNumberMom ? item.phoneNumberMom : 'chưa có' }}</p>
+              <h6>Giáo xứ:
+                <span class="infomation-detail" [class.red-color]="!item?.parish">
+                  {{ item?.parish ? item.parish : 'chưa có' }}
+                </span>
+              </h6>
+              <h6>Khu họ:
+                <span class="infomation-detail" [class.red-color]="!item?.province">
+                  {{ item?.province ? item.province : 'chưa có' }}
+                </span>
+              </h6>
+            </mat-card-content>
+            <mat-card-actions class="d-flex justify-content-between align-items-center">
+              <button mat-button (click)="editMember($event, item)">Update</button>
+              <span class="back" (click)="change($event, i)">
+                Back
+              </span>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
   </div>
 </div>

@@ -1,16 +1,27 @@
-.first_name {
-	position: relative;
+table {
+	width: 100%;
 }
 
-.first_name i {
-	position    : absolute;
-	top         : 50%;
-	transform   : translateY(-50%);
-	margin-right: -30px;
-	right       : 0;
-	cursor      : pointer;
+.table-bordered td, .table-bordered th {
+	border: none;
+	text-align: center;
 }
 
 .done {
 	opacity: 0.5;
+}
+
+.check-list__avt {
+	flex-shrink: 0;
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+.table-bordered td .material-icons {
+	cursor: pointer;
+}
+
+.table-bordered td.fullname {
+	text-align: start;
 }

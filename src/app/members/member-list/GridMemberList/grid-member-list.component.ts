@@ -14,12 +14,23 @@ export class GridMemberListComponent implements OnInit {
 
   @Input() memberList: Array<IMember>;
   @Output() checkList = new EventEmitter();
-
+  @Output() editItem = new EventEmitter();
   constructor() { }
 
   ngOnInit() {}
 
   checkItem(item) {
     this.checkList.emit(item);
+  }
+
+  editMember(event, item) {
+    event.stopPropagation();
+    this.editItem.emit(item);
+  }
+
+  change(event, index) {
+    event.stopPropagation();
+    var element = document.getElementsByClassName("cards");
+    element[index].classList.toggle("applyflip");
   }
 }

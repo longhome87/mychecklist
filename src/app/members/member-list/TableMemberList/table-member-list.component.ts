@@ -10,9 +10,11 @@ import { MemberService } from 'src/app/_firebases/member.service';
   styleUrls: ['./table-member-list.component.css']
 })
 export class TableMemberListComponent implements OnInit {
+  displayedColumns: string[] = ['position', 'prefix', 'fullName'];
 
   @Input() memberList: Array<IMember>;
   @Output() checkList = new EventEmitter();
+  @Output() editItem = new EventEmitter();
 
   constructor() { }
 
@@ -20,5 +22,9 @@ export class TableMemberListComponent implements OnInit {
 
   checkItem(item) {
     this.checkList.emit(item);
+  }
+
+  update(item) {
+    this.editItem.emit(item);
   }
 }

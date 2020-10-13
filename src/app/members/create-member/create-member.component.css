@@ -13,14 +13,15 @@
 	flex-direction: column;
 	width: 30%;
 }
-
+.create__member form {
+	width: 70%;
+}
 .label__image {
 	border: 1px solid green;
 	line-height: 35px;
 	padding: 0 10px;
 	cursor: pointer;
 }
-
 #upload__review {
 	width: 200px;
 	height: 200px;

@@ -1,7 +1,7 @@
 <div class="member-list">
   <div class="member-list__header">
     <h2>Member List</h2>
-    <mat-slide-toggle color="primary" (click)="handlerChangeView()"> 
+    <mat-slide-toggle color="primary" (click)="handlerChangeView()">
       Change view
     </mat-slide-toggle>
   </div>
@@ -14,17 +14,19 @@
       Delete items
     </button>
   </div>
-  <app-table-member-list 
+  <app-table-member-list
     *ngIf="viewTable; else viewList"
     [memberList]="memberList"
     (checkList)="checkList($event)"
+    (editItem)="update($event)"
   >
   </app-table-member-list>
 
   <ng-template #viewList>
-    <app-grid-member-list 
-      [memberList]="memberList" 
+    <app-grid-member-list
+      [memberList]="memberList"
       (checkList)="checkList($event)"
+      (editItem)="update($event)"
     >
     </app-grid-member-list>
   </ng-template>

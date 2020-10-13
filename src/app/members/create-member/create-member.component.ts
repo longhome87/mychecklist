@@ -10,7 +10,8 @@ import { Router } from '@angular/router';
 })
 export class CreateMemberComponent implements OnInit {
   formGroup: FormGroup;
-  srcImage: string;
+  srcImage ='';
+  file: string
 
   constructor(
     private formBuilder: FormBuilder,
@@ -50,9 +51,9 @@ export class CreateMemberComponent implements OnInit {
 
   handlerAvatar($event) {
     let self = this;
-    let file = $event.target.files[0]; 
+    let file = $event.target.files[0];
     let fileReader = new FileReader();
-    
+
     fileReader.onloadend = function(e){
       self.srcImage = fileReader.result.toString();
     }

@@ -1,10 +1,16 @@
 export class IMember {
     id: string;
-    prefixName?: string;
+    prefixName: string;
     firstName: string;
     lastName: string;
-    isChecked?: boolean;
     image?: string;
-    year: number;
-    numberPhone: number
+    dateOfBirth?: string;
+    phoneNumber?: number;
+    fullNameDad?: string;
+    phoneNumberDad?: string;
+    fullNameMom?: string;
+    phoneNumberMom?: string;
+    parish?: string;
+    province?:string;
+    address?: string
 }

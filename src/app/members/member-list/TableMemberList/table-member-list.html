@@ -2,22 +2,30 @@
   <thead class="thead-dark">
     <tr>
       <th scope="col" class="text-center">#</th>
-      <th scope="col" class="text-center">Prefix</th>
-      <th scope="col" class="text-center">Last Name</th>
-      <th scope="col" class="text-center">First Name</th>
+      <th scope="col" class="text-center">Prefix, Full Name</th>
+      <th scope="col" class="text-center">Date of birth</th>
+      <th scope="col" class="text-center">Phone Number</th>
+      <th scope="col" class="text-center"></th>
     </tr>
   </thead>
   <tbody>
-    <tr 
-      *ngFor="let item of memberList; let i = index" 
-      (click)="checkItem(item)" 
+    <tr
+      *ngFor="let item of memberList; let i = index"
+      (click)="checkItem(item)"
       [class.done]="item.isChecked"
     >
-      <th scope="row">{{i+1}}</th>
-      <td>{{item.prefixName}}</td>
-      <td>{{item.lastName}}</td>
-      <td class="first_name">{{item.firstName}}
-        <!-- <i class="material-icons" (click)="update(item); $event.stopPropagation()">edit</i> -->
+      <th scope="row">{{ i+1 }}</th>
+      <td class="fullname">
+        <img
+          class="check-list__avt"
+          [src]="item.image"
+          alt="...">
+        {{ item.prefixName }} {{item.lastName}} {{item.firstName}}
+      </td>
+      <td >{{ item?.dateOfBirth }}</td>
+      <td >{{ item?.phoneNumber }}</td>
+      <td>
+        <i class="material-icons" (click)="update(item); $event.stopPropagation()">edit</i>
       </td>
     </tr>
   </tbody>
