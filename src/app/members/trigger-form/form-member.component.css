@@ -1,19 +1,19 @@
 .full-width {
   width: 100%;
 }
-.create__member {
+.form__member {
 	display: flex;
 	justify-content: flex-start;
 	margin-top: 40px;
 }
 .load__image {
 	display: flex;
-	justify-content: center;
+	justify-content: flex-start;
 	align-items: center;
 	flex-direction: column;
 	width: 30%;
 }
-.create__member form {
+.form__member form {
 	width: 70%;
 }
 .label__image {
@@ -38,8 +38,23 @@
 	z-index: -1;
 }
 
+.content-form {
+	height: 325px;
+	overflow: hidden;
+}
+
+.show-info {
+	cursor: pointer;
+	color: #3520e2;
+	text-decoration-line: underline;
+}
+
+.toggle-show-form {
+	height: auto
+}
+
 @media only screen and (max-width: 425px) {
-	.create__member {
+	.form__member {
 		flex-direction: column;
 	}
 

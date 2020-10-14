@@ -5,7 +5,7 @@ export class IMember {
     lastName: string;
     image?: string;
     dateOfBirth?: string;
-    phoneNumber?: number;
+    phoneNumber?: string;
     fullNameDad?: string;
     phoneNumberDad?: string;
     fullNameMom?: string;

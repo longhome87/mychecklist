@@ -8,7 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './_guards';
 import { MemberListComponent } from './members/member-list/member-list.component';
-import { CreateMemberComponent } from './members/create-member/create-member.component';
+import { FormMemberComponent } from './members/trigger-form/form-member.component';
 import { UpdateMemberComponent } from './members/update-member/update-member.component';
 
 const routes: Routes = [
@@ -19,8 +19,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'members', component: MemberListComponent, canActivate: [AuthGuard] },
   { path: 'checklists', loadChildren: './checklists/checklists.module#ChecklistsModule', canActivate: [AuthGuard] },
-  { path: 'members/create', component: CreateMemberComponent },
-  { path: 'members/update', component: UpdateMemberComponent},
+  { path: 'members/form-member', component: FormMemberComponent },
 
   // otherwise redirect to home
   { path: '**', redirectTo: '' }

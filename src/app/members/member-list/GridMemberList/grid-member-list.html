@@ -46,13 +46,21 @@
             </mat-card-header>
             <mat-card-content>
               <h6>Tên Thánh, Họ và tên Cha:</h6>
-              <p [class.red-color]="!item?.fullnameDad">{{ item?.fullnameDad ? item.fullnameDad : 'chưa có' }}</p>
+              <p [class.red-color]="!item?.fullNameDad">
+                {{ item?.fullNameDad ? item.fullNameDad : 'chưa có' }}
+              </p>
               <h6>Số điện thoại Cha:</h6>
-              <p [class.red-color]="!item?.phoneNumberDad">{{ item?.phoneNumberDad ? item.phoneNumberDad : 'chưa có' }}</p>
+              <p [class.red-color]="!item?.phoneNumberDad">
+                {{ item?.phoneNumberDad ? item.phoneNumberDad : 'chưa có' }}
+              </p>
               <h6>Tên Thánh, Họ và tên Mẹ:</h6>
-              <p [class.red-color]="!item?.fullnameMom">{{ item?.fullnameMom ? item.fullnameMom : 'chưa có' }}</p>
+              <p [class.red-color]="!item?.fullNameMom">
+                {{ item?.fullNameMom ? item.fullNameMom : 'chưa có' }}
+              </p>
               <h6>Số điện thoại Mẹ:</h6>
-              <p [class.red-color]="!item?.phoneNumberMom">{{ item?.phoneNumberMom ? item.phoneNumberMom : 'chưa có' }}</p>
+              <p [class.red-color]="!item?.phoneNumberMom">
+                {{ item?.phoneNumberMom ? item.phoneNumberMom : 'chưa có' }}
+              </p>
               <h6>Giáo xứ:
                 <span class="infomation-detail" [class.red-color]="!item?.parish">
                   {{ item?.parish ? item.parish : 'chưa có' }}

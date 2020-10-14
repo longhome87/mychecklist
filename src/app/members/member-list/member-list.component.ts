@@ -76,14 +76,13 @@ export class MemberListComponent implements OnInit {
 
   createNew() {
     console.log('created new');
-    this.router.navigate(['/members/create']);
+    this.router.navigate(['/members/form-member']);
   }
 
   update(item) {
     console.log('update', item);
     // this.router.navigate(['/members/update']);
-    const { prefixName, firstName, lastName, id, image } = item
-    this.router.navigate(['/members/update', {id, prefixName, firstName, lastName, image}]);
+    this.router.navigate(['/members/form-member', {id: item.id}]);
   }
 
   checkList(item) {

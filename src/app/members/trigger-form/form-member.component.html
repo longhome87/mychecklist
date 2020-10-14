@@ -1,0 +1,103 @@
+<h2>{{isNew ? 'Create New' : 'Update'}} Member</h2>
+<div class="form__member">
+  <div class="load__image">
+    <img
+      id="upload__review"
+      [src]="srcImage || '/assets/image/default-user-image.png'"
+    />
+
+    <label for="avatar" class="label__image">Choose Image</label>
+    <input
+      type="file"
+      id="avatar"
+      name="avatar"
+      accept="image/png, image/jpeg"
+      (change)="handlerAvatar($event)"
+    >
+  </div>
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="form__info">
+    <div class="content-form">
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Prefix Name" formControlName="prefixName" [(ngModel)]="prefixName">
+        <mat-error *ngIf="hasError('prefixName', 'required')">Prefix name is <strong>required</strong></mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput placeholder="First Name" formControlName="firstName" [(ngModel)]="firstName">
+        <mat-error *ngIf="hasError('firstName', 'required')">First name name is <strong>required</strong></mat-error>
+      </mat-form-field>
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Last Name" formControlName="lastName" [(ngModel)]="lastName">
+        <mat-error *ngIf="hasError('lastName', 'required')">Last name name is <strong>required</strong></mat-error>
+      </mat-form-field>
+
+      <!-- Năm sinh -->
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Date of Birth" formControlName="dateOfBirth" [(ngModel)]="dateOfBirth">
+      </mat-form-field>
+
+      <!-- Số điện thoại -->
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Phone Number" formControlName="phoneNumber" [(ngModel)]="phoneNumber">
+      </mat-form-field>
+
+      <!-- Địa chỉ -->
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Địa chỉ" formControlName="address" [(ngModel)]="address">
+      </mat-form-field>
+
+      <!-- Tên Cha -->
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Tên Thánh, Họ và tên Cha" formControlName="fullNameDad" [(ngModel)]="fullNameDad">
+      </mat-form-field>
+
+      <!-- Số điện thoại Cha -->
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Số điện thoại Cha" formControlName="phoneNumberDad" [(ngModel)]="phoneNumberDad">
+      </mat-form-field>
+
+      <!-- tên mẹ -->
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Tên Thánh, Họ và tên Mẹ" formControlName="fullNameMom" [(ngModel)]="fullNameMom">
+      </mat-form-field>
+
+      <!-- Số điện thoại mẹ -->
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Số điện thoại Mẹ" formControlName="phoneNumberMom" [(ngModel)]="phoneNumberMom">
+      </mat-form-field>
+
+      <!-- Giáo xứ -->
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Giáo xứ" formControlName="parish" [(ngModel)]="parish">
+      </mat-form-field>
+
+      <!-- Khu họ -->
+      <mat-form-field class="full-width">
+        <input matInput placeholder="Khu họ" formControlName="province" [(ngModel)]="province">
+      </mat-form-field>
+    </div>
+    <div class="show-info d-flex justify-content-center" (click)="alterDescriptionText()">
+      {{ showShortDesciption ? 'show more': 'show less' }}
+    </div>
+    <button mat-raised-button color="primary" type="submit" class="mb-2 mr-2" [disabled]="formGroup.invalid">Save</button>
+    <button mat-raised-button (click)="onCancel()">Cancel</button>
+  </form>
+</div>
+
+<!-- <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" formControlName="username" class="form-control"
+      [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+    <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+      <div *ngIf="f.username.errors.required">Username is required</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" formControlName="password" class="form-control"
+      [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+      <div *ngIf="f.password.errors.required">Password is required</div>
+    </div>
+  </div>
+</form> -->
