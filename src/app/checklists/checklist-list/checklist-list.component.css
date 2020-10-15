@@ -1,3 +1,19 @@
+.done {
+	opacity: 0.5;
+}
+
+.delete {
+	margin-left: 10px;
+}
+
+.check-list__avt {
+	flex-shrink: 0;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
 @media only screen and (max-width: 425px) {
 	#check-list {
 		position: relative;

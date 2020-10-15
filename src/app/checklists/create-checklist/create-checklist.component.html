@@ -34,7 +34,7 @@
 <mat-nav-list>
   <h3 mat-subheader>Unchecked items</h3>
   <mat-list-item *ngFor="let item of getUncheckedItems()" (click)="onCheck(item)">
-    <img matListAvatar src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="...">
+    <img matListAvatar [src]="item.image || '/assets/image/default-user-image.png'" alt="...">
     <a matLine>{{ item.name }}</a>
     <!-- <mat-icon [ngSwitch]="item.status">
       <span *ngSwitchCase="1">check_box</span>
@@ -45,7 +45,7 @@
   </mat-list-item>
   <h3 mat-subheader>Checked items</h3>
   <mat-list-item *ngFor="let item of getCheckedItems()" (click)="onCheck(item)">
-    <img matListAvatar src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="...">
+    <img matListAvatar [src]="item.image || '/assets/image/default-user-image.png'" alt="...">
     <a matLine>{{ item.name }}</a>
   </mat-list-item>
 </mat-nav-list>

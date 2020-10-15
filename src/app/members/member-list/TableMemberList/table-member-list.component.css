@@ -1,0 +1,27 @@
+table {
+	width: 100%;
+}
+
+.table-bordered td, .table-bordered th {
+	border: none;
+	text-align: center;
+}
+
+.done {
+	opacity: 0.5;
+}
+
+.check-list__avt {
+	flex-shrink: 0;
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+.table-bordered td .material-icons {
+	cursor: pointer;
+}
+
+.table-bordered td.fullname {
+	text-align: start;
+}

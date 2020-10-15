@@ -13,12 +13,14 @@ export class UpdateMemberComponent implements OnInit {
   prefixName:'';
   firstName:'';
   lastName:'';
-  id:''
+  id:'';
+  phoneNumber: '';
+  dateOfBirth: ''
 
   constructor(
     private formBuilder: FormBuilder,
     private memberService: MemberService,
-    private router: Router, 
+    private router: Router,
     private route: ActivatedRoute) {
 
   }
@@ -26,11 +28,22 @@ export class UpdateMemberComponent implements OnInit {
     this.formGroup = this.formBuilder.group({
       prefixName: ['', Validators.required],
       firstName: ['', Validators.required],
-      lastName: ['', Validators.required]
+      lastName: ['', Validators.required],
+      dateOfBirth: '',
+      phoneNumber: '',
+      address: '',
+      fullNameDad: '',
+      phoneNumberDad: '',
+      fullNameMom: '',
+      phoneNumberMom: '',
+      parish: '',
+      province: ''
     });
     this.prefixName = this.route.snapshot.params['prefixName'];
     this.firstName = this.route.snapshot.params['firstName'];
     this.lastName = this.route.snapshot.params['lastName'];
+    this.phoneNumber = this.route.snapshot.params['phoneNumber'];
+    this.dateOfBirth = this.route.snapshot.params['dateOfBirth'];
     this.id = this.route.snapshot.params['id'];
   }
 
@@ -42,7 +55,7 @@ export class UpdateMemberComponent implements OnInit {
     let  { value } = this.formGroup;
     value.id = this.id;
     console.log(value,"zzzz");
-    
+
     this.memberService.updateMember(value)
       .then(data => {
         console.log(data, "update");

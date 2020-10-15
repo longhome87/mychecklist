@@ -10,9 +10,11 @@ import { MemberService } from 'src/app/_firebases/member.service';
   templateUrl: './member-list.component.html',
   styleUrls: ['./member-list.component.css']
 })
+
 export class MemberListComponent implements OnInit {
-  memberList = [];
-  listChecked = []
+  memberList : Array<IMember>;
+  listChecked = [];
+  viewTable = false;
 
   constructor(
     private router: Router,
@@ -36,23 +38,51 @@ export class MemberListComponent implements OnInit {
       doc.map(data => {
         let memberItem: any = data.payload.doc.data();
         memberItem.isChecked = false;
+        if (memberItem.dateOfBirth === undefined) {
+          memberItem.dateOfBirth = null;
+        }
+        if (memberItem.phoneNumber === undefined) {
+          memberItem.phoneNumber = null;
+        }
+        if (memberItem.fullNameDad === undefined) {
+          memberItem.fullnameDad = null;
+        }
+        if (memberItem.phoneNumberDad === undefined) {
+          memberItem.phoneNumberDad = null;
+        }
+        if (memberItem.fullNameMom === undefined) {
+          memberItem.fullnameMom = null;
+        }
+        if (memberItem.phoneNumberMom === undefined) {
+          memberItem.phoneNumberMom = null;
+        }
+        if (memberItem.parish === undefined) {
+          memberItem.parish = null;
+        }
+        if (memberItem.province === undefined) {
+          memberItem.province = null;
+        }
+        if (memberItem.address === undefined) {
+          memberItem.address = null;
+        }
         memberItem.id = data.payload.doc.id;
         this.memberList.push(memberItem);
       });
+      console.log(this.memberList, "memberList");
+
       this.memberList.sort(this.sortService.sortByFirstName);
       });
   }
 
   createNew() {
     console.log('created new');
-    this.router.navigate(['/members/create']);
+    this.router.navigate(['/members/form-member']);
   }
 
   update(item) {
     console.log('update', item);
     // this.router.navigate(['/members/update']);
-    const { prefixName, firstName, lastName, id } = item
-    this.router.navigate(['/members/update', {id, prefixName, firstName, lastName}]);
+    this.router.navigate(['/members/form-member', {id: item.id}]);
   }
 
   checkList(item) {
@@ -75,7 +105,7 @@ export class MemberListComponent implements OnInit {
     this.listChecked.forEach( listId => {
       this.memberService.deleteMember(listId)
       .then(data => {
-        console.log("done");       
+        console.log("done");
       })
       .catch(error => {
         console.log(error);
@@ -84,13 +114,7 @@ export class MemberListComponent implements OnInit {
     this.listChecked = [];
   }
 
-  deleteMember(Id) {
-      this.memberService.deleteMember(Id)
-      .then(data => {
-        console.log("done");       
-      })
-      .catch(error => {
-        console.log(error);
-      });
+  handlerChangeView() {
+    this.viewTable = !this.viewTable;
   }
 }
