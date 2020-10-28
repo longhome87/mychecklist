@@ -1,0 +1,9 @@
+.alert {
+  transition: 1s;
+  transition-timing-function: linear;
+  position: absolute;
+  right: 50%;
+  top: 10px;
+  transform: translateX(50%);
+  border-radius: 0px;
+}

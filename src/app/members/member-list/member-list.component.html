@@ -1,18 +1,20 @@
 <div class="member-list">
-  <div class="member-list__header">
-    <h2>Member List</h2>
-    <mat-slide-toggle color="primary" (click)="handlerChangeView()">
-      Change view
-    </mat-slide-toggle>
-  </div>
-  <div class="btn_list">
-    <button mat-raised-button color="primary" type="button" class="mb-2" (click)="createNew()">
-      Create New
-    </button>
-    <button mat-raised-button color="primary" type="button" class="mb-2" [disabled]="listChecked.length === 0"
-      (click)="deleteMembers()">
-      Delete items
-    </button>
+  <div class="member-list__header-fix">
+    <div class="member-list__header">
+      <h2>Member List</h2>
+      <!-- <mat-slide-toggle color="primary" (click)="handlerChangeView()">
+        Change view
+      </mat-slide-toggle> -->
+    </div>
+    <div class="btn_list">
+      <button mat-raised-button color="primary" type="button" class="mb-2" (click)="createNew()">
+        Create New
+      </button>
+      <button mat-raised-button color="primary" type="button" class="mb-2" [disabled]="listChecked.length === 0"
+        (click)="deleteMembers()">
+        Delete items
+      </button>
+    </div>
   </div>
   <app-table-member-list
     *ngIf="viewTable; else viewList"

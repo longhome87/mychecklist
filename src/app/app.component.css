@@ -1,0 +1,21 @@
+#container {
+  display: block;
+  height: auto;
+  position: relative;
+}
+
+#container #content {
+  padding-top: 70px;
+}
+
+@media screen and (min-width: 1024px) {
+  #container {
+    display: grid;
+    grid-template-columns: 70px auto;
+    height: 100%;
+  }
+
+  #container #content {
+    padding-top: 16px;
+  }
+}

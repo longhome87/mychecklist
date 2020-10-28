@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     console.log('logging');
-    
+
     this.submitted = true;
 
     // stop here if form is invalid
@@ -55,11 +55,15 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.authenticationService.login(this.f.username.value, this.f.password.value)
       .then(data => {
-        this.router.navigate([this.returnUrl]);
-      })
-      .catch(error => {
-        this.alertService.error(error);
+        console.log(this.router);
+        if (data) {
+          this.router.navigate([this.returnUrl]);
+          this.alertService.success('Login successfully!!!')
+          return;
+        }
         this.loading = false;
-      });
+        this.loginForm.reset()
+        this.alertService.error('Username or Password wrong, Login again please');
+      })
   }
 }

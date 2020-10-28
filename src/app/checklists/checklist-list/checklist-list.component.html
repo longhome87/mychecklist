@@ -1,22 +1,26 @@
-<h2>My Check List</h2>
-<button
-  mat-raised-button
-  color="primary"
-  type="button"
-  class="mb-2"
-  (click)="createNewChecklist()"
->Create New
-</button>
+<div class="check-list__header">
+  <h2 class="check-list__title">My Check List</h2>
+  <div>
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      class="mb-2"
+      (click)="createNewChecklist()"
+    >Create New
+    </button>
 
-<button
-  mat-raised-button
-  color="primary"
-  type="button"
-  class="mb-2 delete"
-  (click)="DeleteDate()"
-  [disabled]="listDay.length === 0"
->Delete Date
-</button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      class="mb-2 delete"
+      (click)="DeleteDate()"
+      [disabled]="listDay.length === 0"
+    >Delete Date
+    </button>
+  </div>
+</div>
 
 <div id="check-list">
   <table class="table table-striped table-bordered table-hover">
@@ -26,7 +30,7 @@
         <th scope="col" class="text-center check-list__name" style="min-width: 200px">Name</th>
         <th
           scope="col"
-          class="text-center"
+          class="text-center date"
           *ngFor="let checkDate of checkedDateList"
           (click)="chooseDateDel(checkDate)"
           [class.done] = "checkDate.checked"
@@ -43,7 +47,7 @@
           <img
           class="check-list__avt"
           [src]="member.image"
-          alt="...">
+          [alt]="member.firstName">
           {{member.lastName}} {{member.firstName}}
         </td>
         <td
