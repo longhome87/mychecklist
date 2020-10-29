@@ -19,7 +19,8 @@ export class GridMemberListComponent implements OnInit {
 
   ngOnInit() {}
 
-  checkItem(item) {
+  checkItem($event, item) {
+    $event.stopPropagation();
     this.checkList.emit(item);
   }
 

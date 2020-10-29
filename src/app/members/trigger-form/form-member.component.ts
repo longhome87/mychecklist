@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MemberService } from 'src/app/_firebases/member.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertService } from '../../_services';
 
 @Component({
   selector: 'app-form-member',
@@ -33,7 +34,8 @@ export class FormMemberComponent implements OnInit {
     private formBuilder: FormBuilder,
     private memberService: MemberService,
     private route: ActivatedRoute,
-    private router: Router) {
+    private router: Router,
+    private alertService: AlertService,) {
   }
 
   ngOnInit() {
@@ -170,7 +172,7 @@ export class FormMemberComponent implements OnInit {
     let file = $event.target.files[0];
     let fileReader = new FileReader();
     if (file.size > 1000000) {
-      alert("Chọn lại ảnh, chọn ảnh dưới 1MB");
+      this.alertService.error('Chọn lại ảnh, chọn ảnh dưới 1MB');
       return;
     }
     fileReader.onloadend = function(e){

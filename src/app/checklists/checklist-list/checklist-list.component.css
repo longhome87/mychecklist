@@ -1,85 +1,405 @@
-.done {
-	opacity: 0.5;
+.check-list__header {
+	display: flex;
+	justify-content: space-between;
 }
 
-.delete {
+.text-center.date {
+	min-width: 55px;
+}
+
+.check-list__title {
+	font-size: 20px
+}
+
+button {
+	font-size: 12px;
+	padding: 0 12px;
+	line-height: 30px;
+}
+
+button.delete {
 	margin-left: 10px;
 }
 
 .check-list__avt {
 	flex-shrink: 0;
-	width: 40px;
-	height: 40px;
+	width: 35px;
+	height: 35px;
 	border-radius: 50%;
 	object-fit: cover;
 }
 
-@media only screen and (max-width: 425px) {
+#check-list {
+	position: relative;
+	width   : 1170px;
+	z-index : 1;
+	overflow: auto;
+}
+
+#check-list table {
+	width          : 100%;
+	margin         : auto;
+	border-collapse: separate;
+	border-spacing : 0;
+	font-size: 12px;
+}
+
+#check-list thead th{
+	padding: 10px;
+	position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
+/* #check-list th,
+#check-list td {
+	padding       : 5px 10px;
+	border        : 1px solid #f8f8f8;
+	background    : #fff;
+	vertical-align: top;
+} */
+
+/* #check-list thead {
+	position  : -webkit-sticky;
+	position  : sticky;
+	top       : 0;
+	z-index: 2;
+} */
+
+#check-list thead th.done {
+	opacity: 0.5;
+}
+
+/* safari and ios need the tfoot itself to be position:sticky also */
+/* #check-list tfoot,
+#check-list tfoot th,
+#check-list tfoot td {
+	position  : -webkit-sticky;
+	position  : sticky;
+	bottom    : 0;
+	background: midnightblue;
+	color     : #fff;
+	z-index   : 4;
+} */
+
+/* a:focus {
+	background: red;
+} */
+
+/* testing links*/
+
+table thead .text-center.check-list__name {
+	background  : #343a40;
+	border-color: #454d55;
+}
+
+thead .check-list__name {
+	position     : -webkit-sticky;
+	position     : sticky;
+	left         : 0;
+	z-index      : 5;
+	/* background   : darkgray; */
+	border-bottom: 1px solid #dee2e6;
+}
+
+tbody .check-list__name {
+	position     : -webkit-sticky;
+	position     : sticky;
+	left         : 0;
+	z-index      : 2;
+	background   : darkgray;
+	border-bottom: 1px solid #dee2e6;
+}
+
+/* thead th:first-child,
+tfoot th:first-child {
+	z-index: 5;
+} */
+
+@media only screen and (min-width: 1024px) {
+	.check-list__header {
+		display: block;
+	}
+}
+
+@media only screen and (min-width: 1280px) {
 	#check-list {
-		position: relative;
-		width   : 100%;
-		height  : 500px;
-		z-index : 1;
-		overflow: auto;
+		width   : 1333px;
 	}
+}
 
-	#check-list table {
-		width          : 100%;
-		margin         : auto;
-		border-collapse: separate;
-		border-spacing : 0;
+@media only screen and (min-width: 1440px) {
+	#check-list {
+		width   : 1350px;
 	}
+}
 
-	.check-list th,
-	.check-list td {
-		padding       : 5px 10px;
-		border        : 1px solid #f8f8f8;
-		background    : #fff;
-		vertical-align: top;
+@media only screen and (min-height: 320px) {
+	#check-list {
+		height: 200px;
 	}
+}
 
-	.check-list thead th {
-		background: lightseagreen;
-		color     : #fff;
-		position  : -webkit-sticky;
-		position  : sticky;
-		top       : 0;
+@media only screen and (min-height: 345px) {
+	#check-list {
+		height: 235px;
 	}
+}
 
-	/* safari and ios need the tfoot itself to be position:sticky also */
-	.check-list tfoot,
-	.check-list tfoot th,
-	.check-list tfoot td {
-		position  : -webkit-sticky;
-		position  : sticky;
-		bottom    : 0;
-		background: midnightblue;
-		color     : #fff;
-		z-index   : 4;
+@media only screen and (min-height: 360px) {
+	#check-list {
+		height: 245px;
 	}
+}
 
-	a:focus {
-		background: red;
+@media only screen and (min-height: 384px) {
+	#check-list {
+		height: 275px;
 	}
+}
 
-	/* testing links*/
-
-	tr .text-center.check-list__name {
-		background  : #343a40;
-		border-color: #454d55;
+@media only screen and (min-height: 390px) {
+	#check-list {
+		height: 280px;
 	}
+}
 
-	tr .check-list__name {
-		position     : -webkit-sticky;
-		position     : sticky;
-		left         : 0;
-		z-index      : 2;
-		background   : darkgray;
-		border-bottom: 1px solid #dee2e6;
+@media only screen and (min-height: 400px) {
+	#check-list {
+		height: 305px;
 	}
+}
 
-	thead th:first-child,
-	tfoot th:first-child {
-		z-index: 5;
+@media only screen and (min-height: 450px) {
+	#check-list {
+		height: 340px;
+	}
+}
+
+@media only screen and (min-height: 475px) {
+	#check-list {
+		height: 365px;
+	}
+}
+
+@media only screen and (min-height: 500px) {
+	#check-list {
+		height: 390px;
+	}
+}
+
+@media only screen and (min-height: 525px) {
+	#check-list {
+		height: 415px;
+	}
+}
+
+@media only screen and (min-height: 550px) {
+	#check-list {
+		height: 440px;
+	}
+}
+
+@media only screen and (min-height: 568px) {
+	#check-list {
+		height: 455px;
+	}
+}
+
+@media only screen and (min-height: 575px) {
+	#check-list {
+		height: 465px;
+	}
+}
+
+@media only screen and (min-height: 640px) {
+	#check-list {
+		height: 535px;
+	}
+}
+
+@media only screen and (min-height: 667px) {
+	#check-list {
+		height: 553px;
+	}
+}
+
+@media only screen and (min-height: 720px) {
+	#check-list {
+		height: 610px;
+	}
+}
+
+@media only screen and (min-height: 732px) {
+	#check-list {
+		height: 620px;
+	}
+}
+
+@media only screen and (min-height: 747px) {
+	#check-list {
+		height: 630px;
+	}
+}
+
+@media only screen and (min-height: 760px) {
+	#check-list {
+		height: 645px;
+	}
+}
+
+@media only screen and (min-height: 770px) {
+	#check-list {
+		height: 660px;
+	}
+}
+
+@media only screen and (min-height: 800px) {
+	#check-list {
+		height: 690px;
+	}
+}
+
+@media only screen and (min-height: 854px) {
+	#check-list {
+		height: 735px;
+	}
+}
+
+@media only screen and (min-height: 869px) {
+	#check-list {
+		height: 755px;
+	}
+}
+
+@media only screen and (min-height: 883px) {
+	#check-list {
+		height: 770px;
+	}
+}
+
+@media only screen and (min-height: 896px) {
+	#check-list {
+		height: 790px;
+	}
+}
+
+@media only screen and (min-height: 910px) {
+	#check-list {
+		height: 800px;
+	}
+}
+
+@media only screen and (min-height: 920px) {
+	#check-list {
+		height: 810px;
+	}
+}
+
+@media only screen and (min-height: 930px) {
+	#check-list {
+		height: 820px;
+	}
+}
+
+@media only screen and (min-height: 940px) {
+	#check-list {
+		height: 830px;
+	}
+}
+
+@media only screen and (min-height: 950px) {
+	#check-list {
+		height: 840px;
+	}
+}
+
+@media only screen and (min-height: 960px) {
+	#check-list {
+		height: 850px;
+	}
+}
+
+@media only screen and (min-height: 970px) {
+	#check-list {
+		height: 860px;
+	}
+}
+
+@media only screen and (min-height: 980px) {
+	#check-list {
+		height: 870px;
+	}
+}
+
+@media only screen and (min-height: 990px) {
+	#check-list {
+		height: 880px;
+	}
+}
+
+@media only screen and (min-height: 1000px) {
+	#check-list {
+		height: 890px;
+	}
+}
+
+@media only screen and (min-height: 1010px) {
+	#check-list {
+		height: 900px;
+	}
+}
+
+@media only screen and (min-height: 1020px) {
+	#check-list {
+		height: 910px;
+	}
+}
+
+@media only screen and (min-height: 1030px) {
+	#check-list {
+		height: 920px;
+	}
+}
+
+@media only screen and (min-height: 1040px) {
+	#check-list {
+		height: 930px;
+	}
+}
+
+@media only screen and (min-height: 1050px) {
+	#check-list {
+		height: 940px;
+	}
+}
+
+@media only screen and (min-height: 1060px) {
+	#check-list {
+		height: 950px;
+	}
+}
+
+@media only screen and (min-height: 1070px) {
+	#check-list {
+		height: 960px;
+	}
+}
+
+@media only screen and (min-height: 1080px) {
+	#check-list {
+		height: 970px;
+	}
+}
+
+@media only screen and (min-height: 1090px) {
+	#check-list {
+		height: 980px;
+	}
+}
+
+@media only screen and (min-height: 1100px) {
+	#check-list {
+		height: 990px;
 	}
 }
