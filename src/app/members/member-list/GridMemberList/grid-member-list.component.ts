@@ -13,6 +13,7 @@ import { MemberService } from 'src/app/_firebases/member.service';
 export class GridMemberListComponent implements OnInit {
 
   @Input() memberList: Array<IMember>;
+  @Input() search: boolean;
   @Output() checkList = new EventEmitter();
   @Output() editItem = new EventEmitter();
   constructor() { }

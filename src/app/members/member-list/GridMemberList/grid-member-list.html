@@ -1,5 +1,4 @@
-<div class="row grid-memberlist">
-  <div></div>
+<div class="row grid-memberlist" [class.search]="search">
   <div class="memberList__item col-xl-3 col-lg-4 col-md-6 cards"
     *ngFor="let item of memberList; let i = index">
       <div class="content" (click)="checkItem($event, item)" [class.done]="item.isChecked">

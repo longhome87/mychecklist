@@ -13,8 +13,11 @@ import { MemberService } from 'src/app/_firebases/member.service';
 
 export class MemberListComponent implements OnInit {
   memberList : Array<IMember>;
+  memberListAPI: Array<IMember>;
   listChecked = [];
   viewTable = false;
+  checkSearch = false;
+  search = '';
 
   constructor(
     private router: Router,
@@ -35,6 +38,7 @@ export class MemberListComponent implements OnInit {
     this.memberService.getMembers()
     .subscribe(doc => {
       this.memberList=[];
+      this.memberListAPI=[];
       doc.map(data => {
         let memberItem: any = data.payload.doc.data();
         memberItem.isChecked = false;
@@ -69,8 +73,8 @@ export class MemberListComponent implements OnInit {
         this.memberList.push(memberItem);
       });
       console.log(this.memberList, "memberList");
-
       this.memberList.sort(this.sortService.sortByFirstName);
+      this.memberListAPI = this.memberList;
       });
   }
 
@@ -116,5 +120,98 @@ export class MemberListComponent implements OnInit {
 
   handlerChangeView() {
     this.viewTable = !this.viewTable;
+  }
+
+  searchInput() {
+    this.checkSearch = !this.checkSearch;
+  }
+
+  clearData() {
+    this.search = '';
+    this.filterName('');
+  }
+
+  clearAccent(str) {
+    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+    str = str.replace(/đ/g, "d");
+    str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
+    str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
+    str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
+    str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
+    str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
+    str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
+    str = str.replace(/Đ/g, "D");
+    return str;
+}
+
+  filterName(searchType) {
+    const { memberListAPI } = this;
+    let self = this;
+    if (searchType) {
+      // filter firsName
+      let filterFirstName = memberListAPI.filter(item =>
+          item.firstName.toLowerCase().includes(searchType.toLowerCase())
+          )
+      //filter LastName
+      let lastName = memberListAPI.filter(item =>
+          item.lastName.toLowerCase().includes(searchType.toLowerCase())
+          )
+      //filter date of birth
+      let filterBirthday = memberListAPI.filter(item =>
+          item.dateOfBirth.toLowerCase().includes(searchType.toLowerCase())
+          )
+      // filter PrefixName
+      let filterPrefixName = memberListAPI.filter(item =>
+        self.clearAccent(item.prefixName).toLowerCase().includes(searchType.toLowerCase())
+          )
+      //filter Number phone
+      let filterPhone = memberListAPI.filter(item =>
+          item.phoneNumber.toLowerCase().includes(searchType.toLowerCase())
+          )
+      //filter Name Dady
+      let filterNameDad = memberListAPI.filter(item =>
+          item.fullNameDad.toLowerCase().includes(searchType.toLowerCase())
+          )
+      // filter Name Mom
+      let filterNameMom = memberListAPI.filter(item =>
+          item.fullNameMom.toLowerCase().includes(searchType.toLowerCase())
+          )
+      //Number phone Dady
+      let filterPhoneDady = memberListAPI.filter(item =>
+          item.phoneNumberDad.toLowerCase().includes(searchType.toLowerCase())
+          )
+      // Number phone Mommy
+      let filterPhoneMomy = memberListAPI.filter(item =>
+          item.phoneNumberMom.toLowerCase().includes(searchType.toLowerCase())
+          )
+        let filterMember = [
+          ...filterFirstName,
+          ...lastName,
+          ...filterBirthday,
+          ...filterPrefixName,
+          ...filterPhone,
+          ...filterNameDad,
+          ...filterNameMom,
+          ...filterPhoneDady,
+          ...filterPhoneMomy
+        ]
+        let filterMemberList = [];
+        filterMember.map(member => {
+          if(!filterMemberList.includes(member)) {
+            filterMemberList.push(member);
+            return;
+          }
+          return;
+        })
+        this.memberList = filterMemberList;
+        this.memberList.sort(this.sortService.sortByFirstName);
+        return;
+    }
+    this.memberList = this.memberListAPI;
   }
 }

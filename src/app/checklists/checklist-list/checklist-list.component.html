@@ -46,7 +46,7 @@
         <td class="check-list__name">
           <img
           class="check-list__avt"
-          [src]="member.image"
+          [src]="member.image || '/assets/image/default-user-image.png'"
           [alt]="member.firstName">
           {{member.lastName}} {{member.firstName}}
         </td>
