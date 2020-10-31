@@ -45,3 +45,8 @@ debug.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Firebase deploy
+.firebaserc
+firebase.json
+.firebase/hosting.ZGlzdA.cache
