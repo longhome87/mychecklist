@@ -1,8 +1,7 @@
-<div class="row grid-memberlist">
-  <div></div>
+<div class="row grid-memberlist" [class.search]="search">
   <div class="memberList__item col-xl-3 col-lg-4 col-md-6 cards"
     *ngFor="let item of memberList; let i = index">
-      <div class="content" (click)="checkItem($event, item)" [class.done]="item.isChecked">
+      <div class="content" (dblclick)="change($event, i)" (click)="checkItem($event, item)" [class.done]="item.isChecked">
         <div class="cardFront">
           <mat-card class="example-card">
             <div class="image">
@@ -32,9 +31,9 @@
             </mat-card-content>
             <mat-card-actions  class="d-flex justify-content-between align-items-center">
               <button mat-button (click)="editMember($event, item)">Update</button>
-              <span class="more-details" (click)="change($event, i)">
+              <!-- <span class="more-details" (click)="change($event, i)">
                 More details
-              </span>
+              </span> -->
             </mat-card-actions>
           </mat-card>
         </div>
@@ -74,9 +73,9 @@
             </mat-card-content>
             <mat-card-actions class="d-flex justify-content-between align-items-center">
               <button mat-button (click)="editMember($event, item)">Update</button>
-              <span class="back" (click)="change($event, i)">
+              <!-- <span class="back" (click)="change($event, i)">
                 Back
-              </span>
+              </span> -->
             </mat-card-actions>
           </mat-card>
         </div>

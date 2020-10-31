@@ -31,7 +31,6 @@ button.delete {
 
 #check-list {
 	position: relative;
-	width   : 1170px;
 	z-index : 1;
 	overflow: auto;
 }
@@ -117,14 +116,29 @@ tfoot th:first-child {
 } */
 
 @media only screen and (min-width: 1024px) {
+	.check-list__title {
+		font-size: 2rem
+	}
+
+	button {
+		font-size: 14px;
+		padding: 0 14px;
+		line-height: 35px;
+	}
+
 	.check-list__header {
 		display: block;
+		width   : 1170px;
+	}
+
+	#check-list table {
+		font-size: 14px;
 	}
 }
 
 @media only screen and (min-width: 1280px) {
 	#check-list {
-		width   : 1333px;
+		width   : 1180px;
 	}
 }
 

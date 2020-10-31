@@ -2,22 +2,22 @@
 	margin-top: 80px
 }
 
-.memberList__item {
-	margin-top: 10px;
+.search {
+	margin-top: 90px;
 }
 
-.done {
-	border: 1px solid red;
+.memberList__item {
+	margin-top: 10px;
 }
 
 .image {
 	width: 100%;
 	height: 250px;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 }
 
-.grid-member__name {
-	min-height: 50px;
+.done {
+	border: 1px solid red;
 }
 
 .mat-card-image {
@@ -25,13 +25,20 @@
 	height: 100%;
 	margin: 0;
 }
-
 .red-color {
 	color: red;
 	font-style: italic;
 }
 
-.mat-card-image:first-child {
+.grid-member__name {
+	min-height: 25px;
+}
+
+p {
+	 margin-bottom: 7px;
+}
+
+ .mat-card-image:first-child {
 	margin-top: 0px
 }
 .cards {
@@ -40,11 +47,7 @@
 	-moz-perspective: 1000px;
 	-o-perspective: 1000px;
 	-ms-perspective: 1000px;
-	font-size:25px;
-	height: 510px;
-}
-.cardBack .mat-card-content {
-	padding-bottom: 47px;
+	height: 470px;
 }
 
 .cards .content {
@@ -160,9 +163,19 @@
 	font-weight: 200;
 	font-size: 15px;
 }
-
 @media only screen and (min-width: 1024px) {
-	.grid-memberlist {
-		margin-top: 95px
+	.search {
+		margin-top: 102px;
+	}
+	.cards {
+		height: 490px;
+	}
+
+	.image {
+		margin-bottom: 20px;
+	}
+
+	.grid-member__name {
+		min-height: 50px;
 	}
 }

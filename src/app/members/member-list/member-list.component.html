@@ -5,15 +5,27 @@
       <!-- <mat-slide-toggle color="primary" (click)="handlerChangeView()">
         Change view
       </mat-slide-toggle> -->
+      <mat-slide-toggle color="primary" (click)="searchInput()">
+        Search
+      </mat-slide-toggle>
     </div>
-    <div class="btn_list">
+    <div class="btn_list" *ngIf="!checkSearch">
       <button mat-raised-button color="primary" type="button" class="mb-2" (click)="createNew()">
         Create New
       </button>
       <button mat-raised-button color="primary" type="button" class="mb-2" [disabled]="listChecked.length === 0"
         (click)="deleteMembers()">
-        Delete items
+        Delete Members
       </button>
+    </div>
+    <div class="memberlist__search" *ngIf="checkSearch">
+      <mat-form-field class="example-form-field">
+        <mat-label> Search </mat-label>
+        <input matInput type="text" [(ngModel)]="search" (ngModelChange)="filterName($event)">
+        <button mat-button *ngIf="search" matSuffix mat-icon-button aria-label="Clear" (click)="clearData()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
     </div>
   </div>
   <app-table-member-list
@@ -27,6 +39,7 @@
   <ng-template #viewList>
     <app-grid-member-list
       [memberList]="memberList"
+      [search]="checkSearch"
       (checkList)="checkList($event)"
       (editItem)="update($event)"
     >
