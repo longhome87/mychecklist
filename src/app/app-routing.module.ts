@@ -9,7 +9,6 @@ import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './_guards';
 import { MemberListComponent } from './members/member-list/member-list.component';
 import { FormMemberComponent } from './members/trigger-form/form-member.component';
-import { UpdateMemberComponent } from './members/update-member/update-member.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },

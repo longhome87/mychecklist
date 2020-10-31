@@ -29,7 +29,6 @@ import { MemberListComponent } from './members/member-list/member-list.component
 import { GridMemberListComponent } from './members/member-list/GridMemberList/grid-member-list.component';
 import { TableMemberListComponent } from './members/member-list/TableMemberList/table-member-list.component';
 import { FormMemberComponent } from './members/trigger-form/form-member.component';
-import { UpdateMemberComponent } from './members/update-member/update-member.component';
 import { AppMaterialModule } from './app-material.module';
 import { DatePipe } from '@angular/common';
 
@@ -47,8 +46,7 @@ import { DatePipe } from '@angular/common';
     MemberListComponent,
     TableMemberListComponent,
     GridMemberListComponent,
-    FormMemberComponent,
-    UpdateMemberComponent
+    FormMemberComponent
   ],
   imports: [
     BrowserModule,
