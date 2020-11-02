@@ -13,11 +13,6 @@ import { ChecklistService } from 'src/app/_firebases/checklist.service';
   styleUrls: ['./create-checklist.component.css']
 })
 export class CreateChecklistComponent implements OnInit {
-  checklist: IChecklist;
-  checklistItemList: Array<IChecklistItem> = [];
-  memberList: Array<IMember> = [];
-  selectedDate: Date = new Date();
-
   constructor(
     private route: ActivatedRoute,
     private sortService: SortService,
@@ -27,6 +22,11 @@ export class CreateChecklistComponent implements OnInit {
     private router: Router) {
 
   }
+
+  checklist: IChecklist;
+  checklistItemList: Array<IChecklistItem> = [];
+  memberList: Array<IMember> = [];
+  selectedDate: Date = new Date();
 
   ngOnInit() {
     this.memberService.getMembers()
@@ -51,6 +51,12 @@ export class CreateChecklistComponent implements OnInit {
     //   console.log(data);
     //   console.log(data['checklist']);
     // });
+  }
+
+  FilterDate = (d: Date | null): boolean => {
+    const day = (d || new Date()).getDay();
+    // Selected sunday.
+    return day == 0 ;
   }
 
   onCheck(checklistItem) {

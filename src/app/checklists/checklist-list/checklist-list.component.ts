@@ -19,6 +19,7 @@ export class ChecklistListComponent implements OnInit {
   memberList: Array<IMember>;
   listDay = [];
   checkedDateList = [];
+  progress = true;
 
   constructor(
     private router: Router,
@@ -71,6 +72,7 @@ export class ChecklistListComponent implements OnInit {
           });
           this.memberList.sort(this.sortService.sortByFirstName);
         }
+        this.progress = false;
       },
         (err: Response) => {
           // Log error
@@ -124,27 +126,33 @@ export class ChecklistListComponent implements OnInit {
 
   /// edit stick
   changeStick(member, checkDate) {
-    const { checklistList } = this;
-    let setMember = {
-      id: member.id,
-      firstName: member.firstName,
-      lastName: member.lastName,
-      prefixName: member.prefixName,
-    }
-    const dateIsCheck = checklistList.filter(date => date.id === checkDate.idDate);
+    const { checklistList, datePipe } = this;
+    let currentDay = datePipe.transform(new Date(), 'yyyy-MM-dd')
+    let checkDay = datePipe.transform(checkDate.date, 'yyyy-MM-dd')
+    if (currentDay === checkDay ) {
+      let setMember = {
+        id: member.id,
+        firstName: member.firstName,
+        lastName: member.lastName,
+        prefixName: member.prefixName,
+      }
+      const dateIsCheck = checklistList.filter(date => date.id === checkDate.idDate);
 
-    let listMember = dateIsCheck[0].members;
-    const checkMember = listMember.filter(memberIsCheck => memberIsCheck.id === setMember.id);
-    if (checkMember.length === 0) {
-      listMember.push(member);
-    } else {
-      listMember = listMember.filter(memberIsCheck => memberIsCheck.id !== setMember.id);
+      let listMember = dateIsCheck[0].members;
+      const checkMember = listMember.filter(memberIsCheck => memberIsCheck.id === setMember.id);
+      if (checkMember.length === 0) {
+        listMember.push(member);
+      } else {
+        listMember = listMember.filter(memberIsCheck => memberIsCheck.id !== setMember.id);
+      }
+      this.checklist = {
+        id: checkDate.idDate,
+        date: checkDay,
+        members: listMember
+      }
+      this.checklistService.updateChecklist(this.checklist);
+      return;
     }
-    this.checklist = {
-      id: checkDate.idDate,
-      date: this.datePipe.transform(checkDate.date, 'yyyy-MM-dd'),
-      members: listMember
-    }
-    this.checklistService.updateChecklist(this.checklist);
+    return;
   }
 }

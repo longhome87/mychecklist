@@ -11,14 +11,43 @@ import { MemberListComponent } from './members/member-list/member-list.component
 import { FormMemberComponent } from './members/trigger-form/form-member.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'customers', component: CustomerListComponent },
-  { path: 'add', component: CreateCustomerComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'members', component: MemberListComponent, canActivate: [AuthGuard] },
-  { path: 'checklists', loadChildren: './checklists/checklists.module#ChecklistsModule', canActivate: [AuthGuard] },
-  { path: 'members/form-member', component: FormMemberComponent },
+  {
+    path: '', component: HomeComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'customers',
+    component: CustomerListComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'add',
+    component: CreateCustomerComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'register',
+    component: RegisterComponent
+  },
+  {
+    path: 'members',
+    component: MemberListComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'checklists',
+    loadChildren: './checklists/checklists.module#ChecklistsModule',
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'members/form-member',
+    component: FormMemberComponent,
+    canActivate: [AuthGuard]
+  },
 
   // otherwise redirect to home
   { path: '**', redirectTo: '' }

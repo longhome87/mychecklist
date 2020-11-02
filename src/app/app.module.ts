@@ -32,6 +32,7 @@ import { FormMemberComponent } from './members/trigger-form/form-member.componen
 import { AppMaterialModule } from './app-material.module';
 import { DatePipe } from '@angular/common';
 
+
 @NgModule({
   declarations: [
     AppComponent,
