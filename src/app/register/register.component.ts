@@ -49,7 +49,9 @@ export class RegisterComponent implements OnInit {
     }
 
     this.loading = true;
-    this.userService.createUser(this.registerForm.value)
+    let user = this.registerForm.value;
+    user.permission = 'CUSTOMER'
+    this.userService.createUser(user)
       .then(data => {
         console.log('create new user: ', data);
 

@@ -8,7 +8,9 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './_guards';
 import { MemberListComponent } from './members/member-list/member-list.component';
-import { FormMemberComponent } from './members/trigger-form/form-member.component';
+import { FormUpdateComponent } from './members/form-update/form-update.component';
+import { SettingsComponent } from './settings/settings.component'
+import { UsersComponent } from './users/users.component'
 
 const routes: Routes = [
   {
@@ -34,8 +36,18 @@ const routes: Routes = [
     component: RegisterComponent
   },
   {
+    path: 'settings',
+    component: SettingsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'members',
     component: MemberListComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'users',
+    component: UsersComponent,
     canActivate: [AuthGuard]
   },
   {
@@ -45,7 +57,7 @@ const routes: Routes = [
   },
   {
     path: 'members/form-member',
-    component: FormMemberComponent,
+    component: FormUpdateComponent,
     canActivate: [AuthGuard]
   },
 

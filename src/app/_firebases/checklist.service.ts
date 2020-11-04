@@ -33,6 +33,10 @@ export class ChecklistService extends FirebaseService {
     return this.update(this.dbPath, data.id, data);
   }
 
+  updateChecklistItem(data) {
+    return this.updateItem(this.dbPath, data.id, data);
+  }
+
   deleteChecklist(dataKey: string) {
     return this.delete(this.dbPath, dataKey);
   }

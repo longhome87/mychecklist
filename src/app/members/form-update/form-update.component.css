@@ -23,11 +23,18 @@ h2 {
 	width: 100%;
 }
 
-#upload__review {
+.image {
 	width: 150px;
 	height: 150px;
-	border-radius: 100px;
 	margin-bottom: 10px;
+	border-radius: 100px;
+	overflow: hidden;
+}
+
+#upload__review {
+	width: 100%;
+	height: 100%;
+	object-fit: cover
 }
 
 #avatar {
@@ -90,8 +97,7 @@ button {
 		line-height: 33px;
 		padding: 0 10px;
 	}
-
-	#upload__review {
+	.image {
 		width: 180px;
 		height: 180px;
 	}
@@ -125,7 +131,7 @@ button {
 		padding: 0 20px;
 	}
 
-	#upload__review {
+	.image {
 		width: 200px;
 		height: 200px;
 	}

@@ -29,14 +29,19 @@
         <i class="material-icons">people</i>
       </a>
     </li>
-    <li>
+    <li *ngIf="havePermission()">
       <a routerLink="/users" routerLinkActive="activated">
         <i class="material-icons">supervised_user_circle</i>
       </a>
     </li>
-    <li *ngIf="authenticationService.currentUserValue">
+    <!-- <li *ngIf="authenticationService.currentUserValue">
       <a (click)="logout()">
         <i class="material-icons">exit_to_app</i>
+      </a>
+    </li> -->
+    <li>
+      <a routerLink="/settings" routerLinkActive="activated">
+        <i class="material-icons">settings</i>
       </a>
     </li>
   </ul>

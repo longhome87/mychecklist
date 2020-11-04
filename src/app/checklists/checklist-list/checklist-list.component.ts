@@ -17,7 +17,7 @@ export class ChecklistListComponent implements OnInit {
   checklist: IChecklist;
   checklistList: Array<IChecklist>;
   memberList: Array<IMember>;
-  listDay = [];
+  chooseListDay = [];
   checkedDateList = [];
   progress = true;
 
@@ -32,17 +32,23 @@ export class ChecklistListComponent implements OnInit {
   ngOnInit() {
     const getChecklists = this.checklistService.getChecklists();
     const getMembers = this.memberService.getMembers();
+    // getChecklists.subscribe(doc => {
+    //   let array = [];
+    //   doc.map(data => {
+    //     array.push(data.payload.doc.data())
+    //   })
+    //   console.log(array, "ssss");
+    // })
+
     combineLatest<any>(
       getChecklists,
       getMembers
     )
       .subscribe(data => {
         // Get checklists data
-        console.log(data, "start");
-
         if (data[0] !== null) {
           this.checklistList = [];
-          data[0].map(docChangeAction => {;
+          data[0].map(docChangeAction => {
             let checklistItem: any = docChangeAction.payload.doc.data();
             checklistItem.id = docChangeAction.payload.doc.id;
             this.checklistList.push(checklistItem);
@@ -76,7 +82,7 @@ export class ChecklistListComponent implements OnInit {
       },
         (err: Response) => {
           // Log error
-          console.log(err);
+          console.log(err, "err");
           // const body = err.json();
           // // Display message
           // this.alertService.addAlert({ Type: 'danger', Dismissible: true, Message: 'An error occurred loading npi project setup data.' } as IAlert);
@@ -98,14 +104,14 @@ export class ChecklistListComponent implements OnInit {
   }
 
   DeleteDate(){
-    const { listDay, checklistList } = this;
+    const { chooseListDay, checklistList } = this;
+    const self = this;
     checklistList.forEach(itemCheckList => {
-      if (listDay.includes(itemCheckList.date)) {
+      if (chooseListDay.includes(itemCheckList.date)) {
         this.checklistService.deleteChecklist(itemCheckList.id);
       }
-      return;
     })
-    this.listDay = [];
+    this.chooseListDay = [];
   }
 
   chooseDateDel(itemDay) {
@@ -118,10 +124,10 @@ export class ChecklistListComponent implements OnInit {
       return ;
     });
 
-    if(this.listDay.includes(day)) {
-      return this.listDay = this.listDay.filter( date => date !== day);
+    if(this.chooseListDay.includes(day)) {
+      return this.chooseListDay = this.chooseListDay.filter( date => date !== day);
     }
-    return this.listDay.push(day);
+    return this.chooseListDay.push(day);
   }
 
   /// edit stick
@@ -140,7 +146,7 @@ export class ChecklistListComponent implements OnInit {
 
       let listMember = dateIsCheck[0].members;
       const checkMember = listMember.filter(memberIsCheck => memberIsCheck.id === setMember.id);
-      if (checkMember.length === 0) {
+      if (checkMember && checkMember.length === 0) {
         listMember.push(member);
       } else {
         listMember = listMember.filter(memberIsCheck => memberIsCheck.id !== setMember.id);

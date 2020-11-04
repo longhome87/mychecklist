@@ -28,7 +28,7 @@ export class UserService extends FirebaseService {
     return this.create(this.dbPath, data);
   }
 
-  updateUser(data: IUser) {
+  updateUser(data) {
     return this.update(this.dbPath, data.id, data);
   }
 
@@ -54,6 +54,7 @@ export class UserService extends FirebaseService {
               username: doc.username,
               firstName: doc.firstName,
               lastName: doc.lastName,
+              permission: doc.permission,
               token: 'fake-jwt-token'
             };
           });
