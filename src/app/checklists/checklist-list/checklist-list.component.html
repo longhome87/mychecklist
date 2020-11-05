@@ -8,6 +8,7 @@
     <h2 class="check-list__title">My Check List</h2>
     <div>
       <button
+      *ngIf="hasPermission()"
         mat-raised-button
         color="primary"
         type="button"
@@ -17,6 +18,7 @@
       </button>
 
       <button
+      *ngIf="hasPermission()"
         mat-raised-button
         color="primary"
         type="button"

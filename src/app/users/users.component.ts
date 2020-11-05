@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { MatGridTileHeaderCssMatStyler } from '@angular/material';
 import {MatTableDataSource} from '@angular/material/table';
 import { UserService } from 'src/app/_firebases/user.service';
-import { IUser } from 'src/app/_models/iuser'
+import { IUser } from 'src/app/_models/iuser';
+import { MatDialog } from '@angular/material/dialog';
+import { FormUpdateUserComponent } from '../_components/DialogUpdateUser/dialog-update-user.component'
+import { from } from 'rxjs';
+import { Site } from 'src/app/_until/constant'
+import { AuthenticationService } from 'src/app/_services';
 
 @Component({
   selector: 'app-users',
@@ -11,48 +15,43 @@ import { IUser } from 'src/app/_models/iuser'
 })
 export class UsersComponent implements OnInit {
   listUsers: Array<IUser>;
-  displayedColumns: string[] = ['position', 'userName', 'password', 'firstName', 'lastName', 'action'];
+  displayedColumns: string[] = ['userName', 'firstName', 'lastName', 'permission', 'action'];
   dataSource: any;
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    public dialog: MatDialog,
+    public authenticationService: AuthenticationService
   ) { }
 
   ngOnInit() {
-    this.userService.getUsers()
-    .subscribe(doc => {
-      this.listUsers = []
-      doc.map((data, index) => {
-        let user: any = data.payload.doc.data();
-        user.id = data.payload.doc.id;
-        user.position = index + 1;
-        this.listUsers.push(user);
+    const preventEvent = this.hasPermission();
+    if ( preventEvent ) {
+      this.userService.getUsers()
+      .subscribe(doc => {
+        this.listUsers = []
+        doc.map(data => {
+          let user: any = data.payload.doc.data();
+          user.id = data.payload.doc.id;
+          this.listUsers.push(user);
+        })
       })
-    })
-    this.dataSource = new MatTableDataSource(this.listUsers);
-  }
-
-  createNewUser() {
-    console.log("ssad");
-
-  }
-
-  editUser(user) {
-    console.log(user, "editUser");
-    let updateUser = {
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      permission: "ADMIN",
-      password: user.password,
-      username: user.username
+      this.dataSource = new MatTableDataSource(this.listUsers);
     }
-    this.userService.updateUser(updateUser)
+  }
+
+  hasPermission() {
+    const { currentUserValue } = this.authenticationService;
+    if (currentUserValue && currentUserValue.permission === Site.ADMIN) {
+      return true;
+    }
+    return false;
   }
 
   deleteUser(user) {
-    console.log(user, "deleteUser");
-    this.userService.deleteUser(user.id);
+    this.dialog.open(FormUpdateUserComponent, {
+      data: {...user, type: false}
+    });
   }
 
 
@@ -61,6 +60,15 @@ export class UsersComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     console.log(this.dataSource);
 
+  }
+
+  openDialogEditUser(user) {
+    const dialogRef = this.dialog.open(FormUpdateUserComponent, {
+      data: {...user, type: true}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
 }

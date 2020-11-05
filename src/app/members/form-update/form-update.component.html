@@ -80,8 +80,10 @@
     <div class="show-info d-flex justify-content-center" (click)="alterDescriptionText()">
       {{ showShortDesciption ? 'show more': 'show less' }}
     </div>
-    <button mat-raised-button color="primary" type="submit" class="mb-2 mr-2" [disabled]="formGroup.invalid">Save</button>
-    <button mat-raised-button (click)="onCancel()">Cancel</button>
+    <div class="form-member__footer">
+      <button *ngIf="hasPermission()" mat-raised-button color="primary" type="submit" class="mr-2" [disabled]="formGroup.invalid">Save</button>
+      <button mat-raised-button (click)="onCancel()">Cancel</button>
+    </div>
   </form>
 </div>
 

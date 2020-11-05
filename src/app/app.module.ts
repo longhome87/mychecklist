@@ -33,7 +33,7 @@ import { AppMaterialModule } from './app-material.module';
 import { DatePipe } from '@angular/common';
 import { SettingsComponent } from './settings/settings.component';
 import { UsersComponent } from './users/users.component';
-
+import { FormUpdateUserComponent } from './_components/DialogUpdateUser/dialog-update-user.component'
 
 @NgModule({
   declarations: [
@@ -51,7 +51,8 @@ import { UsersComponent } from './users/users.component';
     GridMemberListComponent,
     FormUpdateComponent,
     SettingsComponent,
-      UsersComponent
+    UsersComponent,
+    FormUpdateUserComponent
    ],
   imports: [
     BrowserModule,
@@ -74,6 +75,9 @@ import { UsersComponent } from './users/users.component';
     // provider used to create fake backend
     fakeBackendProvider
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    FormUpdateUserComponent
+  ],
 })
 export class AppModule { }

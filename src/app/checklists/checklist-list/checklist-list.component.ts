@@ -7,6 +7,8 @@ import { combineLatest } from 'rxjs';
 import { MemberService } from 'src/app/_firebases/member.service';
 import { SortService, DateService } from 'src/app/_services';
 import { DatePipe } from '@angular/common';
+import { Site } from 'src/app/_until/constant'
+import { AuthenticationService } from 'src/app/_services';
 
 @Component({
   selector: 'app-checklist-list',
@@ -27,7 +29,8 @@ export class ChecklistListComponent implements OnInit {
     private memberService: MemberService,
     private sortService: SortService,
     private datePipe: DatePipe,
-    private dateService: DateService) { }
+    private dateService: DateService,
+    public authenticationService: AuthenticationService) { }
 
   ngOnInit() {
     const getChecklists = this.checklistService.getChecklists();
@@ -90,6 +93,14 @@ export class ChecklistListComponent implements OnInit {
         () => { console.log('completed'); });
   }
 
+  hasPermission() {
+    const { currentUserValue } = this.authenticationService;
+    if (currentUserValue && currentUserValue.permission !== Site.CUSTOMER) {
+      return true;
+    }
+    return false;
+  }
+
   createNewChecklist() {
     console.log('createNewChecklist');
     this.router.navigate(['/checklists/' + environment.NewEntityURLParameters.NewChecklist + '/create']);
@@ -115,48 +126,56 @@ export class ChecklistListComponent implements OnInit {
   }
 
   chooseDateDel(itemDay) {
-    const day = this.datePipe.transform(itemDay.date, 'yyyy-MM-dd');
-    const { checkedDateList } = this;
-    checkedDateList.forEach(el => {
-      if(itemDay === el) {
-        return itemDay.checked = !itemDay.checked ;
-      }
-      return ;
-    });
+    const preventEvent = this.hasPermission();
+    if( preventEvent ) {
+      const day = this.datePipe.transform(itemDay.date, 'yyyy-MM-dd');
+      const { checkedDateList } = this;
+      checkedDateList.forEach(el => {
+        if(itemDay === el) {
+          return itemDay.checked = !itemDay.checked ;
+        }
+        return ;
+      });
 
-    if(this.chooseListDay.includes(day)) {
-      return this.chooseListDay = this.chooseListDay.filter( date => date !== day);
+      if(this.chooseListDay.includes(day)) {
+        return this.chooseListDay = this.chooseListDay.filter( date => date !== day);
+      }
+      return this.chooseListDay.push(day);
     }
-    return this.chooseListDay.push(day);
+    return;
   }
 
   /// edit stick
   changeStick(member, checkDate) {
-    const { checklistList, datePipe } = this;
-    let currentDay = datePipe.transform(new Date(), 'yyyy-MM-dd')
-    let checkDay = datePipe.transform(checkDate.date, 'yyyy-MM-dd')
-    if (currentDay === checkDay ) {
-      let setMember = {
-        id: member.id,
-        firstName: member.firstName,
-        lastName: member.lastName,
-        prefixName: member.prefixName,
-      }
-      const dateIsCheck = checklistList.filter(date => date.id === checkDate.idDate);
+    const preventEvent = this.hasPermission();
+    if(preventEvent) {
+      const { checklistList, datePipe } = this;
+      let currentDay = datePipe.transform(new Date(), 'yyyy-MM-dd')
+      let checkDay = datePipe.transform(checkDate.date, 'yyyy-MM-dd')
+      if (currentDay === checkDay ) {
+        let setMember = {
+          id: member.id,
+          firstName: member.firstName,
+          lastName: member.lastName,
+          prefixName: member.prefixName,
+        }
+        const dateIsCheck = checklistList.filter(date => date.id === checkDate.idDate);
 
-      let listMember = dateIsCheck[0].members;
-      const checkMember = listMember.filter(memberIsCheck => memberIsCheck.id === setMember.id);
-      if (checkMember && checkMember.length === 0) {
-        listMember.push(member);
-      } else {
-        listMember = listMember.filter(memberIsCheck => memberIsCheck.id !== setMember.id);
+        let listMember = dateIsCheck[0].members;
+        const checkMember = listMember.filter(memberIsCheck => memberIsCheck.id === setMember.id);
+        if (checkMember && checkMember.length === 0) {
+          listMember.push(member);
+        } else {
+          listMember = listMember.filter(memberIsCheck => memberIsCheck.id !== setMember.id);
+        }
+        this.checklist = {
+          id: checkDate.idDate,
+          date: checkDay,
+          members: listMember
+        }
+        this.checklistService.updateChecklist(this.checklist);
+        return;
       }
-      this.checklist = {
-        id: checkDate.idDate,
-        date: checkDay,
-        members: listMember
-      }
-      this.checklistService.updateChecklist(this.checklist);
       return;
     }
     return;

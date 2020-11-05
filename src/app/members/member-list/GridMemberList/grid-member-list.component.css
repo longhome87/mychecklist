@@ -2,6 +2,10 @@
 	margin-top: 80px
 }
 
+.marginTop {
+	margin-top: 30px;
+}
+
 .search {
 	margin-top: 90px;
 }
@@ -48,6 +52,10 @@ p {
 	-o-perspective: 1000px;
 	-ms-perspective: 1000px;
 	height: 470px;
+}
+
+.heightCard {
+	height: 420px;
 }
 
 .cards .content {
@@ -164,11 +172,20 @@ p {
 	font-size: 15px;
 }
 @media only screen and (min-width: 1024px) {
+	.marginTop {
+		margin-top: 40px;
+	}
+
 	.search {
 		margin-top: 102px;
 	}
+
 	.cards {
 		height: 490px;
+	}
+
+	.heightCard {
+		height: 450px;
 	}
 
 	.image {

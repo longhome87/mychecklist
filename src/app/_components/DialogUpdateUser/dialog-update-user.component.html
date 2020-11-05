@@ -1,0 +1,52 @@
+<div *ngIf='type'>
+  <h2 mat-dialog-title>Update User</h2>
+    <form [formGroup]="formUpdateUser" (ngSubmit)="onSubmit()" class="update-user__info">
+    <mat-dialog-content class="mat-typography">
+      <div class="content-form">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="First Name" formControlName="firstName" [(ngModel)]="firstName">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Last Name" formControlName="lastName" [(ngModel)]="lastName">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="UserName" formControlName="userName" [(ngModel)]="userName">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Password" formControlName="password" [(ngModel)]="password">
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Permission</mat-label>
+          <mat-select [value]="permission" (selectionChange)="changePermission($event)">
+            <mat-option
+              *ngFor="let childLisPermission of listPermission"
+              [value]="childLisPermission">
+              {{ childLisPermission }}
+            </mat-option>
+          </mat-select>
+          <!-- <input matInput placeholder="Permission" formControlName="permission" [(ngModel)]="permission"> -->
+        </mat-form-field>
+      </div>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Cancel</button>
+      <button mat-button [mat-dialog-close]="true" cdkFocusInitial type="submit">Save</button>
+    </mat-dialog-actions>
+  </form>
+</div>
+
+<div *ngIf="!type">
+  <h2 mat-dialog-title>Delete User</h2>
+<mat-dialog-content class="mat-typography">
+  <p>Are you sure delete user of {{ firstName }} !!!</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button (click)="deleteUser()" [mat-dialog-close]="true" cdkFocusInitial>Save</button>
+</mat-dialog-actions>
+</div>

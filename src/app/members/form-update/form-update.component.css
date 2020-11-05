@@ -13,6 +13,7 @@ h2 {
 	margin-top: 10px;
 	font-size: 12px;
 	width: 100%;
+	padding-bottom: 60px;
 }
 
 .load__image {
@@ -75,6 +76,18 @@ button {
 	line-height: 30px;
 }
 
+.form-member__footer {
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+	display: flex;
+	padding: 10px;
+	justify-content: center;
+	align-items: center;
+	background: #f2f2f2;
+	margin-left: -17px;
+}
+
 @media only screen and (min-width: 768px) {
 	h2 {
 		font-size: 23px;
@@ -114,6 +127,11 @@ button {
 		font-size: 14px;
 		padding: 0 14px;
 		line-height: 35px;
+	}
+
+	.form-member__footer {
+		position: static;
+		display: block;
 	}
 }
 
