@@ -28,9 +28,12 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { MemberListComponent } from './members/member-list/member-list.component';
 import { GridMemberListComponent } from './members/member-list/GridMemberList/grid-member-list.component';
 import { TableMemberListComponent } from './members/member-list/TableMemberList/table-member-list.component';
-import { FormMemberComponent } from './members/trigger-form/form-member.component';
+import { FormUpdateComponent } from './members/form-update/form-update.component';
 import { AppMaterialModule } from './app-material.module';
 import { DatePipe } from '@angular/common';
+import { SettingsComponent } from './settings/settings.component';
+import { UsersComponent } from './users/users.component';
+import { FormUpdateUserComponent } from './_components/DialogUpdateUser/dialog-update-user.component'
 
 @NgModule({
   declarations: [
@@ -46,8 +49,11 @@ import { DatePipe } from '@angular/common';
     MemberListComponent,
     TableMemberListComponent,
     GridMemberListComponent,
-    FormMemberComponent
-  ],
+    FormUpdateComponent,
+    SettingsComponent,
+    UsersComponent,
+    FormUpdateUserComponent
+   ],
   imports: [
     BrowserModule,
     FormsModule,
@@ -69,6 +75,9 @@ import { DatePipe } from '@angular/common';
     // provider used to create fake backend
     fakeBackendProvider
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    FormUpdateUserComponent
+  ],
 })
 export class AppModule { }

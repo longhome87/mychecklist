@@ -1,71 +1,80 @@
-<div class="check-list__header">
-  <h2 class="check-list__title">My Check List</h2>
-  <div>
-    <button
-      mat-raised-button
-      color="primary"
-      type="button"
-      class="mb-2"
-      (click)="createNewChecklist()"
-    >Create New
-    </button>
+<mat-progress-bar
+  *ngIf="progress"
+  mode="indeterminate"
+></mat-progress-bar>
 
-    <button
-      mat-raised-button
-      color="primary"
-      type="button"
-      class="mb-2 delete"
-      (click)="DeleteDate()"
-      [disabled]="listDay.length === 0"
-    >Delete Date
-    </button>
+<div *ngIf="!progress">
+  <div class="check-list__header">
+    <h2 class="check-list__title">My Check List</h2>
+    <div>
+      <button
+      *ngIf="hasPermission()"
+        mat-raised-button
+        color="primary"
+        type="button"
+        class="mb-2"
+        (click)="createNewChecklist()"
+      >Create New
+      </button>
+
+      <button
+      *ngIf="hasPermission()"
+        mat-raised-button
+        color="primary"
+        type="button"
+        class="mb-2 delete"
+        (click)="DeleteDate()"
+        [disabled]="chooseListDay.length === 0"
+      >Delete Date
+      </button>
+    </div>
   </div>
-</div>
 
-<div id="check-list">
-  <table class="table table-striped table-bordered table-hover">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col" class="text-center">#</th>
-        <th scope="col" class="text-center check-list__name" style="min-width: 200px">Name</th>
-        <th
-          scope="col"
-          class="text-center date"
-          *ngFor="let checkDate of checkedDateList"
-          (click)="chooseDateDel(checkDate)"
-          [class.done] = "checkDate.checked"
-        >
-          {{checkDate.date.getDate()}}<br>{{checkDate.date.getMonth() + 1}}
-        </th>
-        <th scope="col" class="text-center">Total</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let member of memberList; let i = index">
-        <th scope="row" class="text-center">{{i+1}}</th>
-        <td class="check-list__name">
-          <img
-          class="check-list__avt"
-          [src]="member.image || '/assets/image/default-user-image.png'"
-          [alt]="member.firstName">
-          {{member.lastName}} {{member.firstName}}
-        </td>
-        <td
-          class="text-center"
-          *ngFor="let checkDate of checkedDateList"
-          (click)="changeStick(member, checkDate)"
-        >
-          <!-- <input type="checkbox" checked *ngIf="isCheckedDate(member.checkedDate, date)" disabled>
-          <input type="checkbox" *ngIf="!isCheckedDate(member.checkedDate, date)" disabled> -->
-          <!-- <i class="fa fa-square-o" *ngIf="!isCheckedDate(member.checkedDate, date)" style="font-size: 1.5em; color:black"></i>
-          <i class="fa fa-check-square-o" *ngIf="isCheckedDate(member.checkedDate, date)" style="font-size: 1.5em; color:black"></i> -->
-          <!-- <mat-checkbox (click)="onClick($event)" *ngIf="!isCheckedDate(member.checkedDate, date)"></mat-checkbox>
-          <mat-checkbox [checked]="true" (click)="onClick($event)" *ngIf="isCheckedDate(member.checkedDate, date)">
-          </mat-checkbox> -->
-          <mat-icon *ngIf="isCheckedDate(member.checkedDate, checkDate.date)">check_box</mat-icon>
-        </td>
-        <th scope="row" class="text-center">{{member.checkedDate.length}}</th>
-      </tr>
-    </tbody>
-  </table>
+  <div id="check-list">
+    <table class="table table-striped table-bordered table-hover">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col" class="text-center">#</th>
+          <th scope="col" class="text-center check-list__name" style="min-width: 200px">Name</th>
+          <th
+            scope="col"
+            class="text-center date"
+            *ngFor="let checkDate of checkedDateList"
+            (click)="chooseDateDel(checkDate)"
+            [class.done] = "checkDate.checked"
+          >
+            {{checkDate.date.getDate()}}<br>{{checkDate.date.getMonth() + 1}}
+          </th>
+          <th scope="col" class="text-center">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let member of memberList; let i = index">
+          <th scope="row" class="text-center">{{i+1}}</th>
+          <td class="check-list__name">
+            <img
+            class="check-list__avt"
+            [src]="member.image || '/assets/image/default-user-image.png'"
+            [alt]="member.firstName">
+            {{member.lastName}} {{member.firstName}}
+          </td>
+          <td
+            class="text-center"
+            *ngFor="let checkDate of checkedDateList"
+            (click)="changeStick(member, checkDate)"
+          >
+            <!-- <input type="checkbox" checked *ngIf="isCheckedDate(member.checkedDate, date)" disabled>
+            <input type="checkbox" *ngIf="!isCheckedDate(member.checkedDate, date)" disabled> -->
+            <!-- <i class="fa fa-square-o" *ngIf="!isCheckedDate(member.checkedDate, date)" style="font-size: 1.5em; color:black"></i>
+            <i class="fa fa-check-square-o" *ngIf="isCheckedDate(member.checkedDate, date)" style="font-size: 1.5em; color:black"></i> -->
+            <!-- <mat-checkbox (click)="onClick($event)" *ngIf="!isCheckedDate(member.checkedDate, date)"></mat-checkbox>
+            <mat-checkbox [checked]="true" (click)="onClick($event)" *ngIf="isCheckedDate(member.checkedDate, date)">
+            </mat-checkbox> -->
+            <mat-icon *ngIf="isCheckedDate(member.checkedDate, checkDate.date)">check_box</mat-icon>
+          </td>
+          <th scope="row" class="text-center">{{member.checkedDate.length}}</th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

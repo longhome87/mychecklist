@@ -29,6 +29,10 @@ export class FirebaseService {
     return this.db.collection(collectionName).doc(dataKey).set(data);
   }
 
+  protected updateItem<T>(collectionName: string, dataKey: string, data: T) {
+    return this.db.collection(collectionName).doc(dataKey).update(data);
+  }
+
   protected delete(collectionName: string, dataKey: string) {
     return this.db.collection(collectionName).doc(dataKey).delete();
   }

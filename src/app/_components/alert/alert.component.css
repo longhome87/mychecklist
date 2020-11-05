@@ -3,7 +3,22 @@
   transition-timing-function: linear;
   position: absolute;
   right: 50%;
-  top: 10px;
+  top: 62px;
+  font-size: 12px;
   transform: translateX(50%);
   border-radius: 0px;
+  z-index: 10000;
+}
+
+@media only screen and (min-width: 768px)  {
+  .alert {
+    font-size: 14px
+  }
+}
+
+@media only screen and (min-width: 1024px)  {
+  .alert {
+    top: 10px;
+    font-size: 16px
+  }
 }

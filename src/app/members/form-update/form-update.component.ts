@@ -3,18 +3,20 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MemberService } from 'src/app/_firebases/member.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '../../_services';
+import { Site } from 'src/app/_until/constant'
+import { AuthenticationService } from 'src/app/_services';
 
 @Component({
-  selector: 'app-form-member',
-  templateUrl: './form-member.component.html',
-  styleUrls: ['./form-member.component.css']
+  selector: 'app-form-update',
+  templateUrl: './form-update.component.html',
+  styleUrls: ['./form-update.component.css']
 })
 
-export class FormMemberComponent implements OnInit {
+export class FormUpdateComponent implements OnInit {
   isNew = false;
   showShortDesciption = true;
   formGroup: FormGroup;
-  srcImage = '';
+  srcImage = '/assets/image/default-user-image.png';
   file: string;
   prefixName = '';
   firstName = '';
@@ -35,7 +37,8 @@ export class FormMemberComponent implements OnInit {
     private memberService: MemberService,
     private route: ActivatedRoute,
     private router: Router,
-    private alertService: AlertService,) {
+    private alertService: AlertService,
+    public authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {
@@ -56,45 +59,48 @@ export class FormMemberComponent implements OnInit {
 
     const id = this.route.snapshot.params['id'];
     if (id) {
-      this.memberService.getMember(id)
-      .subscribe(doc => {
-        let member:any = doc.payload.data();
-        this.prefixName = member.prefixName;
-        this.firstName = member.firstName;
-        this.lastName = member.lastName;
-        this.id =  id;
-        if (member.image) {
-          this.srcImage =  member.image;
-        }
-        this.srcImage = member.image;
-        if (member.phoneNumber) {
-          this.phoneNumber =  member.phoneNumber;
-        }
-        if (member.dateOfBirth) {
-          this.dateOfBirth =  member.dateOfBirth;
-        }
-        if (member.address) {
-          this.address =  member.address;
-        }
-        if (member.fullNameDad) {
-          this.fullNameDad =  member.fullNameDad;
-        }
-        if (member.phoneNumberDad) {
-          this.phoneNumberDad =  member.phoneNumberDad;
-        }
-        if (member.fullNameMom) {
-          this.fullNameMom =  member.fullNameMom;
-        }
-        if (member.phoneNumberMom) {
-          this.phoneNumberMom =  member.phoneNumberMom;
-        }
-        if (member.parish) {
-          this.parish =  member.parish;
-        }
-        if (member.province) {
-          this.province =  member.province;
-        }
-      })
+      const preventEvent = this.hasPermission();
+      if ( preventEvent ) {
+        this.memberService.getMember(id)
+        .subscribe(doc => {
+          let member:any = doc.payload.data();
+          this.prefixName = member.prefixName;
+          this.firstName = member.firstName;
+          this.lastName = member.lastName;
+          this.id =  id;
+          if (member.image) {
+            this.srcImage =  member.image;
+          }
+          this.srcImage = member.image;
+          if (member.phoneNumber) {
+            this.phoneNumber =  member.phoneNumber;
+          }
+          if (member.dateOfBirth) {
+            this.dateOfBirth =  member.dateOfBirth;
+          }
+          if (member.address) {
+            this.address =  member.address;
+          }
+          if (member.fullNameDad) {
+            this.fullNameDad =  member.fullNameDad;
+          }
+          if (member.phoneNumberDad) {
+            this.phoneNumberDad =  member.phoneNumberDad;
+          }
+          if (member.fullNameMom) {
+            this.fullNameMom =  member.fullNameMom;
+          }
+          if (member.phoneNumberMom) {
+            this.phoneNumberMom =  member.phoneNumberMom;
+          }
+          if (member.parish) {
+            this.parish =  member.parish;
+          }
+          if (member.province) {
+            this.province =  member.province;
+          }
+        })
+      }
     } else {
       console.log("create member");
       this.isNew = true;
@@ -163,6 +169,14 @@ export class FormMemberComponent implements OnInit {
     }
   }
 
+  hasPermission() {
+    const { currentUserValue } = this.authenticationService;
+    if (currentUserValue && currentUserValue.permission !== Site.CUSTOMER) {
+      return true;
+    }
+    return false;
+  }
+
   onCancel() {
     this.router.navigate(['/members']);
   }
@@ -178,6 +192,7 @@ export class FormMemberComponent implements OnInit {
     fileReader.onloadend = function(e){
       self.srcImage = fileReader.result.toString();
     }
+    console.log(file);
 
     fileReader.readAsDataURL(file);
   }

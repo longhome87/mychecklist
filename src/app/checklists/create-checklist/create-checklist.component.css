@@ -2,6 +2,10 @@
   max-width: 400px;
 }
 
+mat-form-field {
+  width: 45%;
+}
+
 .example-header-image {
   background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
   background-size: cover;
@@ -11,8 +15,17 @@
   font-size:14px
 }
 
+.create__checklist-header {
+  position: fixed;
+  width: 93%;
+  top: 60px;
+  background: #f2f2f2;
+  z-index: 2;
+}
+
 h1 {
-	font-size: 20px;
+  font-size: 20px;
+  margin-top: 15px
 }
 
 button {
@@ -25,9 +38,17 @@ button {
   font-size: 14px !important;
 }
 
+.create-list {
+  padding-top: 130px;
+}
+
 @media only screen and (min-width: 1024px) {
   .create__checklist{
     font-size:16px
+  }
+
+  mat-form-field {
+    width: 15%;
   }
 
   h1 {
@@ -42,5 +63,14 @@ button {
 
   .mat-line {
     font-size: 16px !important;
+  }
+
+  .create__checklist-header {
+    top: 0;
+    width: 90%;
+  }
+
+  .create-list {
+    padding-top: 145px;
   }
 }

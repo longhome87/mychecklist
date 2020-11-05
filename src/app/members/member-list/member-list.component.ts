@@ -4,6 +4,8 @@ import { environment } from 'src/environments/environment';
 import { SortService } from 'src/app/_services';
 import { Router } from '@angular/router';
 import { MemberService } from 'src/app/_firebases/member.service';
+import { Site } from 'src/app/_until/constant'
+import { AuthenticationService } from 'src/app/_services';
 
 @Component({
   selector: 'app-member-list',
@@ -18,11 +20,13 @@ export class MemberListComponent implements OnInit {
   viewTable = false;
   checkSearch = false;
   search = '';
+  progress = true;
 
   constructor(
     private router: Router,
     private sortService: SortService,
-    private memberService: MemberService
+    private memberService: MemberService,
+    public authenticationService: AuthenticationService
   ) { }
 
   ngOnInit() {
@@ -75,7 +79,16 @@ export class MemberListComponent implements OnInit {
       console.log(this.memberList, "memberList");
       this.memberList.sort(this.sortService.sortByFirstName);
       this.memberListAPI = this.memberList;
+      this.progress = false;
       });
+  }
+
+  hasPermission() {
+    const { currentUserValue } = this.authenticationService;
+    if (currentUserValue && currentUserValue.permission !== Site.CUSTOMER) {
+      return true;
+    }
+    return false;
   }
 
   createNew() {

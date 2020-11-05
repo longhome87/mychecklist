@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../_services';
+import { Site } from 'src/app/_until/constant'
 
 @Component({
   selector: 'app-sidebar',
@@ -16,10 +17,18 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
   }
 
-  logout() {
-    console.log('logout');
+  // logout() {
+  //   console.log('logout');
 
-    this.authenticationService.logout();
-    this.router.navigate(['/login']);
+  //   this.authenticationService.logout();
+  //   this.router.navigate(['/login']);
+  // }
+
+  havePermission() {
+    const { currentUserValue } = this.authenticationService;
+    if (currentUserValue && currentUserValue.permission === Site.ADMIN) {
+      return true;
+    }
+    return false;
   }
 }

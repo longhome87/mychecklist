@@ -1,6 +1,6 @@
 #container {
   display: block;
-  height: auto;
+  height: 100%;
   position: relative;
 }
 
@@ -12,7 +12,7 @@
   #container {
     display: grid;
     grid-template-columns: 70px auto;
-    height: 100%;
+    height: auto;
   }
 
   #container #content {

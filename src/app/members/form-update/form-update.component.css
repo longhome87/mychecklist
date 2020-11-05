@@ -13,6 +13,7 @@ h2 {
 	margin-top: 10px;
 	font-size: 12px;
 	width: 100%;
+	padding-bottom: 60px;
 }
 
 .load__image {
@@ -23,11 +24,18 @@ h2 {
 	width: 100%;
 }
 
-#upload__review {
+.image {
 	width: 150px;
 	height: 150px;
-	border-radius: 100px;
 	margin-bottom: 10px;
+	border-radius: 100px;
+	overflow: hidden;
+}
+
+#upload__review {
+	width: 100%;
+	height: 100%;
+	object-fit: cover
 }
 
 #avatar {
@@ -68,6 +76,18 @@ button {
 	line-height: 30px;
 }
 
+.form-member__footer {
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+	display: flex;
+	padding: 10px;
+	justify-content: center;
+	align-items: center;
+	background: #f2f2f2;
+	margin-left: -17px;
+}
+
 @media only screen and (min-width: 768px) {
 	h2 {
 		font-size: 23px;
@@ -90,8 +110,7 @@ button {
 		line-height: 33px;
 		padding: 0 10px;
 	}
-
-	#upload__review {
+	.image {
 		width: 180px;
 		height: 180px;
 	}
@@ -109,6 +128,11 @@ button {
 		padding: 0 14px;
 		line-height: 35px;
 	}
+
+	.form-member__footer {
+		position: static;
+		display: block;
+	}
 }
 
 @media only screen and (min-width: 1024px) {
@@ -125,7 +149,7 @@ button {
 		padding: 0 20px;
 	}
 
-	#upload__review {
+	.image {
 		width: 200px;
 		height: 200px;
 	}
