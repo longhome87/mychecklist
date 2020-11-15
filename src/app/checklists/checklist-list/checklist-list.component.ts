@@ -9,6 +9,9 @@ import { SortService, DateService } from 'src/app/_services';
 import { DatePipe } from '@angular/common';
 import { Site } from 'src/app/_until/constant'
 import { AuthenticationService } from 'src/app/_services';
+import { CheckListDataService } from 'src/app/_services/checklist.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogChooseClassComponent } from 'src/app/_components/DialogChooseClass/DialogChooseClass.component';
 
 @Component({
   selector: 'app-checklist-list',
@@ -17,7 +20,6 @@ import { AuthenticationService } from 'src/app/_services';
 })
 export class ChecklistListComponent implements OnInit {
   checklist: IChecklist;
-  checklistList: Array<IChecklist>;
   memberList: Array<IMember>;
   chooseListDay = [];
   checkedDateList = [];
@@ -31,91 +33,84 @@ export class ChecklistListComponent implements OnInit {
     private sortService: SortService,
     private datePipe: DatePipe,
     private dateService: DateService,
-    public authenticationService: AuthenticationService) { }
+    public authenticationService: AuthenticationService,
+    public checkListDataService: CheckListDataService,
+    public dialog: MatDialog,) { }
 
   ngOnInit() {
-    const getChecklists = this.checklistService.getChecklists();
-    const getMembers = this.memberService.getMembers();
-    // getChecklists.subscribe(doc => {
-    //   let array = [];
-    //   doc.map(data => {
-    //     array.push(data.payload.doc.data())
-    //   })
-    //   console.log(array, "ssss");
-    // })
+    // let params = {
+    //   id: "e5rkgyirjfbWxMKbhbXY",
+    //   course: '2020-2021',
+    //   dates: ['2020-11-13', '2020-11-14'],
+    //   users: [{id: 'QbrgurQZGhnSB3padedA'}, {id: 'qCKWA6w7gKClzA50Qip7'}],
+    //   class: null,
+    //   members: [
+    //     {
+    //       id: 'JDQA05klbTthJu85pFTT',
+    //       absentDates: [
+    //         {date: '2020-11-13', reason: 'bệnh'},
+    //         {date: '2020-11-14', reason: 'tiệc'},
+    //       ]
+    //     },
+    //     {
+    //       id: 'SzRRuL77QR4wFy9hhwOO',
+    //       absentDates: [{date: '2020-11-14', reason: 'ốm'}]
+    //     }
+    //   ]
+    // }
+    // // get checklist
+    // this.checklistService.updateChecklistItem(params)
+    const { IdCheckList } = this.checkListDataService
+    if (!IdCheckList) {
+      this.openDialogChooseClass();
+    }
 
-    combineLatest<any>(
-      getChecklists,
-      getMembers
-    )
-      .subscribe(data => {
-        // Get checklists data
-        if (data[0] !== null) {
-          this.checklistList = [];
-          data[0].map(docChangeAction => {
-            let checklistItem: any = docChangeAction.payload.doc.data();
-            checklistItem.id = docChangeAction.payload.doc.id;
-            this.checklistList.push(checklistItem);
-          });
-          this.checklistList.sort(this.sortService.sortByDate);
-          this.checkedDateList = this.checklistList.map(x => {
-            return {
-              idDate: x.id,
-              checked: false,
-              date: new Date(x.date)
-            }
-          })
-        }
+    this.checkedDateList = this.checkListDataService.listDates;
+    const { listMember } = this.checkListDataService;
 
-        // Get members data
-        if (data[1] !== null) {
-          this.memberList = [];
-          data[1].map(docChangeAction => {
-            let memberItem: any = docChangeAction.payload.doc.data();
-            memberItem.id = docChangeAction.payload.doc.id;
-            memberItem['checkedDate'] = [];
-            let checklists = this.checklistList.filter(x => x.members.some(m => m.id === memberItem.id));
-            checklists.map(x => {
-              memberItem['checkedDate'].push(x.date);
-            });
-            this.memberList.push(memberItem);
-          });
-          this.memberList.sort(this.sortService.sortByFirstName);
-        }
-        this.progress = false;
-      },
-        (err: Response) => {
-          // Log error
-          console.log(err, "err");
-          // const body = err.json();
-          // // Display message
-          // this.alertService.addAlert({ Type: 'danger', Dismissible: true, Message: 'An error occurred loading npi project setup data.' } as IAlert);
-        },
-        () => { console.log('completed'); });
+    this.memberList = [];
+    if (listMember && listMember.length !== 0) {
+      const listIdMember = listMember.map(member => member.id);
+      listIdMember.map(idMember => {
+      const getMember =  this.memberService.getMember(idMember);
+        getMember.subscribe(doc => {
+        let member:any = doc.payload.data();
+        member.id = doc.payload.id;
+        this.memberList.push(member);
+        })
+      })
+    }
 
-        this.hasShortName();
+    console.log(this.checkedDateList, this.memberList, "ssada");
+    if(this.checkedDateList &&  this.memberList) {
+      this.progress = false;
+    }
   }
 
-  hasPermission() {
+  openDialogChooseClass() {
+    this.dialog.open(DialogChooseClassComponent, { disableClose: true });
+  }
+
+  hasRole() {
     const { currentUserValue } = this.authenticationService;
-    if (currentUserValue && currentUserValue.permission !== Site.CUSTOMER) {
+    if (currentUserValue && currentUserValue.role !== Site.CUSTOMER) {
       return true;
     }
     return false;
   }
 
   hasShortName() {
-    const { shortName } = this.authenticationService;
-    if ( shortName ) {
+    const { useShortName } = this.authenticationService;
+    if ( useShortName ) {
       this.isShortName = true;
       return;
     }
     this.isShortName = false;
   }
 
-  hasNickName(member) {
-    if (member && member.nickName) {
-      return member.nickName;
+  hasNickname(member) {
+    if (member && member.nickname) {
+      return member.nickname;
     }
     return member.firstName;
   }
@@ -134,69 +129,69 @@ export class ChecklistListComponent implements OnInit {
   }
 
   DeleteDate(){
-    const { chooseListDay, checklistList } = this;
-    const self = this;
-    checklistList.forEach(itemCheckList => {
-      if (chooseListDay.includes(itemCheckList.date)) {
-        this.checklistService.deleteChecklist(itemCheckList.id);
-      }
-    })
-    this.chooseListDay = [];
+    // const { chooseListDay, checklistList } = this;
+    // const self = this;
+    // checklistList.forEach(itemCheckList => {
+    //   if (chooseListDay.includes(itemCheckList.date)) {
+    //     this.checklistService.deleteChecklist(itemCheckList.id);
+    //   }
+    // })
+    // this.chooseListDay = [];
   }
 
   chooseDateDel(itemDay) {
-    const preventEvent = this.hasPermission();
-    if( preventEvent ) {
-      const day = this.datePipe.transform(itemDay.date, 'yyyy-MM-dd');
-      const { checkedDateList } = this;
-      checkedDateList.forEach(el => {
-        if(itemDay === el) {
-          return itemDay.checked = !itemDay.checked ;
-        }
-        return ;
-      });
+    // const preventEvent = this.hasRole();
+    // if( preventEvent ) {
+    //   const day = this.datePipe.transform(itemDay.date, 'yyyy-MM-dd');
+    //   const { checkedDateList } = this;
+    //   checkedDateList.forEach(el => {
+    //     if(itemDay === el) {
+    //       return itemDay.checked = !itemDay.checked ;
+    //     }
+    //     return ;
+    //   });
 
-      if(this.chooseListDay.includes(day)) {
-        return this.chooseListDay = this.chooseListDay.filter( date => date !== day);
-      }
-      return this.chooseListDay.push(day);
-    }
-    return;
+    //   if(this.chooseListDay.includes(day)) {
+    //     return this.chooseListDay = this.chooseListDay.filter( date => date !== day);
+    //   }
+    //   return this.chooseListDay.push(day);
+    // }
+    // return;
   }
 
   /// edit stick
   changeStick(member, checkDate) {
-    const preventEvent = this.hasPermission();
-    if(preventEvent) {
-      const { checklistList, datePipe } = this;
-      let currentDay = datePipe.transform(new Date(), 'yyyy-MM-dd')
-      let checkDay = datePipe.transform(checkDate.date, 'yyyy-MM-dd')
-      if (currentDay === checkDay ) {
-        let setMember = {
-          id: member.id,
-          firstName: member.firstName,
-          lastName: member.lastName,
-          prefixName: member.prefixName,
-        }
-        const dateIsCheck = checklistList.filter(date => date.id === checkDate.idDate);
+    // const preventEvent = this.hasRole();
+    // if(preventEvent) {
+    //   const { checklistList, datePipe } = this;
+    //   let currentDay = datePipe.transform(new Date(), 'yyyy-MM-dd')
+    //   let checkDay = datePipe.transform(checkDate.date, 'yyyy-MM-dd')
+    //   if (currentDay === checkDay ) {
+    //     let setMember = {
+    //       id: member.id,
+    //       firstName: member.firstName,
+    //       lastName: member.lastName,
+    //       saintName: member.saintName,
+    //     }
+    //     const dateIsCheck = checklistList.filter(date => date.id === checkDate.idDate);
 
-        let listMember = dateIsCheck[0].members;
-        const checkMember = listMember.filter(memberIsCheck => memberIsCheck.id === setMember.id);
-        if (checkMember && checkMember.length === 0) {
-          listMember.push(member);
-        } else {
-          listMember = listMember.filter(memberIsCheck => memberIsCheck.id !== setMember.id);
-        }
-        this.checklist = {
-          id: checkDate.idDate,
-          date: checkDay,
-          members: listMember
-        }
-        this.checklistService.updateChecklist(this.checklist);
-        return;
-      }
-      return;
-    }
-    return;
+    //     let listMember = dateIsCheck[0].members;
+    //     const checkMember = listMember.filter(memberIsCheck => memberIsCheck.id === setMember.id);
+    //     if (checkMember && checkMember.length === 0) {
+    //       listMember.push(member);
+    //     } else {
+    //       listMember = listMember.filter(memberIsCheck => memberIsCheck.id !== setMember.id);
+    //     }
+    //     this.checklist = {
+    //       id: checkDate.idDate,
+    //       date: checkDay,
+    //       members: listMember
+    //     }
+    //     this.checklistService.updateChecklist(this.checklist);
+    //     return;
+    //   }
+    //   return;
+    // }
+    // return;
   }
 }

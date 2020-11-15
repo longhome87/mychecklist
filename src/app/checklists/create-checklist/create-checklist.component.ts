@@ -63,7 +63,7 @@ export class CreateChecklistComponent implements OnInit {
                 this.checklistItemList.push({
                   id: memberItem.id,
                   name: arrayLastname[arrayLastname.length - 1] + ' ' + memberItem.firstName,
-                  image:memberItem.image,
+                  avatar:memberItem.avatar,
                   status: 0,
                   selected: false,
                 })
@@ -105,13 +105,15 @@ export class CreateChecklistComponent implements OnInit {
     this.listMemberSelected = this.memberList.map(MemberSelected => {
       let objMember = {
         id: MemberSelected.id,
-        prefixName: MemberSelected.prefixName,
+        saintName: MemberSelected.saintName,
         firstName: MemberSelected.firstName,
         lastName: MemberSelected.lastName
       }
       return objMember
     })
     let currentDate = this.datePipe.transform(this.selectedDate, 'yyyy-MM-dd')
+    console.log(currentDate,"currentDate");
+
     if (this.listDateExit.includes(currentDate)) {
       this.alertService.error('The selected date already exists')
       return
@@ -119,12 +121,14 @@ export class CreateChecklistComponent implements OnInit {
 
     this.checklist = {
       id: null,
-      date: currentDate,
-      members: this.listMemberSelected.filter(x => checkedItems.includes(x.id))
+      course: null,
+      dates: null,
+      class: null,
+      members: null
     };
-    this.checklistService.getChecklistByDate(this.checklist.date)
-      .get()
-      .then(querySnapshot => {
+    // this.checklistService.getChecklistByDate(this.checklist.dates)
+    //   .get()
+    //   .then(querySnapshot => {
         // if (querySnapshot.size > 0) {
         //   // Merge new members with old one
         //   let existedChecklist = querySnapshot.docs[0].data();
@@ -143,19 +147,19 @@ export class CreateChecklistComponent implements OnInit {
         //       console.log('1', error);
         //     });
         // } else {
-          this.checklistService.createChecklist(this.checklist)
-            .then(data => {
-              this.router.navigate(['/checklists']);
-            })
-            .catch(error => {
-              console.log('2', error);
-            });
-        // }
-      })
-      .catch(error => {
-        console.log(error);
+  //         this.checklistService.createChecklist(this.checklist)
+  //           .then(data => {
+  //             this.router.navigate(['/checklists']);
+  //           })
+  //           .catch(error => {
+  //             console.log('2', error);
+  //           });
+  //       // }
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
 
-      });
+  //     });
   }
 
   onCancel() {

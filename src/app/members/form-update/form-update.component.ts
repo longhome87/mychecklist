@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '../../_services';
 import { Site } from 'src/app/_until/constant'
 import { AuthenticationService } from 'src/app/_services';
+import { ChecklistService } from 'src/app/_firebases/checklist.service';
+import { CheckListDataService } from 'src/app/_services/checklist.service';
 
 @Component({
   selector: 'app-form-update',
@@ -16,22 +18,22 @@ export class FormUpdateComponent implements OnInit {
   isNew = false;
   showShortDesciption = true;
   formGroup: FormGroup;
-  srcImage = '/assets/image/default-user-image.png';
+  avatar = '/assets/image/default-user-image.png';
   file: string;
-  prefixName = '';
-  firstName = '';
-  lastName = '';
-  nickName = ''
-  id = '';
-  phoneNumber = '';
-  dateOfBirth = '';
-  address = '';
-  fullNameDad = '';
-  phoneNumberDad = '';
-  fullNameMom = '';
-  phoneNumberMom = '';
-  parish = '';
-  province = ''
+  saintName = null;
+  firstName = null;
+  lastName = null;
+  nickname = null
+  id = null;
+  phoneNumber = null;
+  dateOfBirth = null;
+  address = null;
+  fullNameDad = null;
+  phoneNumberDad = null;
+  fullNameMom = null;
+  phoneNumberMom = null;
+  parish = null;
+  province = null
 
   constructor(
     private formBuilder: FormBuilder,
@@ -39,44 +41,46 @@ export class FormUpdateComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private alertService: AlertService,
-    public authenticationService: AuthenticationService) {
+    public authenticationService: AuthenticationService,
+    private checklistService: ChecklistService,
+    public checkListDataService: CheckListDataService,) {
   }
 
   ngOnInit() {
     this.formGroup = this.formBuilder.group({
-      prefixName: ['', Validators.required],
+      saintName: ['', Validators.required],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      nickName: '',
-      dateOfBirth: '',
-      phoneNumber: '',
-      address: '',
-      fullNameDad: '',
-      phoneNumberDad: '',
-      fullNameMom: '',
-      phoneNumberMom: '',
-      parish: '',
-      province: ''
+      nickname: null,
+      dateOfBirth: null,
+      phoneNumber: null,
+      address: null,
+      fullNameDad: null,
+      phoneNumberDad: null,
+      fullNameMom: null,
+      phoneNumberMom: null,
+      parish: null,
+      province: null
     });
 
     const id = this.route.snapshot.params['id'];
     if (id) {
-      const preventEvent = this.hasPermission();
+      const preventEvent = this.hasRole();
       if ( preventEvent ) {
         this.memberService.getMember(id)
         .subscribe(doc => {
           let member:any = doc.payload.data();
-          this.prefixName = member.prefixName;
+          this.saintName = member.saintName;
           this.firstName = member.firstName;
           this.lastName = member.lastName;
           this.id =  id;
-          if (member.nickName) {
-            this.nickName =  member.nickName;
+          if (member.nickname) {
+            this.nickname =  member.nickname;
           }
-          if (member.image) {
-            this.srcImage =  member.image;
+          if (member.avatar) {
+            this.avatar =  member.avatar;
           }
-          this.srcImage = member.image;
+          this.avatar = member.avatar;
           if (member.phoneNumber) {
             this.phoneNumber =  member.phoneNumber;
           }
@@ -117,14 +121,16 @@ export class FormUpdateComponent implements OnInit {
   }
 
   onSubmit() {
-    // console.log('Submitted', this.formGroup.controls['prefixName'].value);
+    // console.log('Submitted', this.formGroup.controls['saintName'].value);
     // console.log('Submitted', this.formGroup.value);
+    const { listMember, IdCheckList } = this.checkListDataService;
+    debugger
     const {
-      prefixName,
+      saintName,
       id,
       firstName,
       lastName,
-      nickName,
+      nickname,
       dateOfBirth,
       phoneNumber,
       fullNameDad,
@@ -134,15 +140,15 @@ export class FormUpdateComponent implements OnInit {
       parish,
       address,
       province,
-      srcImage
+      avatar
     } = this
 
     let params = {
       id: null,
-      prefixName: prefixName,
+      saintName: saintName,
       firstName: firstName,
       lastName: lastName,
-      nickName: nickName,
+      nickname: nickname,
       dateOfBirth: dateOfBirth,
       phoneNumber: phoneNumber,
       fullNameDad: fullNameDad,
@@ -152,13 +158,26 @@ export class FormUpdateComponent implements OnInit {
       parish: parish,
       province: province,
       address: address,
-      image: srcImage
+      avatar: avatar
     }
 
     if (this.isNew) {
       this.memberService.createMember(params)
         .then(data => {
-          this.router.navigate(['/members']);
+          let parmasCheckList = {
+            id: IdCheckList,
+            members: [
+              ...listMember,
+              {
+              id :data.id,
+              absentDates: null
+              }
+            ]
+          }
+          this.checklistService.updateChecklistItem(parmasCheckList)
+          .then(data => {
+            this.router.navigate(['/members']);
+          })
         })
         .catch(error => {
           console.log(error);
@@ -176,9 +195,9 @@ export class FormUpdateComponent implements OnInit {
     }
   }
 
-  hasPermission() {
+  hasRole() {
     const { currentUserValue } = this.authenticationService;
-    if (currentUserValue && currentUserValue.permission !== Site.CUSTOMER) {
+    if (currentUserValue && currentUserValue.role !== Site.CUSTOMER) {
       return true;
     }
     return false;
@@ -197,7 +216,7 @@ export class FormUpdateComponent implements OnInit {
       return;
     }
     fileReader.onloadend = function(e){
-      self.srcImage = fileReader.result.toString();
+      self.avatar = fileReader.result.toString();
     }
     console.log(file);
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import { UserService } from 'src/app/_firebases/user.service';
-import { IUser } from 'src/app/_models/iuser';
+import { IUser } from 'src/app/_models';
 import { MatDialog } from '@angular/material/dialog';
 import { FormUpdateUserComponent } from '../_components/DialogUpdateUser/dialog-update-user.component'
 import { from } from 'rxjs';
@@ -15,7 +15,7 @@ import { AuthenticationService } from 'src/app/_services';
 })
 export class UsersComponent implements OnInit {
   listUsers: Array<IUser>;
-  displayedColumns: string[] = ['userName', 'firstName', 'lastName', 'permission', 'action'];
+  displayedColumns: string[] = ['firstName', 'lastName', 'class', 'role', 'action'];
   dataSource: any;
 
   constructor(
@@ -25,7 +25,7 @@ export class UsersComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const preventEvent = this.hasPermission();
+    const preventEvent = this.hasRole();
     if ( preventEvent ) {
       this.userService.getUsers()
       .subscribe(doc => {
@@ -40,9 +40,9 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  hasPermission() {
+  hasRole() {
     const { currentUserValue } = this.authenticationService;
-    if (currentUserValue && currentUserValue.permission === Site.ADMIN) {
+    if (currentUserValue && currentUserValue.role === Site.ADMIN) {
       return true;
     }
     return false;

@@ -18,9 +18,9 @@ export class GridMemberListComponent implements OnInit {
 
   ngOnInit() {}
 
-  hasPermission() {
+  hasRole() {
     const { currentUserValue } = this.authenticationService;
-    if (currentUserValue && currentUserValue.permission !== Site.CUSTOMER) {
+    if (currentUserValue && currentUserValue.role !== Site.CUSTOMER) {
       return true;
     }
     return false;
@@ -28,7 +28,7 @@ export class GridMemberListComponent implements OnInit {
 
   checkItem($event, item) {
     $event.stopPropagation();
-    const preventEvent = this.hasPermission();
+    const preventEvent = this.hasRole();
     if ( !preventEvent ) {
       return;
     }

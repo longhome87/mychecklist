@@ -24,9 +24,9 @@ export class SidebarComponent implements OnInit {
   //   this.router.navigate(['/login']);
   // }
 
-  havePermission() {
+  haveRole() {
     const { currentUserValue } = this.authenticationService;
-    if (currentUserValue && currentUserValue.permission === Site.ADMIN) {
+    if (currentUserValue && currentUserValue.role === Site.ADMIN) {
       return true;
     }
     return false;

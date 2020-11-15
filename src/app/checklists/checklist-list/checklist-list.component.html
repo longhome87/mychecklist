@@ -8,7 +8,7 @@
     <h2 class="check-list__title">My Check List</h2>
     <div>
       <button
-      *ngIf="hasPermission()"
+      *ngIf="hasRole()"
         mat-raised-button
         color="primary"
         type="button"
@@ -18,7 +18,7 @@
       </button>
 
       <button
-      *ngIf="hasPermission()"
+      *ngIf="hasRole()"
         mat-raised-button
         color="primary"
         type="button"
@@ -43,7 +43,7 @@
             (click)="chooseDateDel(checkDate)"
             [class.done] = "checkDate.checked"
           >
-            {{checkDate.date.getDate()}}<br>{{checkDate.date.getMonth() + 1}}
+          {{checkDate.getDate()}}<br>{{checkDate.getMonth() + 1}}
           </th>
           <th scope="col" class="text-center">Total</th>
         </tr>
@@ -54,25 +54,19 @@
           <td class="check-list__name">
             <img
             class="check-list__avt"
-            [src]="member.image || '/assets/image/default-user-image.png'"
+            [src]="member.avatar || '/assets/image/default-user-image.png'"
             [alt]="member.firstName">
-            {{ isShortName ? hasNickName(member) : member?.lastName + ' ' + member?.firstName}}
+            {{ isShortName ? hasNickname(member) : member?.lastName + ' ' + member?.firstName}}
           </td>
           <td
             class="text-center"
             *ngFor="let checkDate of checkedDateList"
             (click)="changeStick(member, checkDate)"
           >
-            <!-- <input type="checkbox" checked *ngIf="isCheckedDate(member.checkedDate, date)" disabled>
-            <input type="checkbox" *ngIf="!isCheckedDate(member.checkedDate, date)" disabled> -->
-            <!-- <i class="fa fa-square-o" *ngIf="!isCheckedDate(member.checkedDate, date)" style="font-size: 1.5em; color:black"></i>
-            <i class="fa fa-check-square-o" *ngIf="isCheckedDate(member.checkedDate, date)" style="font-size: 1.5em; color:black"></i> -->
-            <!-- <mat-checkbox (click)="onClick($event)" *ngIf="!isCheckedDate(member.checkedDate, date)"></mat-checkbox>
-            <mat-checkbox [checked]="true" (click)="onClick($event)" *ngIf="isCheckedDate(member.checkedDate, date)">
-            </mat-checkbox> -->
-            <mat-icon *ngIf="isCheckedDate(member.checkedDate, checkDate.date)">check_box</mat-icon>
+            <!-- <mat-icon *ngIf="isCheckedDate(member.checkedDate, checkDate.date)">check_box</mat-icon> -->
           </td>
-          <th scope="row" class="text-center">{{member.checkedDate.length}}</th>
+          <!-- <th scope="row" class="text-center">{{member.checkedDate.length}}</th> -->
+          <th scope="row" class="text-center">1</th>
         </tr>
       </tbody>
     </table>

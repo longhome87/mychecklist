@@ -1,9 +1,9 @@
-<mat-progress-bar
+<!-- <mat-progress-bar
   *ngIf="progress"
   mode="indeterminate"
-></mat-progress-bar>
+></mat-progress-bar> -->
 
-<div class="member-list" *ngIf="!progress">
+<div class="member-list" >
   <div class="member-list__header-fix">
     <div class="member-list__header">
       <h2>Member List</h2>
@@ -15,10 +15,10 @@
       </mat-slide-toggle>
     </div>
     <div class="btn_list" *ngIf="!checkSearch">
-      <button *ngIf="hasPermission()" mat-raised-button color="primary" type="button" class="mb-2" (click)="createNew()">
+      <button *ngIf="hasRole()" mat-raised-button color="primary" type="button" class="mb-2" (click)="createNew()">
         Create New
       </button>
-      <button *ngIf="hasPermission()" mat-raised-button color="primary" type="button" class="mb-2" [disabled]="listChecked.length === 0"
+      <button *ngIf="hasRole()" mat-raised-button color="primary" type="button" class="mb-2" [disabled]="listChecked.length === 0"
         (click)="deleteMembers()">
         Delete Members
       </button>

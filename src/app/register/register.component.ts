@@ -50,10 +50,10 @@ export class RegisterComponent implements OnInit {
 
     this.loading = true;
     let user = this.registerForm.value;
-    user.permission = 'CUSTOMER'
+    user.role = 'CUSTOMER'
     this.userService.createUser(user)
       .then(data => {
-        console.log('create new user: ', data);
+        console.log('create new user: ', data.id);
 
         this.alertService.success('Registration successful', true);
         this.router.navigate(['/login']);

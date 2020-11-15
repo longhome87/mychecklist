@@ -15,9 +15,9 @@ export class FormUpdateUserComponent implements OnInit {
   lastName: '';
   userName: '';
   password: '';
-  permission: '';
+  role: '';
   type: boolean;
-  listPermission = [Site.ADMIN, Site.GLV, Site.CUSTOMER]
+  listRole = [Site.ADMIN, Site.GLV, Site.CUSTOMER]
 
   constructor(
     private formBuilder: FormBuilder,
@@ -38,7 +38,7 @@ export class FormUpdateUserComponent implements OnInit {
       this.lastName = data.lastName;
       this.userName = data.username;
       this.password = data.password;
-      this.permission = data.permission
+      this.role = data.role
   }
 
   onSubmit() {
@@ -46,15 +46,15 @@ export class FormUpdateUserComponent implements OnInit {
       id: this.data.id,
       firstName: this.firstName,
       lastName: this.lastName,
-      permission: this.permission,
+      role: this.role,
       password: this.password,
       username: this.userName
     }
     this.userService.updateUser(updateUser)
   }
 
-  changePermission($event) {
-    this.permission = $event.value;
+  changeRole($event) {
+    this.role = $event.value;
   }
 
   deleteUser() {

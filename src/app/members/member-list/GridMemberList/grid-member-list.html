@@ -1,18 +1,18 @@
-<div class="row grid-memberlist" [class.search]="search" [class.marginTop]="!hasPermission()">
+<div class="row grid-memberlist" [class.search]="search" [class.marginTop]="!hasRole()">
   <div
     class="memberList__item col-xl-3 col-lg-4 col-md-6 cards"
     *ngFor="let item of memberList; let i = index"
-    [class.heightCard]="!hasPermission()"
+    [class.heightCard]="!hasRole()"
     >
       <div class="content" (dblclick)="change($event, i)" (click)="checkItem($event, item)" [class.done]="item.isChecked">
         <div class="cardFront">
           <mat-card class="example-card">
             <div class="image">
-              <img mat-card-image [src]="item.image || '/assets/image/default-user-image.png'"
+              <img mat-card-image [src]="item.avatar || '/assets/image/default-user-image.png'"
               alt=avatar_{{item.firstName}} />
             </div>
             <mat-card-content>
-              <h5 class="grid-member__name">{{item.prefixName}} {{item.lastName}} {{item.firstName}}</h5>
+              <h5 class="grid-member__name">{{item.saintName}} {{item.lastName}} {{item.firstName}}</h5>
               <p >
                 Ngày sinh:
                 <span [class.red-color]="!item?.dateOfBirth">
@@ -33,7 +33,7 @@
               </p>
             </mat-card-content>
             <mat-card-actions  class="d-flex justify-content-between align-items-center">
-              <button mat-button *ngIf="hasPermission()" (click)="editMember($event, item)">Update</button>
+              <button mat-button *ngIf="hasRole()" (click)="editMember($event, item)">Update</button>
             </mat-card-actions>
           </mat-card>
         </div>
@@ -72,7 +72,7 @@
               </h6>
             </mat-card-content>
             <mat-card-actions class="d-flex justify-content-between align-items-center">
-              <button mat-button *ngIf="hasPermission()" (click)="editMember($event, item)">Update</button>
+              <button mat-button *ngIf="hasRole()" (click)="editMember($event, item)">Update</button>
             </mat-card-actions>
           </mat-card>
         </div>

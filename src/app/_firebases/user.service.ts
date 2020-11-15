@@ -58,11 +58,12 @@ export class UserService extends FirebaseService {
               username: doc.username,
               firstName: doc.firstName,
               lastName: doc.lastName,
-              permission: doc.permission,
+              email: doc.email,
+              role: doc.role,
               token: 'fake-jwt-token'
             };
-            if (doc.shortName) {
-              user.shortName = doc.shortName;
+            if (doc.useShortName) {
+              user.useShortName = doc.useShortName;
             }
             if (doc.language) {
               user.language = doc.language;
