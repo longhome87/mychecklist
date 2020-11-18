@@ -1,16 +1,16 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async, inject } from '@angular/core/testing';
-import { CheckListDataService } from './checklist.service';
+import { ChecklistService } from './checklist.service';
 
 describe('Service: Checklist', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [CheckListDataService]
+      providers: [ChecklistService]
     });
   });
 
-  it('should ...', inject([CheckListDataService], (service: CheckListDataService) => {
+  it('should ...', inject([ChecklistService], (service: ChecklistService) => {
     expect(service).toBeTruthy();
   }));
 });
