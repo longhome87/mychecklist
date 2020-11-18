@@ -2,9 +2,8 @@ import { Component, OnInit, Optional, Inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClassService } from 'src/app/_firebases/class.service';
 import { ChecklistService } from 'src/app/_firebases/checklist.service'
-import { CheckListDataService } from 'src/app/_services/checklist.service'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Site } from 'src/app/_until/constant'
+import { IChecklist } from 'src/app/_models';
 
 @Component({
   selector: 'app-DialogUpdateClasses',
@@ -18,16 +17,25 @@ export class DialogUpdateClassesComponent implements OnInit {
   course: '';
   role: '';
   type: boolean;
-  create = false
+  create = false;
+  private listCheckList: Array<IChecklist>;
 
   constructor(
     private formBuilder: FormBuilder,
     private classService: ClassService,
     private checklistService: ChecklistService,
-    private checkListDataService: CheckListDataService,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
+    const getChecklists = this.checklistService.getChecklists();
+    getChecklists.subscribe(data => {
+      this.listCheckList = [];
+      data.map(docChangeAction => {
+        let checklistItem: any = docChangeAction.payload.doc.data();
+        checklistItem.id = docChangeAction.payload.doc.id;
+        this.listCheckList.push(checklistItem);
+      })
+    })
     this.formUpdateUser = this.formBuilder.group({
       name: ['', Validators.required],
       shortName: ['', Validators.required],
@@ -77,13 +85,9 @@ export class DialogUpdateClassesComponent implements OnInit {
     }
   }
 
-  changeRole($event) {
-    this.role = $event.value;
-  }
-
   deleteClass() {
     const self = this;
-    const { listCheckList } = this.checkListDataService;
+    const { listCheckList } = this;
     listCheckList.map(itemCheckList => {
       if(itemCheckList.class.id === self.data.id) {
         self.checklistService.deleteChecklist(itemCheckList.id)
@@ -93,10 +97,4 @@ export class DialogUpdateClassesComponent implements OnInit {
       }
     })
   }
-
-  // deleteClassTest() {
-  //   ["SnXZOPOHsbeVMBXqasZe", "9IX2W1XLqpk01TR88TqG"].map(id => {
-  //     this.checklistService.deleteChecklist(id);
-  //   })
-  // }
 }

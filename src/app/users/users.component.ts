@@ -4,9 +4,8 @@ import { UserService } from 'src/app/_firebases/user.service';
 import { IUser } from 'src/app/_models';
 import { MatDialog } from '@angular/material/dialog';
 import { FormUpdateUserComponent } from '../_components/DialogUpdateUser/dialog-update-user.component'
-import { from } from 'rxjs';
 import { Site } from 'src/app/_until/constant'
-import { AuthenticationService } from 'src/app/_services';
+import { AuthenticationService, AlertService } from 'src/app/_services';
 
 @Component({
   selector: 'app-users',
@@ -21,11 +20,12 @@ export class UsersComponent implements OnInit {
   constructor(
     private userService: UserService,
     public dialog: MatDialog,
-    public authenticationService: AuthenticationService
+    public authenticationService: AuthenticationService,
+    private alertService: AlertService
   ) { }
 
   ngOnInit() {
-    const preventEvent = this.hasRole();
+    const preventEvent = this.hasPermisson();
     if ( preventEvent ) {
       this.userService.getUsers()
       .subscribe(doc => {
@@ -37,10 +37,12 @@ export class UsersComponent implements OnInit {
         })
       })
       this.dataSource = new MatTableDataSource(this.listUsers);
+    } else {
+      this.alertService.error('Bạn không được phép truy cập vào trang này!!!');
     }
   }
 
-  hasRole() {
+  hasPermisson() {
     const { currentUserValue } = this.authenticationService;
     if (currentUserValue && currentUserValue.role === Site.ADMIN) {
       return true;
@@ -66,7 +68,6 @@ export class UsersComponent implements OnInit {
     const dialogRef = this.dialog.open(FormUpdateUserComponent, {
       data: {...user, type: true}
     });
-    console.log(user);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

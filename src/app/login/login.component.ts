@@ -54,7 +54,6 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.authenticationService.login(this.f.username.value, this.f.password.value)
       .then(data => {
-        console.log(this.router);
         if (data) {
           this.router.navigate([this.returnUrl]);
           this.alertService.success('Login successfully!!!')

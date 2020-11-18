@@ -2,10 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ClassService } from 'src/app/_firebases/class.service';
 import { IClass } from 'src/app/_models';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Site } from 'src/app/_until/constant';
 import { AuthenticationService } from 'src/app/_services';
-import { ChecklistService } from 'src/app/_firebases/checklist.service';
-import { CheckListDataService } from 'src/app/_services/checklist.service';
 
 @Component({
   selector: 'app-DialogChooseClass',
@@ -20,7 +17,6 @@ export class DialogChooseClassComponent implements OnInit {
   constructor(
     private classService: ClassService,
     public authenticationService: AuthenticationService,
-    public checkListDataService: CheckListDataService,
     private dialogRef: MatDialogRef<DialogChooseClassComponent>
   ) { }
 
@@ -38,13 +34,11 @@ export class DialogChooseClassComponent implements OnInit {
       if (currentUserValue && currentUserValue.classes) {
         currentUserValue.classes.map(idClass => {
           let childCatechism = this.listCatechism.filter(
-            catechismId => catechismId === idClass);
-            // debugger
+            catechism => catechism.id === idClass.id);
             this.listClass.push(childCatechism[0]);
         })
       } else {
         this.listClass = this.listCatechism;
-        // debugger
       }
     })
   }
@@ -54,12 +48,9 @@ export class DialogChooseClassComponent implements OnInit {
   }
 
   sendClass() {
-    const { checkListDataService, idCatechism } = this;
-    if (idCatechism && idCatechism.length !== 0) {
-      checkListDataService.handleIdCheklist(idCatechism);
-      this.closeDialog();
-    }
-    return;
+    const { idCatechism } = this;
+    localStorage.setItem('idCatechism', idCatechism);
+    this.closeDialog();
   }
 
   closeDialog(){

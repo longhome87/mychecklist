@@ -4,13 +4,11 @@ import { environment } from 'src/environments/environment';
 import { SortService } from 'src/app/_services';
 import { Router } from '@angular/router';
 import { MemberService } from 'src/app/_firebases/member.service';
-import { Site } from 'src/app/_until/constant'
 import { AuthenticationService } from 'src/app/_services';
-import { CheckListDataService } from 'src/app/_services/checklist.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogChooseClassComponent } from 'src/app/_components/DialogChooseClass/DialogChooseClass.component';
 import { ChecklistService } from 'src/app/_firebases/checklist.service';
-
+import { IMemberAbsent } from 'src/app/_models';
 @Component({
   selector: 'app-member-list',
   templateUrl: './member-list.component.html',
@@ -20,6 +18,8 @@ import { ChecklistService } from 'src/app/_firebases/checklist.service';
 export class MemberListComponent implements OnInit {
   memberList : Array<IMember>;
   memberListAPI: Array<IMember>;
+  IdCheckList: string;
+  listMember: Array<IMemberAbsent>;
   listChecked = [];
   viewTable = false;
   checkSearch = false;
@@ -31,26 +31,37 @@ export class MemberListComponent implements OnInit {
     private sortService: SortService,
     private memberService: MemberService,
     public authenticationService: AuthenticationService,
-    public checkListDataService: CheckListDataService,
     public dialog: MatDialog,
     private checklistService: ChecklistService,
   ) { }
 
   ngOnInit() {
-    // for (let i = 0; i < 10; i++) {
-    //   const nameList = environment.Names;
-    //   const firstName = nameList[Math.floor(Math.random() * nameList.length)];
-    //   const lastName = nameList[Math.floor(Math.random() * nameList.length)];
-    //   const item: IMember = { id: i.toString(), firstName: firstName, lastName: lastName };
-    //   this.memberList.push(item);
-    // }
-
-    // this.memberList.sort(this.sortService.sortByFirstName);
-    const { IdCheckList, listMember } = this.checkListDataService;
-    if (!IdCheckList) {
+    const idCatechism = localStorage.getItem("idCatechism");
+    if (!idCatechism) {
       this.openDialogChooseClass();
+      return;
     }
+    const self = this;
+    this.listMember = [];
+    const getChecklists = this.checklistService.getChecklists();
+    getChecklists.subscribe(data => {
+      data.map(docChangeAction => {
+        let checklistItem: any = docChangeAction.payload.doc.data();
+        checklistItem.id = docChangeAction.payload.doc.id;
+        if (checklistItem.class && checklistItem.class.id === idCatechism) {
+          self.IdCheckList = checklistItem.id;
+          if ( checklistItem.members ) {
+            self.listMember = checklistItem.members;
+            this.getMembers();
+          }
+        }
+      })
+    })
+    // this.progress = false;
+  }
 
+  getMembers() {
+    const { listMember } = this;
     this.memberList = [];
     if (listMember && listMember.length !== 0) {
       const listIdMember = listMember.map(member => member.id);
@@ -66,30 +77,25 @@ export class MemberListComponent implements OnInit {
     }
     this.memberList.sort(this.sortService.sortByFirstName);
     this.memberListAPI = this.memberList;
-    console.log(this.memberList, "memberList");
-    // this.progress = false;
   }
 
   openDialogChooseClass() {
     this.dialog.open(DialogChooseClassComponent, { disableClose: true });
   }
 
-  hasRole() {
+  hasPermission() {
     const { currentUserValue } = this.authenticationService;
-    if (currentUserValue && currentUserValue.role !== Site.CUSTOMER) {
+    if (currentUserValue) {
       return true;
     }
     return false;
   }
 
   createNew() {
-    console.log('created new');
     this.router.navigate(['/members/form-member']);
   }
 
   update(item) {
-    console.log('update', item);
-    // this.router.navigate(['/members/update']);
     this.router.navigate(['/members/form-member', {id: item.id}]);
   }
 
@@ -110,22 +116,18 @@ export class MemberListComponent implements OnInit {
 
   deleteMembers() {
     this.memberList = [];
-    const { listMember, IdCheckList } = this.checkListDataService
-    debugger
-    this.listChecked.forEach( listId => {
-      this.memberService.deleteMember(listId)
-      .then(data => {
-        console.log("done");
-        let listMembers = listMember.filter(member => !this.listChecked.includes(member.id))
-        let parmasCheckList = {
-          id: IdCheckList,
-          members: [...listMembers]
-        }
-        this.checklistService.updateChecklistItem(parmasCheckList);
+    const { listMember, IdCheckList } = this;
+    let listMembers = listMember.filter(member => !this.listChecked.includes(member.id))
+    let parmasCheckList = {
+      id: IdCheckList,
+      members: [...listMembers]
+    }
+    this.checklistService.updateChecklistItem(parmasCheckList)
+    .then(data => {
+        this.listChecked.forEach( listId => {
+          debugger
+          this.memberService.deleteMember(listId);
       })
-      .catch(error => {
-        console.log(error);
-      });
     })
     this.listChecked = [];
   }

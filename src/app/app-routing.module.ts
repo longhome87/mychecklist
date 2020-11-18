@@ -16,8 +16,7 @@ import { AccountComponent } from './account/account.component'
 
 const routes: Routes = [
   {
-    path: '', component: HomeComponent,
-    canActivate: [AuthGuard]
+    path: '', component: HomeComponent
   },
   {
     path: 'customers',
@@ -54,8 +53,7 @@ const routes: Routes = [
   },
   {
     path: 'members',
-    component: MemberListComponent,
-    canActivate: [AuthGuard]
+    component: MemberListComponent
   },
   {
     path: 'users',
@@ -65,7 +63,6 @@ const routes: Routes = [
   {
     path: 'checklists',
     loadChildren: './checklists/checklists.module#ChecklistsModule',
-    canActivate: [AuthGuard]
   },
   {
     path: 'members/form-member',

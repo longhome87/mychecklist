@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../_services';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogChooseClassComponent } from 'src/app/_components/DialogChooseClass/DialogChooseClass.component';
-import { CheckListDataService } from 'src/app/_services/checklist.service'
-
-import { from } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -15,13 +12,12 @@ export class HomeComponent implements OnInit {
 
   constructor(
     public authenticationService: AuthenticationService,
-    public dialog: MatDialog,
-    public checkListDataService: CheckListDataService,
+    public dialog: MatDialog
     ) { }
 
   ngOnInit() {
-    const { IdCheckList } = this.checkListDataService
-    if (!IdCheckList) {
+    const idCatechism = localStorage.getItem("idCatechism");
+    if (!idCatechism) {
       this.openDialogChooseClass();
     }
   }

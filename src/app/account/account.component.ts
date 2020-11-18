@@ -57,8 +57,6 @@ export class AccountComponent implements OnInit {
   }
 
   logout() {
-    console.log('logout');
-
     this.authenticationService.logout();
     this.router.navigate(['/login']);
   }

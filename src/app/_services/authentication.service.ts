@@ -5,7 +5,6 @@ import { map } from 'rxjs/operators';
 
 import { IUser } from '../_models';
 import { UserService } from '../_firebases/user.service';
-import { CheckListDataService } from 'src/app/_services/checklist.service'
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
@@ -50,7 +49,7 @@ export class AuthenticationService {
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
-    // this.checkListDataService.IdCheckList = null;
+    localStorage.removeItem('idCatechism');
     this.currentUserSubject.next(null);
   }
 }

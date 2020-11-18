@@ -60,6 +60,7 @@ export class UserService extends FirebaseService {
               lastName: doc.lastName,
               email: doc.email,
               role: doc.role,
+              classes: doc.classes,
               token: 'fake-jwt-token'
             };
             if (doc.useShortName) {

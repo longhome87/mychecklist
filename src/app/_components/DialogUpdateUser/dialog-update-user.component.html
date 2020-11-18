@@ -30,6 +30,21 @@
           </mat-select>
           <!-- <input matInput placeholder="Permission" formControlName="permission" [(ngModel)]="permission"> -->
         </mat-form-field>
+        <h5>Classes</h5>
+        <div class="mb-3">
+          <span
+            class="class__ischoose"
+            *ngFor="let item of getCheckedItems()"
+            (click)="onCheck(item)">
+            {{ item.shortName }}
+          </span>
+        </div>
+        <div class="listClasses">
+          <mat-list-item *ngFor="let item of getUncheckedItems()" (click)="onCheck(item)">
+            <span matLine class="listClasses__child">{{ item.shortName }}</span>
+          </mat-list-item>
+        </div>
+
       </div>
     </mat-dialog-content>
 

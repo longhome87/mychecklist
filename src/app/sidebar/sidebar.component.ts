@@ -17,14 +17,14 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
   }
 
-  // logout() {
-  //   console.log('logout');
+  logout() {
+    console.log('logout');
 
-  //   this.authenticationService.logout();
-  //   this.router.navigate(['/login']);
-  // }
+    this.authenticationService.logout();
+    this.router.navigate(['/login']);
+  }
 
-  haveRole() {
+  havePermission() {
     const { currentUserValue } = this.authenticationService;
     if (currentUserValue && currentUserValue.role === Site.ADMIN) {
       return true;

@@ -3,10 +3,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MemberService } from 'src/app/_firebases/member.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertService } from '../../_services';
-import { Site } from 'src/app/_until/constant'
 import { AuthenticationService } from 'src/app/_services';
 import { ChecklistService } from 'src/app/_firebases/checklist.service';
-import { CheckListDataService } from 'src/app/_services/checklist.service';
+import { IMemberAbsent } from 'src/app/_models';
 
 @Component({
   selector: 'app-form-update',
@@ -33,7 +32,9 @@ export class FormUpdateComponent implements OnInit {
   fullNameMom = null;
   phoneNumberMom = null;
   parish = null;
-  province = null
+  province = null;
+  private IdCheckList: string;
+  private listMember: Array<IMemberAbsent>;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -42,11 +43,27 @@ export class FormUpdateComponent implements OnInit {
     private router: Router,
     private alertService: AlertService,
     public authenticationService: AuthenticationService,
-    private checklistService: ChecklistService,
-    public checkListDataService: CheckListDataService,) {
+    private checklistService: ChecklistService) {
   }
 
   ngOnInit() {
+    const idCatechism = localStorage.getItem("idCatechism");
+    const getChecklists = this.checklistService.getChecklists();
+    this.listMember = [];
+    getChecklists.subscribe(data => {
+      data.map(docChangeAction => {
+        let checklistItem: any = docChangeAction.payload.doc.data();
+        checklistItem.id = docChangeAction.payload.doc.id;
+        if (checklistItem.class && checklistItem.class.id === idCatechism) {
+          this.IdCheckList = checklistItem.id;
+          if ( checklistItem.members ) {
+            this.listMember = checklistItem.members;
+          }
+        }
+      })
+    })
+
+
     this.formGroup = this.formBuilder.group({
       saintName: ['', Validators.required],
       firstName: ['', Validators.required],
@@ -65,51 +82,48 @@ export class FormUpdateComponent implements OnInit {
 
     const id = this.route.snapshot.params['id'];
     if (id) {
-      const preventEvent = this.hasRole();
-      if ( preventEvent ) {
-        this.memberService.getMember(id)
-        .subscribe(doc => {
-          let member:any = doc.payload.data();
-          this.saintName = member.saintName;
-          this.firstName = member.firstName;
-          this.lastName = member.lastName;
-          this.id =  id;
-          if (member.nickname) {
-            this.nickname =  member.nickname;
-          }
-          if (member.avatar) {
-            this.avatar =  member.avatar;
-          }
-          this.avatar = member.avatar;
-          if (member.phoneNumber) {
-            this.phoneNumber =  member.phoneNumber;
-          }
-          if (member.dateOfBirth) {
-            this.dateOfBirth =  member.dateOfBirth;
-          }
-          if (member.address) {
-            this.address =  member.address;
-          }
-          if (member.fullNameDad) {
-            this.fullNameDad =  member.fullNameDad;
-          }
-          if (member.phoneNumberDad) {
-            this.phoneNumberDad =  member.phoneNumberDad;
-          }
-          if (member.fullNameMom) {
-            this.fullNameMom =  member.fullNameMom;
-          }
-          if (member.phoneNumberMom) {
-            this.phoneNumberMom =  member.phoneNumberMom;
-          }
-          if (member.parish) {
-            this.parish =  member.parish;
-          }
-          if (member.province) {
-            this.province =  member.province;
-          }
-        })
-      }
+      this.memberService.getMember(id)
+      .subscribe(doc => {
+        let member:any = doc.payload.data();
+        this.saintName = member.saintName;
+        this.firstName = member.firstName;
+        this.lastName = member.lastName;
+        this.id =  id;
+        if (member.nickname) {
+          this.nickname =  member.nickname;
+        }
+        if (member.avatar) {
+          this.avatar =  member.avatar;
+        }
+        this.avatar = member.avatar;
+        if (member.phoneNumber) {
+          this.phoneNumber =  member.phoneNumber;
+        }
+        if (member.dateOfBirth) {
+          this.dateOfBirth =  member.dateOfBirth;
+        }
+        if (member.address) {
+          this.address =  member.address;
+        }
+        if (member.fullNameDad) {
+          this.fullNameDad =  member.fullNameDad;
+        }
+        if (member.phoneNumberDad) {
+          this.phoneNumberDad =  member.phoneNumberDad;
+        }
+        if (member.fullNameMom) {
+          this.fullNameMom =  member.fullNameMom;
+        }
+        if (member.phoneNumberMom) {
+          this.phoneNumberMom =  member.phoneNumberMom;
+        }
+        if (member.parish) {
+          this.parish =  member.parish;
+        }
+        if (member.province) {
+          this.province =  member.province;
+        }
+      })
     } else {
       console.log("create member");
       this.isNew = true;
@@ -121,10 +135,7 @@ export class FormUpdateComponent implements OnInit {
   }
 
   onSubmit() {
-    // console.log('Submitted', this.formGroup.controls['saintName'].value);
-    // console.log('Submitted', this.formGroup.value);
-    const { listMember, IdCheckList } = this.checkListDataService;
-    debugger
+    const { listMember, IdCheckList } = this;
     const {
       saintName,
       id,
@@ -193,14 +204,6 @@ export class FormUpdateComponent implements OnInit {
         console.log(error);
       });
     }
-  }
-
-  hasRole() {
-    const { currentUserValue } = this.authenticationService;
-    if (currentUserValue && currentUserValue.role !== Site.CUSTOMER) {
-      return true;
-    }
-    return false;
   }
 
   onCancel() {

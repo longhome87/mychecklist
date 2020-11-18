@@ -8,7 +8,7 @@
     <h2 class="check-list__title">My Check List</h2>
     <div>
       <button
-      *ngIf="hasRole()"
+      *ngIf="hasPermission()"
         mat-raised-button
         color="primary"
         type="button"
@@ -18,7 +18,7 @@
       </button>
 
       <button
-      *ngIf="hasRole()"
+      *ngIf="hasPermission()"
         mat-raised-button
         color="primary"
         type="button"
@@ -39,13 +39,14 @@
           <th
             scope="col"
             class="text-center date"
-            *ngFor="let checkDate of checkedDateList"
+            *ngFor="let checkDate of listDatesCheckList"
             (click)="chooseDateDel(checkDate)"
             [class.done] = "checkDate.checked"
           >
-          {{checkDate.getDate()}}<br>{{checkDate.getMonth() + 1}}
+          {{checkDate?.date.getDate()}}<br>{{checkDate?.date.getMonth() + 1}}
           </th>
           <th scope="col" class="text-center">Total</th>
+          <th scope="col" class="text-center">Awol</th>
         </tr>
       </thead>
       <tbody>
@@ -60,13 +61,14 @@
           </td>
           <td
             class="text-center"
-            *ngFor="let checkDate of checkedDateList"
-            (click)="changeStick(member, checkDate)"
+            *ngFor="let checkDate of listDatesCheckList"
           >
-            <!-- <mat-icon *ngIf="isCheckedDate(member.checkedDate, checkDate.date)">check_box</mat-icon> -->
+            <mat-icon *ngIf="isCheckedDate(member.id, checkDate.date)">check_box</mat-icon>
+            <mat-icon *ngIf="absentPermission(member.id, checkDate.date)">local_parking</mat-icon>
           </td>
           <!-- <th scope="row" class="text-center">{{member.checkedDate.length}}</th> -->
-          <th scope="row" class="text-center">1</th>
+          <td scope="row" class="text-center">{{ total(member?.id) }}</td>
+          <td scope="row" class="text-center">{{ totalAwol(member?.id) }}</td>
         </tr>
       </tbody>
     </table>

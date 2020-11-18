@@ -1,3 +1,4 @@
+import { IClass } from 'src/app/_models/iclass'
 export class IUser {
     id: string;
     username: string;
@@ -7,7 +8,7 @@ export class IUser {
     email?: string;
     token: string;
     role: string;
-    classes?: Array<object>;
+    classes: Array<IClass>;
     useShortName?: boolean;
     language?:boolean
 }
