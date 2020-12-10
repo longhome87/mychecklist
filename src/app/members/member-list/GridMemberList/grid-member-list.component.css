@@ -1,5 +1,5 @@
 .grid-memberlist {
-	margin: 80px -15px 0
+	margin: 95px -15px 0
 }
 
 .marginTop {
@@ -18,10 +18,6 @@
 	width: 100%;
 	height: 170px;
 	margin-bottom: 10px;
-}
-
-.done {
-	border: 1px solid red;
 }
 
 .mat-card {
@@ -219,7 +215,7 @@ p {
 
 @media only screen and (min-width: 1024px) {
 	.marginTop {
-		margin-top: 40px;
+		margin-top: 50px;
 	}
 
 	.search {
@@ -227,7 +223,7 @@ p {
 	}
 
 	.cards {
-		height: 425px;
+		height: 400px;
 	}
 
 	.heightCard {
@@ -236,11 +232,11 @@ p {
 
 	.image {
 		margin-bottom: 20px;
-		height: 200px;
+		height: 170px;
 	}
 
 	.grid-member__name {
-		min-height: 50px;
+		min-height: 42px;
 		font-size: 18px;
 	}
 
