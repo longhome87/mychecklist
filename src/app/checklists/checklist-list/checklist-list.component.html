@@ -18,7 +18,7 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <div>
+    <div style="min-height: 22px;">
       <button
       *ngIf="hasPermission()"
         mat-raised-button
@@ -39,7 +39,7 @@
         [disabled]="chooseListDay.length === 0"
       >Delete Date
       </button>
-      <span style="float: right" class="mr-3">Total day: {{listDatesCheckList.length}}</span>
+      <span style="float: right; font-size: 14px;" class="mr-3">Total day: {{listDatesCheckList.length}}</span>
     </div>
   </div>
   <div id="check-list">
