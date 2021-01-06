@@ -33,8 +33,8 @@ export class ClassesComponent implements OnInit {
           classItem.id = data.payload.doc.id;
           this.listClasses.push(classItem);
         })
+        this.dataSource = new MatTableDataSource(this.listClasses);
       })
-      this.dataSource = new MatTableDataSource(this.listClasses);
     } else {
       this.alertService.error('Bạn không có quyền truy cập vào page này!!!')
     }
@@ -58,8 +58,6 @@ export class ClassesComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    console.log(this.dataSource);
-
   }
 
   openDialogEditUser(classItem) {

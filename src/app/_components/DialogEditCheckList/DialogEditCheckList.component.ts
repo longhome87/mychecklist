@@ -15,6 +15,26 @@ export class DialogEditCheckListComponent implements OnInit {
     labelCheckItem = '';
     message = ''
   ngOnInit() {
+    console.log(this.data, "data");
+    const idMember = this.data.member.id;
+    this.data.members.forEach(member => {
+      if (member.id === idMember) {
+        if (member.absentDates) {
+          for (let i = 0; i < member.absentDates.length; i++) {
+            if (member.absentDates[i].date === this.data.date) {
+              if (member.absentDates[i].reason) {
+                this.message = member.absentDates[i].reason;
+              }
+              this.labelCheckItem = "unChecked";
+              return;
+            }
+            this.labelCheckItem = "checked";
+          }
+        } else {
+          this.labelCheckItem = "checked";
+        }
+      }
+    });
   }
 
   save() {

@@ -35,8 +35,8 @@ export class UsersComponent implements OnInit {
           user.id = data.payload.doc.id;
           this.listUsers.push(user);
         })
+        this.dataSource = new MatTableDataSource(this.listUsers);
       })
-      this.dataSource = new MatTableDataSource(this.listUsers);
     } else {
       this.alertService.error('Bạn không được phép truy cập vào trang này!!!');
     }
@@ -60,8 +60,6 @@ export class UsersComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    console.log(this.dataSource);
-
   }
 
   openDialogEditUser(user) {
