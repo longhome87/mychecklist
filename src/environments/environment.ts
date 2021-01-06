@@ -22005,7 +22005,9 @@ const Names = [
 
 const CloudinaryConfig = {
   cloud_name: 'longhome87',
-  upload_preset: 'checklist'
+  upload_preset: 'checklist',
+  api_key: '782571717915481',
+  api_secret: 'XGDYIOMlwGZdR1Ui-AxL4rEV2II'
 }
 
 export const environment = {
