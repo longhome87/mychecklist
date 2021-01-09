@@ -40,6 +40,11 @@ import { DialogUpdateClassesComponent } from 'src/app/_components/DialogUpdateCl
 import { DialogChooseClassComponent } from 'src/app/_components/DialogChooseClass/DialogChooseClass.component'
 import { DialogHandleReasonComponent } from 'src/app/_components/DialogHandleReason/DialogHandleReason.component'
 import { DialogEditCheckListComponent } from 'src/app/_components/DialogEditCheckList/DialogEditCheckList.component'
+
+import { CloudinaryModule } from '@cloudinary/angular-5.x';
+import * as  Cloudinary from 'cloudinary-core';
+import { FileUploadModule } from 'ng2-file-upload';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,7 +69,7 @@ import { DialogEditCheckListComponent } from 'src/app/_components/DialogEditChec
     DialogChooseClassComponent,
     DialogHandleReasonComponent,
     DialogEditCheckListComponent
-   ],
+  ],
   imports: [
     BrowserModule,
     FormsModule,
@@ -75,7 +80,9 @@ import { DialogEditCheckListComponent } from 'src/app/_components/DialogEditChec
     AngularFirestoreModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    AppMaterialModule
+    AppMaterialModule,
+    CloudinaryModule.forRoot(Cloudinary, environment.CloudinaryConfig),
+    FileUploadModule
   ],
   providers: [
     { provide: FirestoreSettingsToken, useValue: {} },

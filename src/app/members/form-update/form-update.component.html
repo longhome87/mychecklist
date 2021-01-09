@@ -15,9 +15,11 @@
       name="avatar"
       accept="image/png, image/jpeg"
       (change)="handlerAvatar($event)"
+      ng2FileSelect
+      [uploader]="uploader"
     >
   </div>
-  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="form__info">
+  <form [formGroup]="formGroup" (ngSubmit)="onSave()" class="form__info">
     <div class="content-form">
       <mat-form-field class="full-width">
         <input matInput placeholder="Saint Name" formControlName="saintName" [(ngModel)]="saintName">

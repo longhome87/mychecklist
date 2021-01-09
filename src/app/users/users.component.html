@@ -3,10 +3,10 @@
   <div class="users__table">
     <mat-form-field>
       <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. GLV" #input>
     </mat-form-field>
 
-    <table mat-table [dataSource]="listUsers" class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
       <!-- UserName Column -->
       <!-- <ng-container matColumnDef="userName">
