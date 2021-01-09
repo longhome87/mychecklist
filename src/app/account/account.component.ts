@@ -18,7 +18,7 @@ export class AccountComponent implements OnInit {
   avatar = '/assets/image/default-user-image.png';
   useShortName: boolean;
   language: boolean;
-  private uploader: FileUploader;
+  public uploader: FileUploader;
   private response: any;
 
   constructor(

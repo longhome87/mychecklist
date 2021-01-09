@@ -37,7 +37,7 @@ export class FormUpdateComponent implements OnInit {
   province = null;
   private IdCheckList: string;
   private listMember: Array<IMemberAbsent>;
-  private uploader: FileUploader;
+  public uploader: FileUploader;
   private response: any;
 
   constructor(
