@@ -22003,6 +22003,13 @@ const Names = [
   "Zysk"
 ];
 
+const CloudinaryConfig = {
+  cloud_name: 'longhome87',
+  upload_preset: 'checklist',
+  api_key: '782571717915481',
+  api_secret: 'XGDYIOMlwGZdR1Ui-AxL4rEV2II'
+}
+
 export const environment = {
   production: false,
   firebaseConfig: {
@@ -22017,7 +22024,8 @@ export const environment = {
   },
   DatabaseTableNames: DatabaseTableNames,
   NewEntityURLParameters: NewEntityURLParameters,
-  Names: Names
+  Names: Names,
+  CloudinaryConfig: CloudinaryConfig
 };
 
 /*
