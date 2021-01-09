@@ -19,7 +19,7 @@ export class DialogEditCheckListComponent implements OnInit {
     const idMember = this.data.member.id;
     this.data.members.forEach(member => {
       if (member.id === idMember) {
-        if (member.absentDates) {
+        if (member.absentDates && member.absentDates.length > 0) {
           for (let i = 0; i < member.absentDates.length; i++) {
             if (member.absentDates[i].date === this.data.date) {
               if (member.absentDates[i].reason) {
@@ -55,7 +55,10 @@ export class DialogEditCheckListComponent implements OnInit {
     } else {
       listMembers = members.map(member => {
         if (member.id === this.data.member.id) {
-          let listAbsentDates = member.absentDates.map(absentDate => absentDate.date);
+          let listAbsentDates = []; 
+          if (member.absentDates) {
+            listAbsentDates = member.absentDates.map(absentDate => absentDate.date);
+          }
 
           let arrayAbsentDates = [];
           if (listAbsentDates.includes(this.data.date)) {
