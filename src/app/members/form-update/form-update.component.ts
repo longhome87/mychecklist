@@ -35,6 +35,7 @@ export class FormUpdateComponent implements OnInit {
   phoneNumberMom = null;
   parish = null;
   province = null;
+  listDateExit: Array<string>;
   private IdCheckList: string;
   private listMember: Array<IMemberAbsent>;
   public uploader: FileUploader;
@@ -56,6 +57,7 @@ export class FormUpdateComponent implements OnInit {
     const getChecklists = this.checklistService.getChecklists();
     this.listMember = [];
     getChecklists.subscribe(data => {
+      this.listDateExit = [];
       data.map(docChangeAction => {
         let checklistItem: any = docChangeAction.payload.doc.data();
         checklistItem.id = docChangeAction.payload.doc.id;
@@ -63,6 +65,9 @@ export class FormUpdateComponent implements OnInit {
           this.IdCheckList = checklistItem.id;
           if (checklistItem.members) {
             this.listMember = checklistItem.members;
+          }
+          if (checklistItem.dates) {
+            this.listDateExit = checklistItem.dates;
           }
         }
       })
@@ -182,15 +187,36 @@ export class FormUpdateComponent implements OnInit {
     if (this.isNew) {
       this.memberService.createMember(params)
         .then(data => {
-          let parmasCheckList = {
-            id: IdCheckList,
-            members: [
-              ...listMember,
-              {
-                id: data.id,
-                absentDates: null
+          let absentDates = [];
+          let parmasCheckList = {};
+          if (this.listDateExit.length !== 0 ) {
+            absentDates = this.listDateExit.map(date => {
+              return {
+                date: date,
+                reason: null
               }
-            ]
+            })
+            parmasCheckList = {
+              id: IdCheckList,
+              members: [
+                ...listMember,
+                {
+                  id: data.id,
+                  absentDates: absentDates
+                }
+              ]
+            }
+          } else {
+            parmasCheckList = {
+              id: IdCheckList,
+              members: [
+                ...listMember,
+                {
+                  id: data.id,
+                  absentDates: null
+                }
+              ]
+            }
           }
           this.checklistService.updateChecklistItem(parmasCheckList)
             .then(data => {
@@ -223,7 +249,7 @@ export class FormUpdateComponent implements OnInit {
     if (!file) {
       return;
     }
-    
+
     let fileReader = new FileReader();
     // if (file.size > 1000000) {
     //   this.alertService.error('Chọn lại ảnh, chọn ảnh dưới 1MB');

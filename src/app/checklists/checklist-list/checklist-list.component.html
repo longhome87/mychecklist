@@ -7,7 +7,7 @@
   <div class="check-list__header">
     <div class="d-flex justify-content-between">
       <h2 class="check-list__title">My Check List</h2>
-      <mat-form-field class="full-width chooseClasses" appearance="fill">
+      <mat-form-field *ngIf="listClass.length > 1" class="full-width chooseClasses" appearance="fill">
         <mat-label>Choose Classes</mat-label>
         <mat-select (selectionChange)="handleCatechism($event)">
           <mat-option

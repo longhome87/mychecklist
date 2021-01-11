@@ -83,8 +83,10 @@ export class ChecklistListComponent implements OnInit {
       this.listDateExit = [];
       data.map(docChangeAction => {
         let checklistItem: any = docChangeAction.payload.doc.data();
+
         checklistItem.id = docChangeAction.payload.doc.id;
         if (checklistItem.class && checklistItem.class.id === idCatechism) {
+          console.log(checklistItem, "checklistItem");
           self.IdCheckList = checklistItem.id;
           if ( checklistItem.members ) {
             self.listMember = checklistItem.members;
@@ -119,11 +121,16 @@ export class ChecklistListComponent implements OnInit {
     if (listMember && listMember.length !== 0) {
       const listIdMember = listMember.map(member => member.id);
       listIdMember.map(idMember => {
-      const getMember =  this.memberService.getMember(idMember);
+        const getMember =  this.memberService.getMember(idMember);
         getMember.subscribe(doc => {
-        let member:any = doc.payload.data();
-        member.id = doc.payload.id;
-        this.memberList.push(member);
+          let member:any = doc.payload.data();
+          member.id = doc.payload.id;
+          let idMemberOfMemberList = this.memberList.map(member => member.id);
+          console.log(listIdMember);
+
+        if (!idMemberOfMemberList.includes(member.id)) {
+          this.memberList.push(member);
+        }
         })
       })
     }

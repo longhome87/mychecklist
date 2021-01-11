@@ -55,7 +55,7 @@ export class DialogEditCheckListComponent implements OnInit {
     } else {
       listMembers = members.map(member => {
         if (member.id === this.data.member.id) {
-          let listAbsentDates = []; 
+          let listAbsentDates = [];
           if (member.absentDates) {
             listAbsentDates = member.absentDates.map(absentDate => absentDate.date);
           }
@@ -84,15 +84,29 @@ export class DialogEditCheckListComponent implements OnInit {
             }
           } else {
             if (this.message.length !== 0) {
-              member.absentDates.push({
-                date : this.data.date,
-                reason: this.message
-              })
+              if (member.absentDates) {
+                member.absentDates.push({
+                  date : this.data.date,
+                  reason: this.message
+                })
+              } else {
+                member.absentDates = [{
+                  date : this.data.date,
+                  reason: this.message
+                }]
+              }
             } else {
-              member.absentDates.push({
-                date : this.data.date,
-                reason: null
-              })
+              if (member.absentDates) {
+                member.absentDates.push({
+                  date : this.data.date,
+                  reason: null
+                })
+              } else {
+                member.absentDates = [{
+                  date : this.data.date,
+                  reason: null
+                }]
+              }
             }
             return {
               absentDates: member.absentDates,
