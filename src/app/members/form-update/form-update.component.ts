@@ -223,7 +223,7 @@ export class FormUpdateComponent implements OnInit {
     if (!file) {
       return;
     }
-    
+
     let fileReader = new FileReader();
     // if (file.size > 1000000) {
     //   this.alertService.error('Chọn lại ảnh, chọn ảnh dưới 1MB');
@@ -231,7 +231,7 @@ export class FormUpdateComponent implements OnInit {
     // }
     fileReader.onloadend = function (e) {
       self.avatar = fileReader.result.toString();
-      console.log(self.avatar, "avatar");
+      // console.log(self.avatar, "avatar");
 
     }
     console.log(file);
@@ -292,7 +292,7 @@ export class FormUpdateComponent implements OnInit {
     this.uploader.response.subscribe((res: any) => {
       this.response = JSON.parse(res);
       console.log(this.response);
-      this.avatar = this.response.url;
+      this.avatar = this.response.secure_url;
       this.onSubmit();
     });
   }

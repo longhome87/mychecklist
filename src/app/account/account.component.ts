@@ -7,7 +7,7 @@ import { Cloudinary } from '@cloudinary/angular-5.x';
 import { FileUploader, FileUploaderOptions, ParsedResponseHeaders } from 'ng2-file-upload';
 import { HttpClient } from '@angular/common/http';
 // import { $ } from 'protractor';
-declare let $: any;
+// declare let $: any;
 
 @Component({
   selector: 'app-account',
@@ -30,7 +30,7 @@ export class AccountComponent implements OnInit {
     private http: HttpClient
   ) {
     // Set cloudinary config from angular to jquery
-    $.cloudinary.config(this.cloudinary.config());
+    // $.cloudinary.config(this.cloudinary.config());
   }
 
   ngOnInit() {
@@ -71,7 +71,7 @@ export class AccountComponent implements OnInit {
       // Access to XMLHttpRequest at 'https://api.cloudinary.com/v1_1/longhome87/image/destroy'
       // from origin 'http://localhost:4200' has been blocked by CORS policy: Request header 
       // field authorization is not allowed by Access-Control-Allow-Headers in preflight response.
-      this.deleteImage(this.response);
+      // this.deleteImage(this.response);
     }
 
     // Remove all the item on queue except the last item
@@ -164,26 +164,26 @@ export class AccountComponent implements OnInit {
   // Delete an uploaded image
   // Requires setting "Return delete token" to "Yes" in your upload preset configuration
   // See also https://support.cloudinary.com/hc/en-us/articles/202521132-How-to-delete-an-image-from-the-client-side-
-  deleteImage(data: any) {
-    const url = `https://api.cloudinary.com/v1_1/${this.cloudinary.config().cloud_name}/delete_by_token`;
-    const headers = {
-      'Content-Type': 'application/json',
-      'X-Requested-With': 'XMLHttpRequest'
-    };
-    const options = { headers: headers };
-    const body = {
-      token: data.delete_token
-    };
-    this.http.post(url, body, options).subscribe(response => {
-      console.log(`Deleted image - ${data.public_id} ${response['result']}`);
-      // Remove deleted item for responses
-      // this.responses.splice(index, 1);
-    }, error => {
-      console.log(error);
+  // deleteImage(data: any) {
+  //   const url = `https://api.cloudinary.com/v1_1/${this.cloudinary.config().cloud_name}/delete_by_token`;
+  //   const headers = {
+  //     'Content-Type': 'application/json',
+  //     'X-Requested-With': 'XMLHttpRequest'
+  //   };
+  //   const options = { headers: headers };
+  //   const body = {
+  //     token: data.delete_token
+  //   };
+  //   this.http.post(url, body, options).subscribe(response => {
+  //     console.log(`Deleted image - ${data.public_id} ${response['result']}`);
+  //     // Remove deleted item for responses
+  //     // this.responses.splice(index, 1);
+  //   }, error => {
+  //     console.log(error);
 
-      console.log('Use delete_by_token function from cloudinary jquery');
-      $.cloudinary.delete_by_token(this.response.delete_token);
-    });
-  };
+  //     console.log('Use delete_by_token function from cloudinary jquery');
+  //     $.cloudinary.delete_by_token(this.response.delete_token);
+  //   });
+  // };
 
 }
