@@ -42,7 +42,12 @@ import { DialogHandleReasonComponent } from 'src/app/_components/DialogHandleRea
 import { DialogEditCheckListComponent } from 'src/app/_components/DialogEditCheckList/DialogEditCheckList.component'
 
 import { CloudinaryModule } from '@cloudinary/angular-5.x';
-import * as  Cloudinary from 'cloudinary-core';
+// import * as  Cloudinary from 'cloudinary-core';
+import { Cloudinary as CloudinaryCore } from 'cloudinary-core';
+export const cloudinary = {
+  Cloudinary: CloudinaryCore
+};
+
 import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
@@ -81,7 +86,7 @@ import { FileUploadModule } from 'ng2-file-upload';
     HttpClientModule,
     BrowserAnimationsModule,
     AppMaterialModule,
-    CloudinaryModule.forRoot(Cloudinary, environment.CloudinaryConfig),
+    CloudinaryModule.forRoot(cloudinary, environment.CloudinaryConfig),
     FileUploadModule
   ],
   providers: [
